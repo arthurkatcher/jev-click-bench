@@ -10,7 +10,7 @@ An infrastructure failure ("infra_error") is not scored: it is retried by re-run
   python3 screenspot.py report results/pass1.jsonl
   python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
 """
-import argparse, collections, datetime, hashlib, json, math, pathlib, statistics, sys, threading
+import argparse, collections, datetime, hashlib, json, math, os, pathlib, statistics, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageDraw
 import jev
@@ -103,14 +103,20 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
         return rec
 
     rec["ts"] = now()
+    rec.update(payload_bytes=len(state[1]["image_url"]["url"]), sent_pixels=img.size[0] * img.size[1],
+               scale=round(scale, 6), gt_px=[x, y, w, h])
+    t0 = time.time()
     try:
         resp, secs, attempts = jev.decide(state, questions)
+        rec["wall_seconds"] = round(time.time() - t0, 3)
     except jev.JevError as e:
+        rec["wall_seconds"] = round(time.time() - t0, 3)
         rec.update(status="infra_error", hit=None, error=str(e), http_status=e.status,
                    error_body=e.body, attempts=e.attempts, fatal=e.fatal)
         write(out, rec)
         return rec
     except Exception as e:  # backstop: never let one case abort a pass
+        rec["wall_seconds"] = round(time.time() - t0, 3)
         rec.update(status="infra_error", hit=None, error=f"{type(e).__name__}: {e}", fatal=False)
         write(out, rec)
         return rec
@@ -210,7 +216,25 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     before = jev.balance()
     print(f"key balance before: {before}")
     stop = threading.Event()
-    state = {"spent": spent, "n": 0}
+    state = {"spent": spent, "n": 0, "hits": 0, "ok": 0, "wrong_format": 0, "infra_error": 0, "secs": [],
+             "tokens": 0, "t0": time.time()}
+    prog = OUT / f"pass{pass_id}.progress.json"
+
+    def progress(final=False):
+        n, el = state["n"], time.time() - state["t0"]
+        sc = state["ok"] + state["wrong_format"]
+        tmp = prog.with_suffix(".tmp")
+        tmp.write_text(json.dumps({
+            "pass": pass_id, "updated": now(), "final": final, "done_this_run": n, "todo_this_run": len(todo),
+            "already_done_before": len(done), "total_cases": len(cases),
+            "scored_total": len(done) + sc, "hits_this_run": state["hits"],
+            "running_acc_this_run": round(100 * state["hits"] / sc, 2) if sc else None,
+            "ok": state["ok"], "wrong_format": state["wrong_format"], "infra_error": state["infra_error"],
+            "spent_logged_total": round(state["spent"], 6), "input_tokens_this_run": state["tokens"],
+            "median_latency_s": round(statistics.median(state["secs"]), 3) if state["secs"] else None,
+            "elapsed_s": round(el, 1), "eta_s": round(el / n * (len(todo) - n), 1) if n else None,
+            "stopped": stop.is_set()}))
+        os.replace(tmp, prog)
 
     def job(i):
         if stop.is_set():
@@ -219,6 +243,13 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         with _lock:
             state["n"] += 1
             state["spent"] += cost(rec)
+            state[rec["status"]] = state.get(rec["status"], 0) + 1
+            state["hits"] += 1 if rec.get("hit") else 0
+            if rec.get("seconds") is not None:
+                state["secs"].append(rec["seconds"])
+            u = rec.get("usage") if isinstance(rec.get("usage"), dict) else {}
+            state["tokens"] += u.get("input_tokens") or 0 if isinstance(u.get("input_tokens"), int) else 0
+            progress()
             if rec.get("fatal"):
                 print(f"FATAL {rec['error']} on #{i}: stopping the run", file=sys.stderr)
                 stop.set()
@@ -228,8 +259,10 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
             if state["n"] % 50 == 0:
                 print(f"  {state['n']}/{len(todo)}  ${state['spent']:.4f}")
 
+    progress()
     with ThreadPoolExecutor(workers) as ex:
         list(ex.map(job, todo))
+    progress(final=True)
     after = jev.balance()
     if isinstance(before, float) and isinstance(after, float):
         print(f"key balance after: {after:.6f}  (billed this run: ${before - after:.6f}, "
@@ -308,6 +341,13 @@ def report(path):
     if secs:
         lines.append(f"latency median {statistics.median(secs):.3f}s p90 {secs[int(0.9 * (len(secs) - 1))]:.3f}s, "
                      f"cost of logged responses ${spend:.4f} (retried attempts are not logged; compare the key balance)")
+    toks = [r["usage"]["input_tokens"] for r in by.values() if isinstance(r.get("usage"), dict)
+            and isinstance(r["usage"].get("input_tokens"), int)]
+    walls = sorted(r["wall_seconds"] for r in by.values() if r.get("wall_seconds") is not None)
+    if toks:
+        lines.append(f"input tokens: total {sum(toks):,}, mean {statistics.mean(toks):.0f}, min {min(toks)}, max {max(toks)}; "
+                     f"wall time incl. retries median {statistics.median(walls):.3f}s; "
+                     f"retried cases {sum(1 for r in by.values() if (r.get('attempts') or 1) > 1)}")
     confs = [(r["confidence"], r["hit"]) for r in ok if isinstance(r.get("confidence"), (int, float))]
     a = auroc([c for c, h in confs if h], [c for c, h in confs if not h])
     lines.append(f"confidence AUROC (hit vs miss): {a if a is None else round(a, 3)}")
