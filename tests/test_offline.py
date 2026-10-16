@@ -246,4 +246,31 @@ zfull = tmp / "zoom97.jsonl"
 for line in open(full):
     rec = json.loads(line); rec.update(stage="B", **{"pass": "z97"}); ss.write(zfull, rec)
 assert ss.report(zfull) is True and ss.compare(full, zfull) == 1272
+# Z9. review round 1 fixes
+assert abs(ss.mcnemar(60, 26) - 0.00032) < 0.00002 and ss.mcnemar(0, 0) == 1.0 and ss.mcnemar(5, 5) == 1.0
+z = ss.latest(ss.read(tmp / "zoom90.jsonl"))[0]
+assert z["zoom_f"] == 0.5 and z["zoom_margin"] == 0.1 and "code_rev" in z and z["out_of_crop"] is False
+assert all(k not in x for x in ss.read(tmp / "zoom94.jsonl") for k in ("seconds", "wall_seconds", "attempts"))
+mixed_z = tmp / "zoom96.jsonl"  # an edited constant between stop and resume -> INCOMPLETE
+for line in open(zfull):
+    rec = json.loads(line); rec.update(zoom_f=0.5 if rec["i"] else 0.4, zoom_margin=0.1); ss.write(mixed_z, rec)
+assert ss.report(mixed_z) is False
+other = tmp / "pass89.jsonl"  # a different resolved model -> compare refuses
+for line in open(full):
+    rec = json.loads(line); rec.update(model="typesafe/jev-1.14-NEWER"); ss.write(other, rec)
+assert ss.compare(full, other) is None
+# B pointing past the crop edge: flagged out_of_crop, mapped box still inside the screen -> not out_of_range
+mock(lambda s, q: (answer({"left": 1.01, "right": 1.05, "top": 0.4, "bottom": 0.5}), 0.5, 1))
+r = ss.run_one(1, cases=CASES, out=tmp / "z.jsonl", pass_id="zt", annotate_mode="none", window=(0, 0, 1180, 820),
+               size=(1568, 1090))
+assert r["out_of_crop"] is True and r["out_of_range"] is False, r
+# progress file in zoom mode after a B-only resume: A total right, B counters present
+mock(b_fails_once); calls.clear()
+ss.run_all(88, workers=1, max_cost=1.0, limit=3, annotate_mode="none", zoom=True)
+pr = json.loads((tmp / "pass88.progress.json").read_text())
+assert pr["zoom_infra_error"] == 1 and pr["zoom_scored_this_run"] == 2 and pr["a_scored_total"] == 3, pr
+mock(lambda s, q: (answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}), 0.3, 1))
+ss.run_all(88, workers=1, max_cost=1.0, limit=1, annotate_mode="none", zoom=True)
+pr = json.loads((tmp / "pass88.progress.json").read_text())
+assert pr["a_resumed_this_run"] == 1 and pr["a_scored_total"] == 3 and pr["zoom_scored_total"] == 3, pr
 print("\nALL OFFLINE TESTS PASSED")

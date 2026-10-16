@@ -86,6 +86,12 @@ def now():
 
 
 ZOOM_F, ZOOM_MARGIN = 0.5, 0.1  # frozen before the zoom run (README "Zoom method")
+try:
+    import subprocess
+    CODE_REV = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"], capture_output=True,
+                              text=True, timeout=5).stdout.strip() or None
+except Exception:
+    CODE_REV = None
 
 
 def zoom_window(a, W, H):
@@ -123,7 +129,8 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
            "instructions_sent": text, "prompt_version": PROMPT_VERSION, "template_hash": TEMPLATE_HASH,
            "requested_model": jev.MODEL, "orig_size": [W, H], "sent_size": list(img.size), "gt": gt}
     if window:
-        rec.update(stage="B", window=list(window), window_frac=round(cw / W, 4))
+        rec.update(stage="B", window=list(window), window_frac=round(cw / W, 4), zoom_f=ZOOM_F,
+                   zoom_margin=ZOOM_MARGIN, code_rev=CODE_REV)
     if dry:
         print(json.dumps(rec, indent=1), "\nquestions:", json.dumps(questions),
               f"\nimage part: {len(state[1]['image_url']['url']) // 1024} KB base64")
@@ -166,9 +173,9 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
         rec.update(status="wrong_format", hit=False, hit_tolerant=False, error=f"{type(e).__name__}: {e}")
         write(out, rec)
         return rec
-    out_of_range = any(not 0 <= v <= 1 for v in b.values())  # edges outside the image Jev saw
     if window:  # crop fractions -> full-screenshot fractions
         rec["box_crop"] = b
+        rec["out_of_crop"] = any(not 0 <= v <= 1 for v in b.values())  # pointed past the crop edge
         b = {"left": (x0 + b["left"] * cw) / W, "right": (x0 + b["right"] * cw) / W,
              "top": (y0 + b["top"] * ch) / H, "bottom": (y0 + b["bottom"] * ch) / H}
     point =[(b["left"] + b["right"]) / 2, (b["top"] + b["bottom"]) / 2]
@@ -180,6 +187,7 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
     on_edge = any(abs(point[k % 2] - gt[k]) < EPS for k in range(4))
     # Official rule scores the centre whatever the box shape or range; both are flagged and counted.
     degenerate = b["right"] <= b["left"] or b["bottom"] <= b["top"]
+    out_of_range = any(not 0 <= v <= 1 for v in b.values())  # edges outside the screenshot
     rec.update(status="ok", box=b, point=point, confidence=conf, hit=hit, hit_tolerant=hit_tolerant,
                degenerate=degenerate, out_of_range=out_of_range, on_edge=on_edge)
     if not isinstance((meta.get("usage") or {}).get("cost") if isinstance(meta.get("usage"), dict) else None, (int, float)):
@@ -257,33 +265,45 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     print(f"key balance before: {before}")
     stop = threading.Event()
     state = {"spent": spent, "n": 0, "hits": 0, "ok": 0, "wrong_format": 0, "infra_error": 0, "secs": [],
-             "tokens": 0, "t0": time.time(), "zoom_hits": 0, "zoom_scored": 0}
+             "tokens": 0, "t0": time.time(), "zoom_hits": 0, "zoom_scored": 0, "zoom_wrong_format": 0,
+             "zoom_infra_error": 0, "zoom_secs": [], "zoom_tokens": 0, "a_resumed": 0}
     prog = OUT / f"pass{pass_id}.progress.json"
 
     def progress(final=False):
         n, el = state["n"], time.time() - state["t0"]
         sc = state["ok"] + state["wrong_format"]
         tmp = prog.with_suffix(".tmp")
-        tmp.write_text(json.dumps({
+        snap = {
             "pass": pass_id, "updated": now(), "final": final, "done_this_run": n, "todo_this_run": len(todo),
-            "already_done_before": len(done), "total_cases": len(cases),
-            "scored_total": len(done) + sc, "hits_this_run": state["hits"],
+            "already_done_before": len(done), "total_cases": len(cases),  # zoom mode: both stages done
+            "scored_total": len(done) + sc if not zoom else None, "hits_this_run": state["hits"],
             "running_acc_this_run": round(100 * state["hits"] / sc, 2) if sc else None,
             "ok": state["ok"], "wrong_format": state["wrong_format"], "infra_error": state["infra_error"],
             "spent_logged_total": round(state["spent"], 6), "input_tokens_this_run": state["tokens"],
             "median_latency_s": round(statistics.median(state["secs"]), 3) if state["secs"] else None,
             "elapsed_s": round(el, 1), "eta_s": round(el / n * (len(todo) - n), 1) if n else None,
-            "stopped": stop.is_set(), "zoom": zoom, "zoom_scored_this_run": state["zoom_scored"],
-            "zoom_running_acc_this_run": round(100 * state["zoom_hits"] / state["zoom_scored"], 2)
-            if state["zoom_scored"] else None}))
+            "stopped": stop.is_set(), "zoom": zoom}
+        if zoom:
+            snap.update({
+                "a_scored_total": len(a_done) + sc, "a_resumed_this_run": state["a_resumed"],
+                "zoom_scored_total": len(z_done) + state["zoom_scored"],
+                "zoom_scored_this_run": state["zoom_scored"], "zoom_hits_this_run": state["zoom_hits"],
+                "zoom_running_acc_this_run": round(100 * state["zoom_hits"] / state["zoom_scored"], 2)
+                if state["zoom_scored"] else None,
+                "zoom_wrong_format": state["zoom_wrong_format"], "zoom_infra_error": state["zoom_infra_error"],
+                "zoom_median_latency_s": round(statistics.median(state["zoom_secs"]), 3) if state["zoom_secs"] else None,
+                "zoom_input_tokens_this_run": state["zoom_tokens"]})
+        tmp.write_text(json.dumps(snap))
         os.replace(tmp, prog)
 
     def stage_b(i, a):
         """Stage B for case i from stage A's scored record. A wrong_format A has no box to zoom on:
         the zoom answer is the same miss (copied, no cost)."""
         if a["status"] != "ok":
-            z = {k: v for k, v in a.items() if k not in ("usage", "raw")}
-            z.update({"pass": f"z{pass_id}", "stage": "B", "zoom_skipped": "stage A wrong_format", "ts": now()})
+            z = {k: v for k, v in a.items() if k not in ("usage", "raw", "seconds", "wall_seconds", "attempts",
+                                                         "payload_bytes", "sent_pixels", "scale")}
+            z.update({"pass": f"z{pass_id}", "stage": "B", "zoom_skipped": "stage A wrong_format", "ts": now(),
+                      "zoom_f": ZOOM_F, "zoom_margin": ZOOM_MARGIN, "code_rev": CODE_REV})
             write(zout, z)
             return z
         W, H = a["orig_size"]
@@ -305,10 +325,17 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         with _lock:
             state["n"] += 1
             state["spent"] += new_cost + (cost(z) if z else 0.0)
+            state["a_resumed"] += 1 if resumed else 0
             if z:
                 if z["status"] in ("ok", "wrong_format"):
                     state["zoom_scored"] += 1
                     state["zoom_hits"] += 1 if z.get("hit") else 0
+                if z["status"] in ("wrong_format", "infra_error"):
+                    state[f"zoom_{z['status']}"] += 1
+                if z["status"] == "infra_error" and state["zoom_infra_error"] <= 20:
+                    print(f"zoom infra_error on #{i}: {z.get('error')}", file=sys.stderr)
+                if z.get("seconds") is not None:
+                    state["zoom_secs"].append(z["seconds"])
                 if z.get("fatal"):
                     print(f"FATAL {z['error']} on #{i} (zoom): stopping the run", file=sys.stderr)
                     stop.set()
@@ -317,9 +344,9 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
                 state["hits"] += 1 if rec.get("hit") else 0
                 if rec.get("seconds") is not None:
                     state["secs"].append(rec["seconds"])
-            for x in ((rec,) if not resumed else ()) + ((z,) if z else ()):
+            for x, key in ((rec, "tokens"),) * (not resumed) + ((z, "zoom_tokens"),) * bool(z):
                 u = x.get("usage") if isinstance(x.get("usage"), dict) else {}
-                state["tokens"] += u["input_tokens"] if isinstance(u.get("input_tokens"), int) else 0
+                state[key] += u["input_tokens"] if isinstance(u.get("input_tokens"), int) else 0
             progress()
             if rec.get("fatal"):
                 print(f"FATAL {rec['error']} on #{i}: stopping the run", file=sys.stderr)
@@ -328,7 +355,8 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
                 print(f"cost cap reached (${state['spent']:.4f}): stopping", file=sys.stderr)
                 stop.set()
             if state["n"] % 50 == 0:
-                print(f"  {state['n']}/{len(todo)}  ${state['spent']:.4f}")
+                print(f"  {state['n']}/{len(todo)}  ${state['spent']:.4f}" + (
+                    f"  zoom scored {state['zoom_scored']}, infra {state['zoom_infra_error']}" if zoom else ""))
 
     progress()
     with ThreadPoolExecutor(workers) as ex:
@@ -336,12 +364,23 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     progress(final=True)
     after = jev.balance()
     if isinstance(before, float) and isinstance(after, float):
-        print(f"key balance after: {after:.6f}  (billed this run: ${before - after:.6f}, "
-              f"logged this run: ${state['spent'] - spent:.6f})")
+        billed, logged = before - after, state["spent"] - spent
+        print(f"key balance after: {after:.6f}  (billed this run: ${billed:.6f}, logged this run: ${logged:.6f})")
+        if logged and abs(billed - logged) > 0.2 * logged:
+            print("  note: the balance lags billing; check it again later. Logged usage.cost is the cost of record.")
     report(out)
     if zoom:
         report(zout)
-        compare(out, zout)
+        compare(out, zout, methods=True)
+        a = latest(read(out)); z = latest(read(zout))
+        both = [i for i in z if i in a]
+        ca = sum(cost(a[i]) for i in both); cz = sum(cost(z[i]) for i in both)
+        la = [a[i]["seconds"] for i in both if a[i].get("seconds") is not None]
+        lab = [a[i]["seconds"] + z[i]["seconds"] for i in both
+               if a[i].get("seconds") is not None and z[i].get("seconds") is not None]
+        if la and lab:
+            print(f"A alone: ${ca:.4f}, median {statistics.median(la):.3f}s per case | "
+                  f"A+B: ${ca + cz:.4f}, median {statistics.median(lab):.3f}s per case (sequential)")
 
 
 def wilson(k, n, z=1.96):
@@ -379,6 +418,9 @@ def report(path):
         problems.append(f"{missing} not run")
     if len(versions) > 1:
         problems.append("mixed prompt versions")
+    zcfg = {(r.get("zoom_f"), r.get("zoom_margin"), r.get("code_rev")) for r in scored.values() if r.get("stage") == "B"}
+    if len({c[:2] for c in zcfg}) > 1:
+        problems.append("mixed zoom configs")
     if len({m[0] for m in models}) > 1 or len({m[1] for m in models}) > 1:
         problems.append("mixed requested/resolved models")
     complete = not problems
@@ -409,7 +451,9 @@ def report(path):
     lines.append(f"scored {len(scored)}/{n_total}, wrong_format {len(scored) - len(ok)}, infra_error {len(infra)}, "
                  f"not run {missing}, degenerate boxes {sum(1 for r in ok if r['degenerate'])}, "
                  f"centre on a truth edge {sum(1 for r in ok if r.get('on_edge'))}, "
-                 f"edges outside [0,1] {sum(1 for r in ok if r.get('out_of_range'))}")
+                 f"edges outside [0,1] {sum(1 for r in ok if r.get('out_of_range'))}"
+                 + (f", stage B box past the crop edge {sum(1 for r in ok if r.get('out_of_crop'))}, "
+                    f"zoom configs {sorted(zcfg, key=str)}" if zcfg else ""))
     secs = sorted(r["seconds"] for r in by.values() if r.get("seconds") is not None)
     spend = sum(cost(r) for r in read(path))
     if secs:
@@ -434,7 +478,18 @@ def report(path):
     return complete
 
 
-def compare(p1, p2):
+def mcnemar(b, c):
+    """Exact two-sided McNemar p-value on the discordant pairs (b = miss->hit, c = hit->miss)."""
+    n = b + c
+    if not n:
+        return 1.0
+    tail = sum(math.comb(n, k) for k in range(min(b, c) + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
+
+
+def compare(p1, p2, methods=False):
+    """Case-level comparison. methods=False: two runs of the same method (rerun stability).
+    methods=True: raw stage A vs zoom A+B (paired: delta + McNemar, no mean of the two)."""
     a, b = latest(read(p1)), latest(read(p2))
     sa = {i: r for i, r in a.items() if r["status"] in ("ok", "wrong_format")}
     sb = {i: r for i, r in b.items() if r["status"] in ("ok", "wrong_format")}
@@ -442,15 +497,29 @@ def compare(p1, p2):
     if len(sa) != n or len(sb) != n:
         print(f"INCOMPLETE: {len(sa)} and {len(sb)} of {n} scored; finish both passes first")
         return None
+    ident = lambda d: {(r.get("template_hash"), r.get("requested_model"), r.get("model")) for r in d.values()
+                       if r["status"] == "ok"}
+    if ident(sa) != ident(sb):
+        print(f"INCOMPLETE: template/model differ between files: {ident(sa)} vs {ident(sb)}")
+        return None
     agree = sum(1 for i in sa if bool(sa[i]["hit"]) == bool(sb[i]["hit"]))
     up = sum(1 for i in sa if not sa[i]["hit"] and sb[i]["hit"])
     down = sum(1 for i in sa if sa[i]["hit"] and not sb[i]["hit"])
     m1 = 100 * sum(1 for r in sa.values() if r["hit"]) / n
     m2 = 100 * sum(1 for r in sb.values() if r["hit"]) / n
-    print(f"pass A {m1:.2f}  pass B {m2:.2f}  mean {(m1 + m2) / 2:.2f} +- {abs(m1 - m2) / 2:.2f}")
-    print(f"case-level agreement {agree}/{n} ({100 * agree / n:.1f}%), miss->hit {up}, hit->miss {down}")
+    p = mcnemar(up, down)
+    if methods:
+        print(f"raw A {m1:.2f}  zoom A+B {m2:.2f}  delta {m2 - m1:+.2f} pp  (paired, exact McNemar p={p:.4g})")
+    else:
+        print(f"pass {pathlib.Path(p1).stem} {m1:.2f}  pass {pathlib.Path(p2).stem} {m2:.2f}  "
+              f"mean {(m1 + m2) / 2:.2f} +- {abs(m1 - m2) / 2:.2f}  (exact McNemar p={p:.4g})")
+    line = f"case-level agreement {agree}/{n} ({100 * agree / n:.1f}%), miss->hit {up}, hit->miss {down}"
+    if not methods:  # determinism: byte-identical answers, not just the same hit/miss
+        same = sum(1 for i in sa if sa[i]["status"] == sb[i]["status"] == "ok" and sa[i].get("box") is not None
+                   and sa[i].get("box") == sb[i].get("box") and sa[i].get("confidence") == sb[i].get("confidence"))
+        line += f", identical box+confidence {same}/{n}"
+    print(line)
     return agree
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1].isdigit():

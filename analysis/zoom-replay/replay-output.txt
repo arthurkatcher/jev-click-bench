@@ -1,0 +1,140 @@
+===== zoomsim.py
+log-size coef 1.05  (per doubling of target size, odds x2.07)
+pass1 actual 83.3, model fit 83.3
+
+ f    est%   centre-covered%  fixed  broken  B-calls  median zoom vs A
+ 1.00   84.1   100.0           160.8  151.0   1272     1.00x
+ 0.80   85.6    98.7           153.9  125.1   1272     1.25x
+ 0.70   86.1    97.7           146.9  111.4   1272     1.43x
+ 0.60   87.1    97.2           144.6   97.2   1272     1.67x
+ 0.50   87.3    95.8           146.1   96.1   1272     2.00x
+ 0.45   86.9    94.7           142.8   97.3   1272     2.22x
+ 0.40   87.0    93.9           143.5   96.4   1272     2.50x
+ 0.35   86.6    92.7           135.3   93.5   1272     2.86x
+ 0.30   86.9    92.1           135.8   90.3   1272     3.33x
+ 0.25   86.5    90.9           136.5   96.1   1272     4.00x
+ 0.20   86.1    89.5           127.5   92.7   1272     5.00x
+ 0.15   85.3    87.9           120.4   95.2   1272     6.67x
+
+misses only: how far A point was from target, as fraction of image side
+  target edge within 0.05 of A point: 136 of 212 misses
+  target edge within 0.10 of A point: 157 of 212 misses
+  target edge within 0.15 of A point: 165 of 212 misses
+  target edge within 0.20 of A point: 173 of 212 misses
+  target edge within 0.25 of A point: 180 of 212 misses
+  target edge within 0.30 of A point: 184 of 212 misses
+
+confidence gate (B only when A conf < g), f=0.4:
+  gate 0.7: est 85.6, B calls 660
+  gate 0.8: est 86.1, B calls 911
+  gate 0.9: est 87.0, B calls 1173
+  gate None: est 87.0, B calls 1272
+
+upscale cap (B never > native resolution), f sweep:
+  f 0.60: est 85.0 covered 97.2 median zoom 1.53x
+  f 0.50: est 83.7 covered 95.8 median zoom 1.53x
+  f 0.40: est 82.0 covered 93.9 median zoom 1.53x
+  f 0.30: est 80.3 covered 92.1 median zoom 1.53x
+===== zoomsim2.py
+log-size coef 1.05  (per doubling of target size, odds x2.07)
+pass1 actual 83.3, model fit 83.3
+ f     est%  fixed  broken  (A-hits cut out of crop)
+ 1.00   83.7   33.9   29.8   0
+ 0.80   84.5   38.0   23.7   0
+ 0.70   84.8   39.9   20.7   0
+ 0.60   85.3   43.1   17.7   0
+ 0.50   84.9   48.8   28.4   14
+ 0.45   84.5   50.7   35.8   23
+ 0.40   84.4   54.5   41.3   30
+ 0.35   84.2   55.8   44.8   35
+ 0.30   84.3   60.9   48.3   40
+ 0.25   83.8   67.1   60.8   54
+ 0.20   83.8   69.8   64.3   59
+
+no upscaling past native:
+ 1.00   83.3   31.8   31.8   0
+ 0.80   83.9   34.5   26.7   0
+ 0.70   84.2   35.1   24.4   0
+ 0.60   84.4   36.4   22.8   0
+ 0.50   83.3   35.7   36.4   14
+ 0.40   81.9   34.1   52.1   30
+
+per cell f=0.60: {'desktop icon': 82.4, 'desktop text': 93.6, 'mobile icon': 83.1, 'mobile text': 92.1, 'web icon': 74.8, 'web text': 83.0}
+
+per cell f=0.50: {'desktop icon': 83.4, 'desktop text': 93.0, 'mobile icon': 83.2, 'mobile text': 89.4, 'web icon': 76.0, 'web text': 82.9}
+
+per cell f=0.40: {'desktop icon': 83.2, 'desktop text': 91.2, 'mobile icon': 83.0, 'mobile text': 87.1, 'web icon': 76.7, 'web text': 83.9}
+pass1 per cell: {'desktop icon': 77.9, 'desktop text': 92.8, 'mobile icon': 82.9, 'mobile text': 92.8, 'web icon': 69.0, 'web text': 79.9}
+
+scale==1 (not downscaled) cases in pass 1: 238 acc 88.2
+orig sizes:
+[((2560, 1440), 393), ((1080, 2400), 211), ((1170, 2532), 182), ((960, 540), 109), ((2360, 1640), 77), ((1920, 1080), 70), ((1280, 2774), 28), ((2880, 1800), 8)]
+===== zoomsim3.py
+log-size coef 1.05  (per doubling of target size, odds x2.07)
+pass1 actual 83.3, model fit 83.3
+ f     est%  fixed  broken  A-hits cut out
+ 1.00   83.7   33.9   29.8   0
+ 0.80   84.5   38.4   24.0   0
+ 0.70   84.9   41.0   21.1   0
+ 0.60   85.4   44.5   18.2   0
+ 0.50   86.0   49.6   15.4   0
+ 0.45   86.4   52.4   14.0   0
+ 0.40   86.7   55.8   12.6   0
+ 0.35   87.1   59.5   11.2   0
+ 0.30   87.5   63.4    9.8   0
+ 0.25   88.1   68.8    8.4   0
+ 0.20   88.6   73.8    7.0   0
+ 0.15   89.0   78.0    5.8   0
+per cell f=0.60: {'desktop icon': 82.7, 'desktop text': 93.6, 'mobile icon': 83.2, 'mobile text': 92.2, 'web icon': 74.8, 'web text': 82.9}
+per cell f=0.40: {'desktop icon': 84.5, 'desktop text': 94.5, 'mobile icon': 84.1, 'mobile text': 92.7, 'web icon': 77.4, 'web text': 84.7}
+per cell f=0.30: {'desktop icon': 85.8, 'desktop text': 95.1, 'mobile icon': 84.4, 'mobile text': 92.9, 'web icon': 78.9, 'web text': 86.0}
+===== zoomsim4.py
+log-size coef 1.05  (per doubling of target size, odds x2.07)
+pass1 actual 83.3, model fit 83.3
+ f     est%  fixed  broken  A-hits cut out
+ 1.00   83.7   33.9   29.8   0
+ 0.80   84.5   38.4   24.0   0
+ 0.70   84.9   41.0   21.1   0
+ 0.60   85.4   44.5   18.2   0
+ 0.50   86.0   49.6   15.4   0
+ 0.45   86.4   52.4   14.0   0
+ 0.40   86.7   55.8   12.6   0
+ 0.35   87.1   59.5   11.2   0
+ 0.30   87.5   63.4    9.8   0
+ 0.25   88.1   68.8    8.4   0
+ 0.20   88.6   73.8    7.0   0
+ 0.15   89.0   78.0    5.8   0
+per cell f=0.60: {'desktop icon': 82.7, 'desktop text': 93.6, 'mobile icon': 83.2, 'mobile text': 92.2, 'web icon': 74.8, 'web text': 82.9}
+per cell f=0.40: {'desktop icon': 84.5, 'desktop text': 94.5, 'mobile icon': 84.1, 'mobile text': 92.7, 'web icon': 77.4, 'web text': 84.7}
+per cell f=0.30: {'desktop icon': 85.8, 'desktop text': 95.1, 'mobile icon': 84.4, 'mobile text': 92.9, 'web icon': 78.9, 'web text': 86.0}
+size   0-20   n=   3 acc 0.0
+size  20-30   n=  24 acc 54.2
+size  30-45   n= 118 acc 57.6
+size  45-60   n= 153 acc 69.9
+size  60-80   n= 219 acc 87.7
+size  80-120  n= 284 acc 88.0
+size 120-inf  n= 471 acc 91.3
+
+misses: target visible in crop, and target size after zoom (median), by f
+ f 0.60: target in crop 186/212, median size 98 px, >=45px 175, upscale vs native median 1.03x
+ f 0.50: target in crop 183/212, median size 114 px, >=45px 175, upscale vs native median 1.24x
+ f 0.40: target in crop 176/212, median size 143 px, >=45px 173, upscale vs native median 1.55x
+ f 0.35: target in crop 172/212, median size 159 px, >=45px 172, upscale vs native median 1.77x
+ f 0.30: target in crop 165/212, median size 179 px, >=45px 165, upscale vs native median 2.06x
+ f 0.25: target in crop 163/212, median size 213 px, >=45px 163, upscale vs native median 2.48x
+ f 0.20: target in crop 157/212, median size 256 px, >=45px 156, upscale vs native median 3.10x
+
+miss sizes now (sent px): median 58
+mobile median scale A 0.65 upscale at f=0.4 1.63x
+desktop median scale A 1.00 upscale at f=0.4 3.26x
+web median scale A 0.61 upscale at f=0.4 1.53x
+===== zoomsim5.py
+log-size coef 1.05  (per doubling of target size, odds x2.07)
+pass1 actual 83.3, model fit 83.3
+            est%  fixed broken  miss-targets-in-crop  median window  share widened
+click f=0.6   85.4   44.5   18.2   186/212  0.60  0%
+box   f=0.6   85.4   45.8   19.0   196/212  0.60  11%
+click f=0.5   86.0   49.6   15.4   183/212  0.50  0%
+box   f=0.5   86.0   50.8   16.5   193/212  0.50  14%
+click f=0.4   86.7   55.8   12.6   176/212  0.40  0%
+box   f=0.4   86.7   57.0   14.0   187/212  0.40  17%
