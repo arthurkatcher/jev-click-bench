@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2: run report
 
-Status as of Fri Oct 16 2026, 22:05 CEST. Living document: updated after each run.
+Status as of Fri Oct 16 2026, 23:15 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -8,7 +8,9 @@ Status as of Fri Oct 16 2026, 22:05 CEST. Living document: updated after each ru
 - Text targets are easy (93% on mobile and desktop), icons and web pages are hard (web icon 69%).
 - It is fast and nearly free: median 0.89 s per answer, $0.00015 per case, $0.19 for the full benchmark.
 - Most misses are close: median 24 px away in the image Jev saw. Almost half are one specific failure: Jev boxes the whole bar or row the target sits in, and the box centre lands beside the target.
-- Accuracy depends strongly on how big the target is after resizing to Jev's 1568 px limit. This motivated the next method: a second call on a 2x zoomed crop. It is built, frozen and under review; not run yet.
+- Accuracy depends strongly on how big the target is in the image Jev sees. That motivated the zoom method, a second call on a 2x crop around the first answer: **87.89%**, +3.54 pp over its own raw answer (p=0.0002). See 1b.
+- Deep audit (1c): every answer rescored from the raw API response, every sent image rebuilt, logs and billing reconciled. No number changed.
+- Label audit (1d): of the 271 cases any run missed, 4 have a wrong answer key and 39 more sit on ambiguous or loose instructions. Side note only: the score stays the official key.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
 
@@ -43,11 +45,40 @@ Status as of Fri Oct 16 2026, 22:05 CEST. Living document: updated after each ru
 
 The platform split is read after the run, but the reason (small targets shrunk by the 1568 px cap) was written down before it. Harness rule it suggests: zoom on desktop and web, skip it on mobile (saves the second call on ~40% of cases).
 
-- Zoom helps where predicted (desktop and web, small shrunk targets) and does nothing on mobile (wrong-element misses).
+- Zoom helps where predicted: desktop, web and small targets. The gain also shows at native size, so it comes from the target's size relative to the image, not only from pixels lost to the 1568 px cap (1c). It does nothing on mobile: the fixes there are cancelled by crops that cut the row label.
 - The cost is 50 cases that A had right and B broke, vs 95 fixed. Zoom flips 11.4% of cases against 3.9% for a plain rerun, so the change is real, not noise.
 - Confidence gets much more useful after zoom: AUROC 0.651 (A) -> 0.758 (B), and B answers at confidence >= 0.9 are right 98.7% of the time (150 cases).
 - Cost and speed: exactly 2x tokens (4.54M + 4.54M), $0.19 + $0.19, median latency 0.84 s -> 1.67 s per case (A then B).
-- Key balance read $0.370 after the run, but it lags (billed $0.070 vs logged $0.382): real credit left about $0.06.
+- Key balance re-read at 22:57: $0.058079, exactly the balance before the run minus the logged $0.381729 (the $0.370 read right after the run was lag). Credit left is below one raw pass.
+
+## 1c. Deep audit of all three runs
+
+Full write-up: `analysis/AUDIT-run2.md`. Every number there comes from `python3 analysis/audit_run2.py`.
+
+- **Integrity: all checks passed.** Records, identity, frozen wording and resolved model all check out, with 0 retries and 0 errors. Every answer was re-parsed and rescored (1060 / 1073 / 1118, as logged). Every zoom window and mapping was rebuilt from A2, and all 2,544 sent images were rebuilt with exact payload lengths. The stage-A code is identical in both runs (d9596d8 vs bb538fc), and run 2's billing matches its logs exactly.
+- **Rerun noise.** The same request twice gives an identical box in only 383 of 1272 cases. But the click moves a median 4.8 px, and 32 of the 49 flips are edge cases.
+- **Why zoom helps.** Targets under 60 px in A's image gain +11.4 pp (p=0.0001); 60 px and up gain +1.1 (not significant). Native-size screenshots gain too (+3.8 pp; 960x540 desktop 86.2 -> 93.6). So the cause is relative size and a finer answer grid, not only lost pixels. Clicks also get tighter: a median 11.8 vs 18.8 px from the target centre on shared hits.
+- **What zoom costs.** Of the 50 breaks: 21 precision slips, 14 context loss (the crop cut the label that names the target, 9 of them on mobile settings rows), 12 neighbour picks, 2 garbage answers and 1 ambiguous label.
+- **Confidence.** B at 0.9 or more is right 98.7% of the time (150 cases), and A2 and B agreeing is right 92.1% (995 cases). Taking the more confident of A2 and B (86.95%) is worse than always taking B, which backs the no-gate design.
+- **Against the mean of both raw runs,** zoom is +4.05 pp (CI +2.28 to +5.86).
+
+## 1d. Label audit of the misses (side note: the score stays the official key)
+
+Full write-up: `analysis/LABELS-audit.md`. The per-case verdicts are in `analysis/label-audit/`, and the counts come from `python3 analysis/labels_audit.py`. All 271 cases missed by at least one run were viewed with all three answers drawn.
+
+| Group | Cases | A1 misses | A2 misses | B misses |
+|---|---|---|---|---|
+| Answer-key error | 4 | 4 | 4 | 4 |
+| Two valid answers | 18 | 18 | 16 | 14 |
+| Same control, key covers part of it | 12 | 12 | 11 | 8 |
+| Loose wording, key still the best | 8 | 8 | 7 | 8 |
+| Cannot verify | 1 | 1 | 1 | 1 |
+| **Label issues, total** | **43** | **43** | **39** | **35** |
+| Label-fine (model errors) | 228 | 169 | 160 | 119 |
+
+- **Key errors.** #458's key box is copied from another screenshot and sits on empty space; #487, #1035 and #1037 mark the wrong element. A corrected key would add 2 hits to A1 and A2 and 3 to B (0.16-0.24 pp). Not applied.
+- Jev reads the label-issue cases the same way every time: all three runs miss 32 of the 43.
+- The dataset scans found one duplicate test case (#1017 = #1021) and one key box 1 px past the image edge (#449, hit by all runs).
 
 ## 2. What has been done (Oct 16 2026, CEST)
 
@@ -61,8 +92,9 @@ The platform split is read after the run, but the reason (small targets shrunk b
 | 21:10-21:24 | Zoom method designed from pass 1 (offline replay, no calls), implemented with tests |
 | 21:24-21:48 | Two review rounds of the zoom harness (12 agents, 26 minor findings, all fixed); one live smoke on #1095 |
 | 21:49-22:01 | Pass 2 + zoom run: A2 84.36%, A+B 87.89%, 0 errors, $0.38 |
+| 22:05-23:15 | Deep audit of all three runs (rescore, image rebuild, logs, billing) and label audit of the 271 missed cases |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method).
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), then the audit commit.
 
 ## 3. Setup
 
@@ -207,7 +239,7 @@ Misses lean left: 109 of 212 land left of the target (down 42, right 27, up 16, 
 
 Decision: no bias correction in code. Shifting clicks right after seeing these numbers would be tuning on the test set.
 
-## 7. Zoom method (built, frozen, not run)
+## 7. Zoom method (frozen before the run, run in pass 2)
 
 ### Idea, in three steps
 1. Jev boxes the target on the full screenshot (stage A, the raw call).
@@ -242,9 +274,11 @@ What zoom can and cannot fix:
 - **#744**: fixable with the grown window.
 - **#331** (title-bar box as wide as the screen): the window is the full screen, so stage B is just a second try. Zoom does not fix a wrong pick.
 
+In the run, #1095 stayed a miss: B boxed the field again, as in the smoke. #744 stayed a miss: A2 boxed the whole row again, so the window grew to 0.90 of the screen and the zoom was only 1.1x. #331 was hit by A2 and kept by B (conf 0.78).
+
 Disclosure for any write-up: the crop rule was picked from pass 1 misses on the same test set (light selection: one round value on a flat curve, no search against real zoom scores). A clean confirmation would be ScreenSpot-Pro with the same frozen rule.
 
-### Planned run
+### The run (done 21:49-22:01, results in 1b)
 `python3 screenspot.py run --pass 2 --zoom --workers 4 --max-cost 0.40`
 - Stage A is byte-identical to a raw pass and goes to `results/pass2.jsonl`, so it is also pass 2: the rerun stability check.
 - Stage B goes to `results/zoom2.jsonl`.
@@ -252,7 +286,7 @@ Disclosure for any write-up: the crop rule was picked from pass 1 misses on the 
 - Expected cost about $0.38, against about $0.44 real credit. The cap of $0.40 stops cleanly, and resume re-runs only the missing stage.
 
 ### Live smoke (dev log, not part of any pass)
-One live A+B call on #1095, about 21:45: A FALSE (search field boxed, conf 0.36), B FALSE (on the 2x crop Jev boxed the search field again, conf 0.32). Mechanics correct: same image size and tokens as A (3922 vs 3926), box mapped back right. The miss is an interpretation, not blur. No design change from this case. Figure: `analysis/figures/live-zoom-smoke_case_1095.png`.
+One live A+B call on #1095 at 21:35: A FALSE (search field boxed, conf 0.36), B FALSE (on the 2x crop Jev boxed the search field again, conf 0.32). Mechanics correct: same image size and tokens as A (3922 vs 3926), box mapped back right. The miss is an interpretation, not blur. No design change from this case. Figure: `analysis/figures/live-zoom-smoke_case_1095.png`.
 
 ### Review
 - **Round 1:** 3 auditors (crop and mapping maths, runner and data completeness, methodology), one skeptic each. 13 confirmed findings, all minor, none changing a score. Fixed in 1b2e535:
@@ -281,10 +315,13 @@ One live A+B call on #1095, about 21:45: A FALSE (search field boxed, conf 0.36)
 
 | Item | Cost |
 |---|---|
-| 3 smoke calls (v1 wording, dev log) | ~$0.0005 |
+| 3 smoke calls (v1 wording, dev log) | $0.0005 |
 | Pass 1 | $0.1909 |
-| Real credit left (per Arthur) | ~$0.44 |
-| Pass 2 + zoom (planned) | ~$0.38 |
+| Live zoom smoke on #1095 (dev log) | $0.0003 |
+| Pass 2 + zoom | $0.3817 |
+| Credit left (read 22:57, matches the logs) | $0.0581 |
+
+Any new run needs a top-up first: a raw pass costs $0.19, raw + zoom $0.38. The key also shows $0.0022 of usage today that is not from the bench (`analysis/AUDIT-run2.md`, section 1).
 
 ## 9. Published comparison points (from the research notes, check each paper before public use)
 
@@ -300,15 +337,18 @@ One live A+B call on #1095, about 21:45: A FALSE (search field boxed, conf 0.36)
 
 OS-Atlas-7B is often cited around 84.1 but is unverified here. Jev is a general decision model, not a grounding specialist, and runs in TypeSafe's long-context mode on OpenRouter for every image request ("slower and less accurate" per TypeSafe).
 
-## 10. Pinned for after the zoom run
+## 10. Pinned
 
-- **Label audit of the misses (Arthur, Oct 16).** Some ScreenSpot-v2 instructions fit more than one element (e.g. #1095 "search result": Jev boxes the search field, the key says the magnifier button). v2 is already the OS-Atlas cleanup of v1, but ambiguity is left. Plan: go through the misses (pass 1, pass 2, zoom), mark the ones where the instruction honestly fits another element, report "X of the misses are arguable labels" as a side note. The score always stays the official answer key, never re-scored.
+- **Label audit of the misses: DONE** (1d, `analysis/LABELS-audit.md`). 43 of the 271 missed cases have a label issue, 4 of them wrong keys. Reported as a side note; the score stays the official key.
 - **Wording ablation, off-benchmark only.** Whether a different wrapper sentence moves Jev toward buttons can only be tested on screenshots outside ScreenSpot-v2.
 - **ScreenSpot-Pro** with the same frozen zoom rule, as the clean confirmation of the crop choice.
+- **Row-preserving crop for tall mobile screens.** The main cost of zoom is context loss on mobile settings rows (1c). Test it only on a separate set, never tuned on ScreenSpot-v2.
 
 ## 11. Caveats
 
-- One pass so far. Run-to-run variation is unknown until pass 2 (others measured ~5% of identical requests changing their pick).
+- Run-to-run noise is measured: 49 of 1272 cases (3.9%) flip between two identical raw passes, and the 1.0 pp gap is not significant (p=0.085). The headline stays pass 1.
+- The official answer key has 4 wrong boxes, and 39 more missed cases sit on ambiguous instructions (1d). All scores use the key as is, like every published table, so comparisons stay fair.
+- The zoom crop rule was picked from pass 1 misses on this same test set (light selection, section 7). ScreenSpot-Pro is the clean check.
 - 81% of cases are downscaled to fit 1568 px, which hurts small targets. That is a property of the API limit, reported rather than worked around in the raw number.
 - Long-context mode is forced for images on OpenRouter; the direct TypeSafe API might score differently.
 - `jev-latest` changes around Oct 21. This run is pinned to `jev-1.14`, and the resolved dated id is logged per case.

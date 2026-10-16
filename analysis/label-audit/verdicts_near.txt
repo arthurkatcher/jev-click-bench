@@ -1,0 +1,126 @@
+# Label audit, near set (120 cases): every miss of every run is within max(25 px, half the target's short
+# side) of the key box. All three answers drawn and viewed by eye. Format: case | code | note.
+# Codes  EDGE      right element, click a few px outside the key box
+#        WIDE      the box spans the target and its neighbours, centre beside the target
+#        NEIGHBOUR the click is on the adjacent control
+#        SAME, ARGUABLE, VAGUE, CROP as in verdicts_wrong_element.txt
+11 | NEIGHBOUR | check shared files: A1/A2 on the selected Recent tab's edge (17 px); B hits
+15 | EDGE | the fifth in this month: B degenerate box 3 px left of the 5 cell; A1/A2 hit
+18 | NEIGHBOUR | adjust the voice: A1/A2 pick the brightness slider next to volume (57-69 px); B hits
+46 | CROP | open the wlan: B picks the wifi icon of the network row below (crop cut the WLAN label); A1/A2 hit
+226 | WIDE | click power on: A1 tall box over the empty area above the button (129 px); A2/B hit
+247 | NEIGHBOUR | switch to show link attributes (typo for Ink): A1/A2 pick the Off row below (17-33 px); B hits
+262 | EDGE | remove maps from the desktop: A1/A2 5 px below the delete badge, on the app icon; B hits
+264 | EDGE | remove chrome from the desktop: all three 5 px off the delete badge, on the app icon
+267 | NEIGHBOUR | add alarm to the included controls: B on the alarm icon right of the + button (18 px); A1/A2 hit
+278 | WIDE | switch the map style to satellite: A1/A2 boxes span Transit + Satellite, centre in the gap (24 px); B hits
+322 | NEIGHBOUR | view settings: B straddles the shield icon left of the settings icon (22 px); A1/A2 hit
+342 | ARGUABLE | turn off rule-based mode: key = the already-selected Rule-based radio, but turning it off means picking another mode; A1/A2 land just below it toward Direct (6-18 px); B hits the key
+374 | WIDE | display more information: A1/A2 tall boxes from the Learn more link down, centre below it (27 px); B hits
+464 | WIDE | show more awards: A1/A2 boxes extend above Show More, centre on its top edge (3-17 px); B hits
+495 | EDGE | unlock the zoom: B 0.2 px outside the lock button; A1/A2 hit
+501 | NEIGHBOUR | close this window: all three on the maximise button left of the close x (8-10 px)
+502 | EDGE | minimize this window: A1/A2 2 px below the minimise button; B hits
+515 | NEIGHBOUR | network and internet settings: A1/A2 on the tray chevron left of the network icon (12-17 px); B hits
+518 | EDGE | open settings: A1/A2 1-6 px right of the gear icon; B hits
+524 | EDGE | view the personal account: A1/A2 3-6 px below the avatar; B hits
+527 | EDGE | undo: A1/A2 2-5 px below the undo button; B hits
+533 | NEIGHBOUR | fill in red: A1/A2 on the Dark Red swatch left of Red (5-10 px), B 0.x px off the edge
+535 | EDGE | maximize window: A1/A2 1 px left of the maximise button; B hits
+548 | EDGE | play previous track: B 2 px left of the button; A1/A2 hit
+551 | NEIGHBOUR | check hourly weather: B on the selected Summary tab's edge (19 px); A1/A2 hit
+563 | ARGUABLE | switch to english: two English entries (UK and US); key = UK; A1/A2 box both and centre between them (5 px); B hits
+564 | WIDE | open the file: A1/A2 box Open..Scan, centre on Edit (10-12 px); B hits
+589 | EDGE | go to the desktop: A1/A2 1 px below the Desktop item; B hits
+591 | EDGE | input a url: all three in the thin address-bar strip, 1-8 px outside its key box
+600 | NEIGHBOUR | set the second photo as wallpaper: all three on the first thumbnail's right side (6-29 px)
+610 | EDGE | dismiss the account protection: A2 2 px above Dismiss; A1/B hit
+618 | EDGE | back to previous page button: A1/A2 3-9 px right of the arrow; B hits
+659 | EDGE | switch to sounds: B 5 px below the Sounds tab; A1/A2 hit
+672 | EDGE | switch to apps: A2 5 px left, in the gap after General; A1/B hit
+687 | NEIGHBOUR | zoom in: B between the - and + buttons (9 px); A1/A2 hit
+688 | NEIGHBOUR | switch to device: A1/A2 on the selected People tab's edge (13 px); B hits
+707 | NEIGHBOUR | add a device: A1/A2 on the - button right of + (12-19 px); B hits
+708 | NEIGHBOUR | remove a network connected device: B on the + button left of - (11 px); A1/A2 hit
+728 | NEIGHBOUR | switch to time zone settings: B on the selected Date & Time segment's edge (5 px); A1/A2 hit
+731 | NEIGHBOUR | delete this email: A1/A2 on the archive icon left of the trash (26 px); B hits
+746 | EDGE | back to previous page: A1/A2 2-12 px left of the back chevron; B hits
+752 | EDGE | back to previous folder: A1/A2 sub-pixel outside the back button, at its boundary with forward; B hits
+762 | NEIGHBOUR | choose the red pen: B on the black pen's edge left of the red pen (13 px); A1/A2 hit
+773 | NEIGHBOUR | switch to design: A2 on the Draw tab left of Design (19 px); A1/B hit
+774 | EDGE | rotate title box: A1/A2 sub-pixel below the rotate handle; B hits
+779 | NEIGHBOUR | debug: A1/A2 below the Run button left of the debug icon (16-28 px); B hits
+783 | EDGE | select python interpreter: A1 1 px below the thin dropdown; A2/B hit
+784 | EDGE | add a new package: B 4 px off the + toward -; A1/A2 hit
+805 | EDGE | enlarge the font: A1/B 1 px left of the big A, between the small and big A; A2 hits
+809 | EDGE | view battery usage of last 10 days: B 7 px left, at the selected Last 24 Hours boundary; A1/A2 hit
+814 | NEIGHBOUR | open google drive: A1/A2 on Contacts left of Drive (31-32 px); B hits
+816 | WIDE | click to restart the computer: A1/A2 boxes span Configure..Restart, centre 8 px above; B hits
+817 | WIDE | add current webpage to favourites: A1/A2 boxes run right of the star, centre on empty bar (25 px); B hits
+821 | EDGE | center the selected text: A1 degenerate box 6 px above, A2 sub-pixel; B hits
+827 | WIDE | do not save this file: A1/A2 boxes extend below Don't Save, centre on/below its bottom edge (1-16 px); B hits
+836 | EDGE | view my account profile: A1/A2 4 px below the avatar; B hits
+838 | EDGE | add a new one: A2 7 px off the + button toward its chevron; A1/B hit
+839 | WIDE | go to personal homepage: A1/A2 tall boxes over the whole user menu, centre on Edit status/profile (70 px); B hits
+848 | NEIGHBOUR | create a new issue: A1/A2 straddle Edit issues/New issue (2-14 px); B hits
+849 | NEIGHBOUR | download: A2 between the upload and download icons (8 px); A1/B hit
+870 | EDGE | switch to groups view: A1 6 px left at the Activity/Groups boundary; A2/B hit
+886 | WIDE | view supported cloud: A1/A2 boxes span Kubernetes Deployments..Supported cloud, centre 12 px above; B hits
+894 | WIDE | switch to create: A1/A2 boxes span Plan..Create, centre in the gap (22 px); B hits
+897 | SAME | enable static application security testing: key = the checkbox only; A1/A2 click its label text (20 px), which toggles the same checkbox; B hits
+899 | EDGE | comment to administrator: A1/A2 3 px left of the comment icon, toward the emoji button; B hits
+904 | EDGE | copy the http link: A1 6 px left of the copy button, on the URL end; A2/B hit
+909 | NEIGHBOUR | check notification: B picks the search icon left of the bell (42 px); A1/A2 hit
+920 | EDGE | use filters: A1 2 px below the Filters button; A2/B hit
+936 | NEIGHBOUR | delete carnation breakfast essentials...: A1/A2 on the gear icon left of the trash (3-29 px); B hits
+972 | ARGUABLE | add comment: fits the comment box (key) and the Post button; B picks Post (131 px), A1 boxes the Post row (115 px); A2 hits
+983 | EDGE | support the second book (forum posts, no books): A1/A2 1 px off the upvote arrow; B hits
+989 | NEIGHBOUR | check the profile of user knittedjedi: A1/A2 at the Profile/Block user boundary (1-14 px); B hits
+993 | NEIGHBOUR | choose tag: A1/A2 on the 'See the full list of tags' help link under the Tags field (26-33 px); B hits
+1002 | EDGE | toggle the open external links in the new tab option: A1/A2 4 px right of the checkbox, in the gap before its label; B hits
+1004 | EDGE | don't show post previews: A1/A2 in the gap between the checkbox and its label (4-17 px); B hits
+1029 | EDGE | check the wiki: A2 4 px left, in the Forums/Wiki gap; A1/B hit
+1032 | CROP | check the details of the third new: B picks the fourth item (crop cut the first item, so 'third' was counted from the second); A1/A2 hit
+1033 | EDGE | close the ad banner: A1 1 px below the x; A2/B hit
+1042 | EDGE | open the menu: B 4 px left of the menu icon; A1/A2 hit
+1052 | EDGE | locate to my position: A1 3 px left of the locate button; A2/B hit
+1059 | NEIGHBOUR | view more option of edit button: A2/B on the Edit button itself, left of its dropdown chevron (18-25 px); A1 hits
+1070 | ARGUABLE | check the direction of "slight left onto hancock street": steps 4 and 5 have that exact text; key = step 4; A1 lands between them (3 px); A2/B hit
+1082 | EDGE | click on the marker already added to the map: A1 2 px off the pin; A2/B hit
+1085 | EDGE | check geo uri link: B 2 px above the link; A1/A2 hit
+1092 | EDGE | download in apple app store: A1 11 px left, in the gap after the Google Play badge; A2/B hit
+1093 | SAME | look into wikidata: portal tile = one link (icon, title, tagline; verified on wikipedia.org); key marks only the title; A1/A2 on the tagline (3-10 px); B hits
+1109 | SAME | open wikispecies: same one-link portal tile; A1/B on the tagline (7-10 px); A2 hits
+1110 | SAME | open mediawiki: same one-link portal tile; all three on the logo/tagline (14-22 px)
+1112 | EDGE | switch language of current page: A1/A2 1-8 px below the English button; B hits
+1114 | EDGE | open wikidata article upon earth item: A1 1 px above the link; A2/B hit
+1120 | NEIGHBOUR | open talk page: B on the selected Article tab (24 px); A1/A2 hit
+1124 | NEIGHBOUR | show cloth color for current season: A2 left of the Current season link, under Home/Away colours (19 px); A1/B hit
+1134 | EDGE | open 'retrospect and prospect in computer-based...': A1 5 px below the link; A2/B hit
+1148 | WIDE | open keras: A1/A2 boxes span Keras..Kubeflow, centre between (18 px); B hits
+1153 | EDGE | change page language: A1/A2 3 px below the languages button; B hits
+1155 | NEIGHBOUR | switch to talk column: B on the selected Article tab (25 px), A1/A2 6 px left of Talk
+1178 | EDGE | view help for email account: B 6 px left of the ? icon; A1/A2 hit
+1185 | CROP | check the information of the first product: B picks the first Compare Products sidebar item (crop changed the reading order); A1/A2 hit
+1188 | VAGUE | switch the product arrangement to a 2*2 grid: no 2x2 icon exists; key = the List-mode icon, all three pick the Grid-mode icon (the current mode, 26 px)
+1192 | NEIGHBOUR | check the second image: all three pick the first thumbnail, the selected one with the orange frame (37-75 px)
+1194 | EDGE | sign in the website: A1 2 px left of Sign In; A2/B hit
+1196 | EDGE | check the information about the first item: A1/A2 7-14 px below the product image; B hits
+1204 | EDGE | subscribe to feedback on this item: A2 4 px left of the Subscribe button; A1/B hit
+1206 | EDGE | go to the second page: A1/A2 8 px off the tiny '2', B 2 px
+1217 | SAME | Click the current date: the date line reads 'Wednesday September 25', the key marks only 'September 25'; A1/A2 box the whole line and centre between (17 px), B 3 px
+1221 | NEIGHBOUR | view drama books: A1/A2 on Design above Drama (11 px); B hits
+1224 | EDGE | install a steam desktop application: A1 9 px below the button; A2/B hit
+1225 | EDGE | Change the webpage language to French: A2 1 px above the link; A1/B hit
+1228 | EDGE | view more information about the airpods item: A1 7 px left, at the Vision/AirPods boundary; A2/B hit
+1233 | SAME | switch off "keep me logged in" setting: key = the checkbox only; A1/A2 click its label text (5-15 px), which toggles the same checkbox; B hits
+1234 | EDGE | choose downloading docker in mac-apple silicon: A1 6 px above the item, A2 sub-pixel; B hits
+1235 | NEIGHBOUR | mark Anna's comment as unhelpful: B on Yes left of No (24 px), A1 between them (10 px), A2 sub-pixel
+1237 | WIDE | Modify the display font size: A1 box spans the search field and the A button, centre 9 px left; A2/B hit
+1249 | EDGE | upvote MagicJoshByGosh's reply: A1 1 px off the upvote arrow; A2/B hit
+1252 | EDGE | view the community of minecraft: A1/A2 3 px left, between SHOP and COMMUNITY; B hits
+1256 | NEIGHBOUR | View the comments on the first article about Musk: all three on the downvote button left of comments (8 px)
+1258 | EDGE | Follow the Twitter account of 'Ask PayPal': A1/A2 3 px left of the Follow button; B hits
+1262 | NEIGHBOUR | View my shopping cart: B on the account icon left of the cart (19 px), A1/A2 between them (5 px)
+1265 | EDGE | check shoes under 50 dollars...: A1/B 9 px left, in the gap between the Dresses and Shoes tiles; A2 hits
+1270 | EDGE | Check the Mega products in the brand selection: A2/B 1-6 px above the MEGA checkbox, between rows; A1 hits

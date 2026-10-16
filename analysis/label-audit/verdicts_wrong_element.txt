@@ -1,0 +1,162 @@
+# Label audit, wrong-element set (151 cases): at least one run clicked more than max(25 px, half the target's
+# short side) outside the key box. All three answers drawn and viewed by eye. Format: case | code | note.
+# A1 = pass 1, A2 = pass 2, B = zoom answer. Px distances are original screenshot px.
+# Codes  KEYERROR  the key box sits on the wrong element or on empty space
+#        ARGUABLE  the instruction fits Jev's element about as well as the key's (two valid answers)
+#        SAME      Jev's element is the same control; the key box covers only part of it
+#        VAGUE     wording loose, broken or misspelt, but the key is still the best answer
+#        UNSURE    cannot be verified from the screenshot
+#        MODEL     Jev's element does not fit the instruction (model error)
+#        PRECISION right element (or the bar/row holding it), click off it
+#        CROP      only the zoom answer missed: the crop cut the label that names the target
+4 | ARGUABLE | view the menu: key = sidebar toggle; Jev picks the dropdown chevron of the language pill / the top ... handle, both open menus
+5 | SAME | select source language: key = chevron only; Jev boxes the whole English-UK pill (same control)
+12 | MODEL | add an event: A picks the list icon next to +; B fixes
+14 | PRECISION | view as year: boxes straddle Month/Year or the whole segmented control
+25 | MODEL | search in this note: A picks the grid icon next to the magnifier; B fixes
+27 | MODEL | get more information: key = ... more button; Jev picks toolbar icons (wording loose)
+37 | MODEL | open the app store: all three pick 'Apple Store' (look-alike name) instead of App Store
+49 | CROP | pjlab-office: names cut by the crop, B picks another row's (i)
+57 | CROP | allow siri when locked: row labels cut, B picks the toggle above
+58 | CROP | show suggestions: label cut, B picks 'None >' in another row
+61 | MODEL | last 10 days: all three pick 'Last 24 Hours' (consistent)
+86 | PRECISION | view library: A boxes the whole tab bar, B fixes
+88 | MODEL | shuffle the music list: all three pick Play
+89 | ARGUABLE | view more information (icon): key = ... menu; Jev picks the MORE link of the description (same screen as #91, where the key IS that MORE link)
+91 | PRECISION | view more information about classical christmas (text): key = MORE; Jev boxes the whole description incl. MORE, centre on the paragraph
+94 | ARGUABLE | view ore details (typo): key = ... circle; Jev picks 'Learn More'
+98 | MODEL | view shared: boxes straddle Recents..Shared, A2 picks Recents
+118 | MODEL | favorite the music: A picks the broken-heart (dislike) icon next to the heart; B fixes
+121 | MODEL | play next song: all three pick previous track
+125 | MODEL | write a new message: A hits; B picks ... next to compose
+127 | MODEL | set focus time to 60 mins: all three pick the highlighted 30 mins (selected-state pull)
+129 | MODEL | customize focus time: key = +; all three pick the highlighted 30 mins (selected-state pull)
+132 | MODEL | switch to focus mode: A hits; B picks a spot by the Day/Week toggle
+136 | CROP | turn off wlan: label cut, B picks the status-bar wifi icon
+169 | MODEL | start the stopwatch: all three pick the lap/flag button next to play
+184 | MODEL | open options: A1 hits; A2 picks +, B picks status-bar dots
+194 | MODEL | use dark mode display: all three pick the highlighted Light mode card (selected-state pull)
+196 | PRECISION | return upper page (odd wording): A boxes a tall strip holding the back arrow, centre far below
+202 | PRECISION | battery for better performance: all box the whole slider, centre on the selected Balanced knob (selected-state pull)
+218 | MODEL | show week steps: A picks the selected D tab (selected-state pull); B straddles D/W
+224 | MODEL | tap continue button: all three pick Cancel (left of Continue)
+227 | MODEL | change mode: all three pick the power button left of Mode
+228 | MODEL | raise air conditioner temperature: all three pick minus (left of +)
+235 | MODEL | display unread massages (typo): A hits; B picks the Chats tab
+281 | UNSURE | choose watercolor brush style: key = red cone tool; A picks the paint-tube tool; cannot verify which icon is watercolor
+297 | MODEL | apply the smooth filter: A boxes span 3 thumbnails (centre on Portrait), B picks Last edits
+298 | PRECISION | open additional options: A1 boxes the whole bar, B the three icons; A2 hits
+307 | CROP | alarm for 7:40: times cut by the crop, B picks the 07:25/07:30 toggles
+311 | CROP | close the Apple tab: the 'Apple' title cut, B picks another tab's X
+314 | VAGUE | search for the privacy report of a website: key = address bar; all three pick the Edit button under the Privacy Report card (the wording names a visible section)
+331 | PRECISION | search games: A1 boxes the whole title bar; A2 and B hit
+340 | PRECISION | display phone files: A boxes camera..phone; B hits
+341 | PRECISION | display public ip address: key = eye toggle; A boxes the whole Public IP card; B hits
+346 | CROP | open night mode: labels cut, B picks 'Off >' of another row
+385 | PRECISION | add a emoji: boxes span the whole emoji row incl. the add-reaction target
+387 | ARGUABLE | tap the icon for displaying more functional (broken English): key = (+) top right; all three pick the 'More' app icon, which literally shows more functions
+391 | PRECISION | show all messages: A hits; B boxes the whole tab bar
+398 | PRECISION | largest font size: A1 boxes the whole slider; A2 and B hit
+406 | MODEL | show all downloading apps: A1 picks the Account tab, A2 lands just under the download icon; B hits
+407 | PRECISION | show softwares: boxes run from Software down to Pre-orders
+411 | PRECISION | tap a button to open table lamp: A boxes the whole lamp card incl. the power button; B hits
+431 | PRECISION | AirPods playback setting: A boxes a tall strip from the AirPods icon down; B hits
+437 | MODEL | play next song: A picks previous, B picks pause
+439 | MODEL | check the play list: A1 hits; A2 boxes the whole row, B picks the lyrics icon
+455 | ARGUABLE | switch to uppercase input: key = the left 'abc' key; A2 and B press Shift (also uppercase)
+457 | MODEL | view the calandar (typo): key = calendar widget; A2/B pick the dock's App Library stack that holds a tiny Calendar icon
+458 | KEYERROR | automatic downloads using cellular data: key box [26,1095,267,136] is copied from #455 (iPad keyboard) and lands on empty space; all three Jev answers are the right toggle
+461 | ARGUABLE | adjust the camera focus: key = left-edge slider; A1 centres on the tap-to-focus square (fits), A2/B pick the shutter (does not)
+473 | MODEL | update Google chrome: A1 picks the app icon; A2 hits; B boxes several Update buttons
+484 | CROP | disallow friend requests: labels cut, B boxes two toggles
+487 | KEYERROR | switch temperature display to Fahrenheit: key box is on the 'Notifications' row; all three Jev answers are on 'Fahrenheit F' (right)
+580 | MODEL | adjust the volume: all three pick the tray icons left of the speaker
+606 | MODEL | play the next track: A picks play, B picks previous
+623 | ARGUABLE | view the game for me: key = the 'Games for you' header; all three pick the first game tile in that section
+625 | PRECISION | click to choose shapes: A boxes a tall strip from Shapes into the canvas; B hits
+640 | MODEL | insert an image: A picks Bold, B a blank spot
+647 | MODEL | rotate left: A picks rotate-right next to it; B fixes
+649 | PRECISION | view in youtube: boxes span Facebook..YouTube, centre in the gap
+658 | MODEL | check microphone: key row labelled in Chinese; A picks the line-in row; B fixes
+668 | MODEL | switch to dark mode: A1 hits; A2 straddles, B picks the selected Light card (selected-state pull)
+673 | MODEL | add a new preferred language: A hits; B outputs a tall box under +, conf 0.09
+718 | PRECISION | switch to privacy: boxes straddle Search Results/Privacy (Search Results is selected)
+719 | MODEL | switch to alerts mode: A picks the None card (left), B straddles None/Banners
+727 | PRECISION | view firewall: boxes straddle the tabs, centre on FileVault next to Firewall
+734 | ARGUABLE | view attachment: key = paperclip '1' button; all three pick the paperclip icon in the message header
+740 | MODEL | open the image in memo: key = the image itself; all three pick the insert-media toolbar button
+744 | PRECISION | next page: boxes span the whole card row (the known #744 case)
+760 | PRECISION | save file: A boxes run from the save icon down to Layout; B hits
+799 | MODEL | switch to apps: A1/A2 straddle Categories/Apps, 13-22 px short of Apps; B picks the selected Categories segment
+833 | PRECISION | adjust the options of "show previous" (typo for previews): all three box the whole row, centre mid-row, not on the When Unlocked popup
+840 | PRECISION | sign out: A2 box spans Edit profile..Sign out, centre on Preferences; A1 and B hit
+841 | PRECISION | switch to explore projects: A1/A2 17-30 px left of Explore; B box spans Yours..Starred, centre on the selected Starred tab
+843 | MODEL | fork the a11y project: A1/A2 pick the merge-request count right of the fork count; B picks the fork icon of another row (crop cut the project names)
+853 | MODEL | full screen display: A1/A2 straddle the attach icon left of the toggle (35 px); B picks a far-left toolbar icon at conf 0.23
+856 | VAGUE | click the icon to sort by created date: wording names the 'Created date' dropdown, A1/A2 pick it (100 px left of the sort-direction icon); B 11 px short
+860 | MODEL | delete the byte blaze assignee: A1/A2 pick the Byte Blaze token itself, not its x; B hits
+863 | PRECISION | thumbs down icon: boxes straddle the thumbs-up count and the thumbs-down button, centres 9-35 px left of it
+864 | MODEL | reply to emoticon (broken wording for add reaction): A1/A2 box the thumbs-down button, 30-55 px left; B hits
+865 | MODEL | view more information of this issue: all three pick the Owner badge (conf 0.20-0.23); key = issue-actions kebab
+869 | ARGUABLE | check my followers: B picks the Followers profile tab (also lists followers); A1/A2 land on blank space at the tab's x and the link's y (a blend of the two)
+896 | SAME | switch to private visibility level: key = the radio circle only; A1/A2 pick the lock icon of its label (21-33 px), which selects the same radio; B misses by 1 px
+903 | PRECISION | copy the ssh link: A1/A2 boxes span the URL field and the copy button, centres on the URL text; B hits
+906 | MODEL | check the owner of coding_friends: B picks the group name (143 px left of the Owner badge); A1/A2 hit
+907 | MODEL | star the chatgpt project: A2/B pick the project avatar/name at the far left (label-name pull), not its star count; A1 hits
+910 | VAGUE | has question about scope (broken wording): all three pick the Scope dropdown the wording names, not its ? help icon
+926 | MODEL | go to next page: A1/A2 pick the page-number field, B the previous < button (conf 0.19)
+929 | MODEL | favorite the blueberry drink: B picks Add to Cart left of the heart (79 px); A1/A2 hit
+940 | MODEL | go to next page: A1/A2 box the page numbers 3-5, centre 59 px left of >; B hits
+951 | MODEL | sort from largest to smallest: A1/A2 pick the Position sort dropdown, not the direction arrow; B 2 px short
+953 | PRECISION | page 5: all three box the page group 2-5, centre on 3 (34-46 px)
+954 | PRECISION | details about dead sea collection salt: all three box the whole table row, centre on the rating/review cells (conf 0.19-0.28)
+961 | MODEL | show reviews: B picks the Details tab left of Reviews (45 px); A1/A2 hit
+986 | VAGUE | view the comments of the first book (no books on the page, relationship posts): A1/B tall boxes span the Comments tab down to the first post's 8 comments link (a blend); A2 hits
+988 | CROP | hide the no.140 comment: B box spans both Hide links, centre between (crop cut the 140 number); A1/A2 hit
+1009 | MODEL | close the message box: A1/A2 box the message text (the noun), not its x; B hits
+1024 | MODEL | check the third result: A1/A2 pick the second result's vote arrows; B hits
+1027 | CROP | delete the entered search query: B picks the header search bar showing 'harry potter' (crop cut the query in the real field); A1/A2 hit
+1031 | ARGUABLE | create a new page: all three pick the sidebar link 'Create new page' (exact wording match); key = the 'Create this page' button
+1035 | KEYERROR | log in by x account: key box sits on the YouTube icon, the X icon is two to the left (the other 2 keys on this screenshot are right); all three Jev answers land on the f/X pair, none cleanly on X
+1036 | MODEL | share to facebook: A1/A2 pick the X icon right of f (18-31 px); B hits
+1037 | KEYERROR | check the weather news: key box sits on 'DelmarvaLife', the 'Weather' nav item is two to the left; B lands on Weather (a hit under a fixed key), A1/A2 between News and Weather
+1038 | MODEL | follow sadie gurman: A1/A2 pick the author name (label-name pull), not Follow; B hits
+1051 | MODEL | export the map data: A1/A2 box below History/Export over the directions button (conf 0.19); B hits
+1058 | ARGUABLE | click the button to navigate to boston: A1/A2 pick the Boston search-result link (moves the map to Boston); B 15 px short of the directions button (the key)
+1060 | PRECISION | need help: A1/A2 box Help..About and below, centre 33 px off; B hits
+1063 | PRECISION | check communities: A1/A2 straddle User Diaries/Communities, 12 px short; B centres on User Diaries (89 px)
+1069 | PRECISION | close the location labels on the map: A1/A2 2 px right of the x; B picks open map water (conf 0.21)
+1072 | PRECISION | change the area bounding numbered "42.3768": all three box the whole bounding-box widget, centre in the empty middle 46-71 px below the field
+1073 | MODEL | inspect map features and view details: all three pick the Map Key (i) legend button 270 px above the query-features button
+1074 | PRECISION | goto openstreetmap france: A1/A2 box the map strip above the footer link, centre 28-49 px above; B hits
+1075 | SAME | click the "starbucks" located in auburn street: the whole result text is one link, the key marks only its first word; all three click inside the same link (on 'County', 115-128 px from the key box)
+1084 | PRECISION | select the html as share format: all three box the whole Link/Short Link/HTML control, centre on Short Link (62-69 px)
+1087 | MODEL | start mapping: B picks Learn More (186 px); A1 7 px short, A2 hits
+1095 | VAGUE | search result (the smoke-test case): all three box the search field and centre in it; key = the search button
+1096 | SAME | check wikipedia: the footer logo and title are one link, the key marks only the title; all three hit the logo 29-36 px left
+1097 | VAGUE | goto france wikipedia: the page is the Wiktionary portal, so Francais opens French Wiktionary; all three pick the footer Wikipedia link (the key of #1096 on the same screenshot)
+1135 | SAME | let website remember account information...: key = the checkbox only; A1/A2 box the checkbox with its label and centre on the label text (300 px), which toggles the same checkbox; B hits
+1141 | MODEL | return the homepage of mediawiki: A1 picks the page heading under the logo; A2/B hit
+1142 | MODEL | switch to the discussion page: A1/A2 centre on the active Main Page tab (27-40 px, selected-state pull); B straddles, 8 px short
+1147 | PRECISION | open arsenal f.c. records...: A1/A2 box the whole sentence holding the link, centre on 'statistics' (140-152 px); B hits
+1159 | MODEL | delete the 'article' tag for searching: all three centre on the Article chip text (the noun), 23-43 px left of its x
+1160 | ARGUABLE | input keyword in the searchbar: two search bars on screen; all three pick the header 'Search Wikipedia' bar, key = the results-page search field
+1161 | MODEL | select to search in all area: A1/A2 pick the end of 'General Help', 40-53 px left of the All checkbox (A2 box degenerate); B picks the Discussion checkbox
+1165 | ARGUABLE | show content of reinforcement learning: A1/A2 pick the 'Reinforcement learning' title link (opens that article), key = its [show] toggle; B hits (weak: 'show' matches the toggle's label)
+1172 | MODEL | confirm leaving the shopping cart: A1/A2 straddle Cancel/OK (16-29 px), B picks Cancel
+1179 | MODEL | add the creole seasoning to favorites: all three pick Add to Cart left of the heart (65-110 px)
+1186 | VAGUE | check the price changes for the first item: no price-history control exists, the key is the Add to Compare bar-chart icon; A1/A2 13-25 px left (heart side), B picks the product title at conf 0.08
+1195 | MODEL | search the products about football: A1/A2 pick the search field holding 'football', not the search button; B hits
+1199 | MODEL | add this item to compare: B picks Add to Wish List left of it (31 px); A2 5 px short in the gap; A1 hits
+1200 | MODEL | rate this product with four stars: boxes span the first four stars, centre between star 2 and 3 (33-39 px left of the 4th star)
+1212 | CROP | star the awesome-huggingface project: B picks the Star of the card above (crop cut the repo names); A1/A2 hit
+1214 | ARGUABLE | Switch the language that needs to be translated to Chinese: reads as either source or target; B picks the TARGET-side Chinese tab at conf 0.80, A2 the selected target English, A1 7 px short on the source side (key = source-side Chinese)
+1216 | MODEL | add wikipedia to wishlist: A1 picks empty banner space 239 px above; A2/B hit
+1219 | PRECISION | switch the payment option to upgrade program: A1/A2 box all three payment cards, centre on Finance; B hits (conf 0.16)
+1222 | MODEL | Switch the map to 3D display mode: B picks the tilt button left of 3D (30 px); A1/A2 hit
+1236 | SAME | Choose to sort from oldest to newest: key = the radio circle only; all three click its 'Oldest -> Newest' label (48-62 px right), which selects the same radio
+1240 | MODEL | next page of the browse by category section: A1/A2 pick the first category tile, B the left < arrow at conf 0.08 (key outside B's window)
+1243 | PRECISION | close the privacy information bar: A1/A2 box the bar end left of the x, 24-34 px short; B hits
+1248 | PRECISION | close the pop-up window in the bottom right corner: A1/A2 box the bottom bar, 47-67 px left of the x; B hits
+1257 | MODEL | play the video on the physical characteristics of Mars: B picks the adjacent video to the left (160 px); A1/A2 hit
+1264 | MODEL | send the verification code to the specified email address: A1/A2 pick the email field (the noun), not Get Code; B hits
