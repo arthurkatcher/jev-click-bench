@@ -211,8 +211,22 @@ Disclosure for any write-up: the crop rule was picked from pass 1 misses on the 
 - Report: raw pass 1 (headline), raw pass 2 with pass-1/pass-2 agreement, zoom (A+B) with flips both ways against its own A, cost and latency of A+B vs A, all six cells.
 - Expected cost about $0.38, against about $0.44 real credit. The cap of $0.40 stops cleanly, and resume re-runs only the missing stage.
 
+### Live smoke (dev log, not part of any pass)
+One live A+B call on #1095, about 21:45: A FALSE (search field boxed, conf 0.36), B FALSE (on the 2x crop Jev boxed the search field again, conf 0.32). Mechanics correct: same image size and tokens as A (3922 vs 3926), box mapped back right. The miss is an interpretation, not blur. No design change from this case. Figure: `analysis/figures/live-zoom-smoke_case_1095.png`.
+
 ### Review
-Workflow `review-jev-zoom-harness` running (3 auditors: crop and mapping maths, runner robustness and data completeness, methodology; one skeptic each). Findings and fixes go here when it lands.
+- **Round 1:** 3 auditors (crop and mapping maths, runner and data completeness, methodology), one skeptic each. 13 confirmed findings, all minor, none changing a score. Fixed in 1b2e535:
+  - live B error counters and stderr lines
+  - progress split by stage
+  - copied wrong_format records no longer double A's time
+  - paired exact McNemar plus identical-answer count in `compare`, and no raw/zoom "mean"
+  - model/template check across files
+  - zoom config and code revision logged on every B record, mixed configs gated
+  - `out_of_crop` separate from `out_of_range`
+  - replay archived with its search grid and the registered ~86% prediction
+  - resume and balance-lag notes
+- Key balance before launch read $0.440.
+- **Round 2:** running.
 
 ## 8. Budget
 
@@ -237,7 +251,13 @@ Workflow `review-jev-zoom-harness` running (3 auditors: crop and mapping maths, 
 
 OS-Atlas-7B is often cited around 84.1 but is unverified here. Jev is a general decision model, not a grounding specialist, and runs in TypeSafe's long-context mode on OpenRouter for every image request ("slower and less accurate" per TypeSafe).
 
-## 10. Caveats
+## 10. Pinned for after the zoom run
+
+- **Label audit of the misses (Arthur, Oct 16).** Some ScreenSpot-v2 instructions fit more than one element (e.g. #1095 "search result": Jev boxes the search field, the key says the magnifier button). v2 is already the OS-Atlas cleanup of v1, but ambiguity is left. Plan: go through the misses (pass 1, pass 2, zoom), mark the ones where the instruction honestly fits another element, report "X of the misses are arguable labels" as a side note. The score always stays the official answer key, never re-scored.
+- **Wording ablation, off-benchmark only.** Whether a different wrapper sentence moves Jev toward buttons can only be tested on screenshots outside ScreenSpot-v2.
+- **ScreenSpot-Pro** with the same frozen zoom rule, as the clean confirmation of the crop choice.
+
+## 11. Caveats
 
 - One pass so far. Run-to-run variation is unknown until pass 2 (others measured ~5% of identical requests changing their pick).
 - 81% of cases are downscaled to fit 1568 px, which hurts small targets. That is a property of the API limit, reported rather than worked around in the raw number.
