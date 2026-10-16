@@ -19,12 +19,14 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction 
     python3 screenspot.py 0                             # one live case -> dev log
     python3 screenspot.py run --pass 1 --workers 4      # full pass (cap $0.30 by default)
     python3 screenspot.py report results/pass1.jsonl
+    python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
 
 ## Protocol (frozen before the full run)
 - Prompt v2: box instruction `In the screenshot, the UI element to use for this task: <instruction>`, instruction whitespace-normalised and passed unquoted (21 contain their own quotes, 40 start with "click", 17 with "tap"). No wording iteration on ScreenSpot-v2 rows; any wording ablation runs off-benchmark and is reported separately.
 - Headline = pass 1, micro average (hits / 1,272), the convention published v2 tables use (OS-Atlas-7B's 84.12 recomputes as micro; its macro would be 82.20). Macro (mean of six cells) printed next to it, labelled. Baselines are compared under the convention their paper uses, checked against the paper's own table.
 - Malformed answers count as misses (`wrong_format`), as in both official evals; their number is reported. Infrastructure failures (HTTP errors, transport errors, a 200 body with no `answers` object) are re-run until the pass is complete. A pass with unscored cases, mixed prompt versions or mixed requested/resolved models prints INCOMPLETE on every number and is not a headline.
-- Edges are inclusive with a 1e-9 tolerance, so float noise on a 2-decimal box centre that sits exactly on a truth edge cannot flip a hit into a miss; such centres are counted (`on_edge`).
+- Headline hit = the official rule exactly (strict float compare, edges inclusive). A 1e-9 edge-tolerant average is printed next to it with the number of cases that differ. Boxes with edges outside [0,1] are scored by centre like the official code and counted; a response with no box at all is re-run as an infra error. Report prints Wilson 95% CIs; gaps to a baseline inside the CI are called on par.
+- Pass 1 starts with `--limit 20` (the first live calls of the frozen v2 wording), raw answers read, then the same pass resumes with no change. `compare` gives pass-1/pass-2 agreement after both are complete. Billed spend is checked against the key balance before and after each run.
 - Degenerate boxes (right <= left or bottom <= top) are scored by their centre like the official rule, flagged, and counted in the report.
 - Pass 2 = same protocol, own file. Report pass 1 as the headline, pass 2, the case-level agreement and mean ± half the difference. Never best-of-two or union.
 - Model pinned to `typesafe/jev-1.14` (jev-latest flips ~Oct 21); the resolved dated id is logged per case.

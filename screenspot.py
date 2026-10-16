@@ -8,6 +8,7 @@ An infrastructure failure ("infra_error") is not scored: it is retried by re-run
   python3 screenspot.py 0 [--dry]               # one case, dev log results/runs.jsonl
   python3 screenspot.py run --pass 1 [--workers 4] [--max-cost 0.30] [--limit N]
   python3 screenspot.py report results/pass1.jsonl
+  python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
 """
 import argparse, collections, datetime, hashlib, json, math, pathlib, statistics, sys, threading
 from concurrent.futures import ThreadPoolExecutor
@@ -54,16 +55,25 @@ def request(case, img):
     return state, {"target": {"type": "box", "instructions": text}}, text
 
 
+class MissingAnswer(Exception):
+    """The response has no answers.target / box / edge keys: an infrastructure problem, re-run it."""
+
+
 def parse_box(resp):
-    """-> (box dict, confidence) or raises ValueError for any malformed answer."""
-    a = resp["answers"]["target"]
-    b = a["box"]
+    """-> (box dict, confidence). MissingAnswer if the structure is absent; ValueError if the model
+    produced edges that are not finite numbers (a wrong_format miss, as in the official evals)."""
+    a = resp["answers"].get("target") if isinstance(resp.get("answers"), dict) else None
+    b = a.get("box") if isinstance(a, dict) else None
+    if not isinstance(b, dict) or any(k not in b for k in ("left", "top", "right", "bottom")):
+        raise MissingAnswer(f"no complete box in answers.target: {a}")
     vals = [b[k] for k in ("left", "top", "right", "bottom")]
-    if not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) and 0 <= v <= 1
-               for v in vals):
-        raise ValueError(f"box values not finite numbers in [0,1]: {b}")
-    conf = a.get("confidence")
-    return {k: float(b[k]) for k in ("left", "top", "right", "bottom")}, conf
+    if not all(isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in vals):
+        raise ValueError(f"box edges are not finite numbers: {b}")
+    return {k: float(b[k]) for k in ("left", "top", "right", "bottom")}, a.get("confidence")
+
+
+def inside(point, gt, eps=0.0):
+    return gt[0] - eps <= point[0] <= gt[2] + eps and gt[1] - eps <= point[1] <= gt[3] + eps
 
 
 def cost(r):
@@ -115,18 +125,28 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
                provider=meta.get("provider"), usage=meta.get("usage"))
     try:
         b, conf = parse_box(resp)
+    except MissingAnswer as e:
+        rec.update(status="infra_error", hit=None, fatal=False, error=str(e))
+        write(out, rec)
+        return rec
     except (KeyError, TypeError, ValueError, AttributeError) as e:
-        rec.update(status="wrong_format", hit=False, error=f"{type(e).__name__}: {e}")
+        rec.update(status="wrong_format", hit=False, hit_tolerant=False, error=f"{type(e).__name__}: {e}")
         write(out, rec)
         return rec
     point = [(b["left"] + b["right"]) / 2, (b["top"] + b["bottom"]) / 2]
-    # Inclusive edges with a 1e-9 tolerance: 2-decimal box centres can sit exactly on an edge and float
-    # noise (0.01 + 0.34) / 2 = 0.17500000000000002 must not turn that hit into a miss.
-    hit = gt[0] - EPS <= point[0] <= gt[2] + EPS and gt[1] - EPS <= point[1] <= gt[3] + EPS
+    # hit = the official rule exactly (SeeClick / ScreenSpot-Pro: strict float compare, edges inclusive).
+    # hit_tolerant adds 1e-9 so float noise on a 2-decimal centre that sits exactly on an edge cannot
+    # flip it; reported next to the headline, never instead of it.
+    hit = inside(point, gt)
+    hit_tolerant = inside(point, gt, EPS)
     on_edge = any(abs(point[k % 2] - gt[k]) < EPS for k in range(4))
-    # Official rule scores the centre whatever the box shape; degenerate boxes are flagged and counted.
+    # Official rule scores the centre whatever the box shape or range; both are flagged and counted.
     degenerate = b["right"] <= b["left"] or b["bottom"] <= b["top"]
-    rec.update(status="ok", box=b, point=point, confidence=conf, hit=hit, degenerate=degenerate, on_edge=on_edge)
+    out_of_range = any(not 0 <= v <= 1 for v in b.values())
+    rec.update(status="ok", box=b, point=point, confidence=conf, hit=hit, hit_tolerant=hit_tolerant,
+               degenerate=degenerate, out_of_range=out_of_range, on_edge=on_edge)
+    if not isinstance((meta.get("usage") or {}).get("cost") if isinstance(meta.get("usage"), dict) else None, (int, float)):
+        print(f"warning: #{i} answer has no usage.cost", file=sys.stderr)
     write(out, rec)
     if annotate_mode == "all" or (annotate_mode == "misses" and not hit):
         try:
@@ -159,7 +179,17 @@ def annotate(orig, gt, b, point, hit, max_w=1000):
 
 
 def read(path):
-    return [json.loads(l) for l in open(path) if l.strip()]
+    """Records of a jsonl file; a truncated line (e.g. a killed run) is skipped with a warning."""
+    out, bad = [], 0
+    for l in open(path):
+        if l.strip():
+            try:
+                out.append(json.loads(l))
+            except ValueError:
+                bad += 1
+    if bad:
+        print(f"warning: {bad} unreadable line(s) skipped in {path}", file=sys.stderr)
+    return out
 
 
 def latest(recs):
@@ -176,7 +206,9 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     done = {i for i, r in latest(read(out)).items() if r["status"] in ("ok", "wrong_format")} if out.exists() else set()
     spent = sum(cost(r) for r in read(out)) if out.exists() else 0.0
     todo = [c["i"] for c in cases if c["i"] not in done][:limit]
-    print(f"pass {pass_id}: {len(done)} done, {len(todo)} to run, ${spent:.4f} spent so far, cap ${max_cost}")
+    print(f"pass {pass_id}: {len(done)} done, {len(todo)} to run, ${spent:.4f} logged so far, cap ${max_cost}")
+    before = jev.balance()
+    print(f"key balance before: {before}")
     stop = threading.Event()
     state = {"spent": spent, "n": 0}
 
@@ -198,7 +230,21 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
 
     with ThreadPoolExecutor(workers) as ex:
         list(ex.map(job, todo))
+    after = jev.balance()
+    if isinstance(before, float) and isinstance(after, float):
+        print(f"key balance after: {after:.6f}  (billed this run: ${before - after:.6f}, "
+              f"logged this run: ${state['spent'] - spent:.6f})")
     report(out)
+
+
+def wilson(k, n, z=1.96):
+    if not n:
+        return (0.0, 0.0)
+    p = k / n
+    d = 1 + z * z / n
+    c = (p + z * z / (2 * n)) / d
+    h = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+    return (100 * (c - h), 100 * (c + h))
 
 
 def auroc(pos, neg):
@@ -232,28 +278,36 @@ def report(path):
     flag = "" if complete else f"  ** INCOMPLETE ({', '.join(problems)}): not a headline number **"
     lines = [f"# {pathlib.Path(path).name}" + flag, f"prompt versions: {dict(versions)}",
              f"models (requested, resolved, provider): {dict(models)}"]
-    lines.append("| Platform | Type | n | scored | hits | acc |")
-    lines.append("|---|---|---|---|---|---|")
+    lines.append("| Platform | Type | n | scored | hits | acc | 95% CI |")
+    lines.append("|---|---|---|---|---|---|---|")
     cell_acc = []
     for p, t in CELLS:
         idx = [c["i"] for c in cases if c["platform"] == p and c["data_type"] == t]
         hits = sum(1 for i in idx if scored.get(i, {}).get("hit"))
         acc = hits / len(idx)
         cell_acc.append(acc)
-        lines.append(f"| {p} | {t} | {len(idx)} | {sum(1 for i in idx if i in scored)} | {hits} | {100 * acc:.2f} |")
+        lo, hi = wilson(hits, len(idx))
+        lines.append(f"| {p} | {t} | {len(idx)} | {sum(1 for i in idx if i in scored)} | {hits} | {100 * acc:.2f} "
+                     f"| {lo:.1f}-{hi:.1f} |")
     hits = sum(1 for r in scored.values() if r["hit"])
     lines.append("")
-    lines.append(f"Avg (micro, hits / {n_total}, as published v2 tables): {100 * hits / n_total:.2f}" + flag)
+    lo, hi = wilson(hits, n_total)
+    lines.append(f"Avg (micro, hits / {n_total}, official strict rule, as published v2 tables): "
+                 f"{100 * hits / n_total:.2f}  (95% Wilson CI {lo:.1f}-{hi:.1f})" + flag)
+    tol = sum(1 for r in scored.values() if r.get("hit_tolerant"))
+    lines.append(f"Avg (micro, 1e-9 edge tolerance): {100 * tol / n_total:.2f}  "
+                 f"({sum(1 for r in scored.values() if bool(r.get('hit_tolerant')) != bool(r['hit']))} cases differ)" + flag)
     lines.append(f"Avg (macro, mean of 6 cells): {100 * statistics.mean(cell_acc):.2f}" + flag)
     ok = [r for r in scored.values() if r["status"] == "ok"]
     lines.append(f"scored {len(scored)}/{n_total}, wrong_format {len(scored) - len(ok)}, infra_error {len(infra)}, "
                  f"not run {missing}, degenerate boxes {sum(1 for r in ok if r['degenerate'])}, "
-                 f"centre on a truth edge {sum(1 for r in ok if r.get('on_edge'))}")
+                 f"centre on a truth edge {sum(1 for r in ok if r.get('on_edge'))}, "
+                 f"edges outside [0,1] {sum(1 for r in ok if r.get('out_of_range'))}")
     secs = sorted(r["seconds"] for r in by.values() if r.get("seconds") is not None)
     spend = sum(cost(r) for r in read(path))
     if secs:
         lines.append(f"latency median {statistics.median(secs):.3f}s p90 {secs[int(0.9 * (len(secs) - 1))]:.3f}s, "
-                     f"cost (all attempts in file) ${spend:.4f}")
+                     f"cost of logged responses ${spend:.4f} (retried attempts are not logged; compare the key balance)")
     confs = [(r["confidence"], r["hit"]) for r in ok if isinstance(r.get("confidence"), (int, float))]
     a = auroc([c for c, h in confs if h], [c for c, h in confs if not h])
     lines.append(f"confidence AUROC (hit vs miss): {a if a is None else round(a, 3)}")
@@ -264,6 +318,24 @@ def report(path):
             lines.append(f"  conf [{lo:.1f}, {hi:.1f}{']' if hi == 1.0 else ')'}: n={len(b)} acc={100 * sum(b) / len(b):.1f}")
     print("\n".join(lines))
     return complete
+
+
+def compare(p1, p2):
+    a, b = latest(read(p1)), latest(read(p2))
+    sa = {i: r for i, r in a.items() if r["status"] in ("ok", "wrong_format")}
+    sb = {i: r for i, r in b.items() if r["status"] in ("ok", "wrong_format")}
+    n = len(load())
+    if len(sa) != n or len(sb) != n:
+        print(f"INCOMPLETE: {len(sa)} and {len(sb)} of {n} scored; finish both passes first")
+        return None
+    agree = sum(1 for i in sa if bool(sa[i]["hit"]) == bool(sb[i]["hit"]))
+    up = sum(1 for i in sa if not sa[i]["hit"] and sb[i]["hit"])
+    down = sum(1 for i in sa if sa[i]["hit"] and not sb[i]["hit"])
+    m1 = 100 * sum(1 for r in sa.values() if r["hit"]) / n
+    m2 = 100 * sum(1 for r in sb.values() if r["hit"]) / n
+    print(f"pass A {m1:.2f}  pass B {m2:.2f}  mean {(m1 + m2) / 2:.2f} +- {abs(m1 - m2) / 2:.2f}")
+    print(f"case-level agreement {agree}/{n} ({100 * agree / n:.1f}%), miss->hit {up}, hit->miss {down}")
+    return agree
 
 
 if __name__ == "__main__":
@@ -287,8 +359,13 @@ if __name__ == "__main__":
     r.add_argument("--annotate", choices=["misses", "all", "none"], default="misses")
     rp = sub.add_parser("report")
     rp.add_argument("path")
+    cp = sub.add_parser("compare")
+    cp.add_argument("pass_a")
+    cp.add_argument("pass_b")
     args = ap.parse_args()
     if args.cmd == "run":
         run_all(args.pass_id, args.workers, args.max_cost, args.limit, args.annotate)
+    elif args.cmd == "compare":
+        compare(args.pass_a, args.pass_b)
     else:
         report(args.path)

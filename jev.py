@@ -79,3 +79,14 @@ def decide(state, questions, retries=4):
             continue
         raise last
     raise last
+
+
+def balance():
+    """Remaining credit on the OpenRouter key (float), or an error string. Read-only, free."""
+    try:
+        r = requests.get("https://openrouter.ai/api/v1/key", timeout=20,
+                         headers={"Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}"})
+        v = r.json()["data"].get("limit_remaining")
+        return float(v) if v is not None else "no limit set"
+    except Exception as e:
+        return f"unavailable ({type(e).__name__})"

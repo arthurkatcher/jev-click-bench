@@ -7,6 +7,7 @@ CASES = ss.load()
 assert len(CASES) == 1272
 tmp = pathlib.Path(tempfile.mkdtemp())
 ss.OUT = tmp
+jev.balance = lambda: 0.5  # never touch the network in tests
 
 
 def answer(box, conf=0.8):
@@ -48,12 +49,18 @@ mock(lambda s, q: (answer(b), 0.5, 1))
 r = one(2, out)
 assert r["status"] == "ok" and r["hit"] is True and r["degenerate"] is True
 # 4. malformed answers -> wrong_format, hit False, raw kept
-for i, bad in [(3, {"answers": {}}), (4, answer({"left": "0.1", "right": 0.2, "top": 0.1, "bottom": 0.2})),
+mock(lambda s, q: ({"answers": {}}, 0.5, 1))
+assert one(3, out)["status"] == "infra_error"
+for i, bad in [(4, answer({"left": "0.1", "right": 0.2, "top": 0.1, "bottom": 0.2})),
                (5, answer({"left": float("nan"), "right": 0.2, "top": 0.1, "bottom": 0.2})),
-               (7, answer({"left": 1.5, "right": 0.2, "top": 0.1, "bottom": 0.2}))]:
+]:
     mock(lambda s, q, bad=bad: (bad, 0.5, 1))
     r = one(i, out)
     assert r["status"] == "wrong_format" and r["hit"] is False and "raw" in r, (i, r)
+# 4b. edges outside [0,1] are scored by centre (official rule) and flagged
+mock(lambda s, q: (answer({"left": 0.97, "right": 1.01, "top": 0.97, "bottom": 1.003}), 0.5, 1))
+r = one(7, out)
+assert r["status"] == "ok" and r["out_of_range"] is True and r["hit"] is False
 # 5. missing confidence is fine
 a = answer(gt_box(8)); del a["answers"]["target"]["confidence"]
 mock(lambda s, q: (a, 0.5, 1))
@@ -106,7 +113,7 @@ c = CASES[12]
 assert c["bbox"] == [341, 70, 72, 69]
 mock(lambda s, q: (answer({"left": 0.01, "right": 0.34, "top": 0.05, "bottom": 0.07}), 0.5, 1))
 r = one(12, out)
-assert r["hit"] is True and r["on_edge"] is True, r
+assert r["hit"] is False and r["hit_tolerant"] is True and r["on_edge"] is True, r  # strict official rule
 # 11. a 200 body without answers (provider error object) -> infra_error, re-runnable, not a miss
 for bad in ({"error": {"message": "upstream"}}, {"model": "x"}, "oops", None):
     mock(lambda s, q, bad=bad: (bad, 0.5, 1))
@@ -146,4 +153,10 @@ for line in open(full):
         rec["model"] = "typesafe/jev-1.14-OTHER"
     ss.write(mixed, rec)
 assert ss.report(mixed) is False
+# 15. truncated last line is skipped, not a crash
+with open(out, "a") as f:
+    f.write('{"pass": "t", "i": 5, "sta')
+assert len(ss.read(out)) > 0
+# 16. compare two complete passes
+assert ss.compare(full, full) == 1272
 print("\nALL OFFLINE TESTS PASSED")
