@@ -34,6 +34,15 @@ Status as of Fri Oct 16 2026, 22:05 CEST. Living document: updated after each ru
 | A at native size (B upsample only) | 238 | 87.39 | 91.18 | +3.78 |
 | A downscaled (B recovers pixels) | 1034 | 83.66 | 87.14 | +3.48 |
 
+| Platform | n | raw A1 | raw A2 | zoom A+B | delta vs A2 | miss->hit | hit->miss | McNemar p | bootstrap CI |
+|---|---|---|---|---|---|---|---|---|---|
+| desktop + web | 771 | 79.90 | 81.06 | 87.16 | +6.10 | 78 | 31 | 0.0000077 | +3.4 to +8.7 |
+| desktop | 334 | 86.53 | 85.93 | 91.32 | +5.39 | 29 | 11 | 0.0064 | +1.8 to +9.0 |
+| web | 437 | 74.83 | 77.35 | 83.98 | +6.64 | 49 | 20 | 0.00064 | +3.0 to +10.3 |
+| mobile | 501 | 88.62 | 89.42 | 89.02 | -0.40 | 17 | 19 | 0.87 | -2.8 to +2.0 |
+
+The platform split is read after the run, but the reason (small targets shrunk by the 1568 px cap) was written down before it. Harness rule it suggests: zoom on desktop and web, skip it on mobile (saves the second call on ~40% of cases).
+
 - Zoom helps where predicted (desktop and web, small shrunk targets) and does nothing on mobile (wrong-element misses).
 - The cost is 50 cases that A had right and B broke, vs 95 fixed. Zoom flips 11.4% of cases against 3.9% for a plain rerun, so the change is real, not noise.
 - Confidence gets much more useful after zoom: AUROC 0.651 (A) -> 0.758 (B), and B answers at confidence >= 0.9 are right 98.7% of the time (150 cases).
