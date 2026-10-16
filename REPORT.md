@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2: run report
 
-Status as of Fri Oct 16 2026, 21:30 CEST. Living document: updated after each run.
+Status as of Fri Oct 16 2026, 22:05 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -9,6 +9,36 @@ Status as of Fri Oct 16 2026, 21:30 CEST. Living document: updated after each ru
 - It is fast and nearly free: median 0.89 s per answer, $0.00015 per case, $0.19 for the full benchmark.
 - Most misses are close: median 24 px away in the image Jev saw. Almost half are one specific failure: Jev boxes the whole bar or row the target sits in, and the box centre lands beside the target.
 - Accuracy depends strongly on how big the target is after resizing to Jev's 1568 px limit. This motivated the next method: a second call on a 2x zoomed crop. It is built, frozen and under review; not run yet.
+
+## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
+
+**Q1. Is A1 different from A2? No, within noise.** Pass 1 83.33%, pass 2 84.36% (CI 82.3-86.2), mean 83.84 +- 0.51. 1223 of 1272 cases agree (96.1%): 31 miss->hit, 18 hit->miss, exact McNemar p = 0.085 (not significant). Jev is not deterministic: only 383 of 1272 boxes are identical and 55 of 1272 box+confidence, but the box stays on the same element. Rerun noise floor: 3.9% of cases flip.
+
+**Q2. Is A+B better than A? Yes, clearly.** Zoom 87.89% (CI 86.0-89.6) vs its own A 84.36%: +3.54 pp, paired 95% bootstrap CI +1.73 to +5.42, 95 miss->hit vs 50 hit->miss, exact McNemar p = 0.00023. Beat the registered prediction (85.8%).
+
+| Cell | raw A | zoom A+B | delta pp | miss->hit | hit->miss | McNemar p |
+|---|---|---|---|---|---|---|
+| all | 84.36 | 87.89 | +3.54 | 95 | 50 | 0.00023 |
+| mobile text | 93.10 | 93.79 | +0.69 | 7 | 5 | 0.77 |
+| mobile icon | 84.36 | 82.46 | -1.90 | 10 | 14 | 0.54 |
+| desktop text | 90.72 | 94.85 | +4.12 | 12 | 4 | 0.077 |
+| desktop icon | 79.29 | 86.43 | +7.14 | 17 | 7 | 0.064 |
+| web text | 83.76 | 89.32 | +5.56 | 21 | 8 | 0.024 |
+| web icon | 69.95 | 77.83 | +7.88 | 28 | 12 | 0.017 |
+
+| Window group | n | raw A | zoom A+B | delta pp |
+|---|---|---|---|---|
+| half (2x zoom) | 1108 | 83.84 | 87.36 | +3.52 |
+| widened to hold A's box | 75 | 80.00 | 86.67 | +6.67 |
+| full screen (same image re-asked) | 89 | 94.38 | 95.51 | +1.12 (1 flip) |
+| A at native size (B upsample only) | 238 | 87.39 | 91.18 | +3.78 |
+| A downscaled (B recovers pixels) | 1034 | 83.66 | 87.14 | +3.48 |
+
+- Zoom helps where predicted (desktop and web, small shrunk targets) and does nothing on mobile (wrong-element misses).
+- The cost is 50 cases that A had right and B broke, vs 95 fixed. Zoom flips 11.4% of cases against 3.9% for a plain rerun, so the change is real, not noise.
+- Confidence gets much more useful after zoom: AUROC 0.651 (A) -> 0.758 (B), and B answers at confidence >= 0.9 are right 98.7% of the time (150 cases).
+- Cost and speed: exactly 2x tokens (4.54M + 4.54M), $0.19 + $0.19, median latency 0.84 s -> 1.67 s per case (A then B).
+- Key balance read $0.370 after the run, but it lags (billed $0.070 vs logged $0.382): real credit left about $0.06.
 
 ## 2. What has been done (Oct 16 2026, CEST)
 
@@ -20,7 +50,8 @@ Status as of Fri Oct 16 2026, 21:30 CEST. Living document: updated after each ru
 | 20:55-21:03 | Pass 1: 20-case start, raw answers read, then the full pass resumed unchanged |
 | 21:08 | Error analysis of the 212 misses (analysis/ERRORS-pass1.md) |
 | 21:10-21:24 | Zoom method designed from pass 1 (offline replay, no calls), implemented with tests |
-| 21:24- | Review workflow of the zoom harness running |
+| 21:24-21:48 | Two review rounds of the zoom harness (12 agents, 26 minor findings, all fixed); one live smoke on #1095 |
+| 21:49-22:01 | Pass 2 + zoom run: A2 84.36%, A+B 87.89%, 0 errors, $0.38 |
 
 Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method).
 
