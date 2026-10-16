@@ -194,7 +194,7 @@ Offline replay of pass 1, no API calls (`analysis/zoom-replay/`):
 | 0.3 | 87.5 | 165 / 212 |
 
 - The estimate keeps rising for tighter crops only because it assumes bigger is always better. Pass 1 shows that stops near 60 px, and below 0.5 the enlargement adds pixels with no new detail while targets start falling out of the crop. 0.5 sits on the flat part and is the round 2x choice.
-- Drawing real misses showed that centring the window on A's click cuts the target out of too-wide misses (#744: the "next page" arrow sits at the end of a wide row). Hence the window must contain A's whole box. That keeps 193 of 212 miss targets inside the crop (vs 183 for click-centred) and widens the window in 14% of cases. Estimate unchanged at about 86%.
+- Drawing real misses showed that centring the window on A's click cuts the target out of too-wide misses (#744: the "next page" arrow sits at the end of a wide row). Hence the window must contain A's whole box. That keeps 193 of 212 miss targets at least partly visible in the crop (vs 183 for click-centred; 177 fully inside, 185 with the centre inside) and widens the window in 14% of cases. Every pass-1 hit stays at least partly visible; 14 full-width list rows have their centre cut. Estimate unchanged at about 86% (85.8% under the runner's exact resize rule).
 - Examples: `analysis/zoom-examples/` (miss_*_click.png vs miss_*_box.png, and B_sent_*.png = the exact image stage B would send).
 
 What zoom can and cannot fix:
@@ -226,7 +226,16 @@ One live A+B call on #1095, about 21:45: A FALSE (search field boxed, conf 0.36)
   - replay archived with its search grid and the registered ~86% prediction
   - resume and balance-lag notes
 - Key balance before launch read $0.440.
-- **Round 2:** running.
+- **Round 2:** 13 confirmed, all minor, 0 refuted. The crop and mapping maths were verified on all 1,272 cases, including 2,544 mocked calls. Fixed:
+  - a full-screen window keeps B's box exactly
+  - a half-written line after a hard kill is ended before the next append
+  - the cap is checked before each call, and a rerun at the cap makes no call
+  - `compare` auto-detects a zoom file
+  - new `zoomstats` command: per cell, window groups, bootstrap CI, noise floor, latency and tokens over the same cases
+  - identical box counted separately from identical box+confidence (confidence jitters: 0.38 vs 0.36 on identical #1095 requests)
+  - the replay re-run under the runner's resize rule (85.8%)
+  - the coverage wording
+  - the smoke disclosure
 
 ## 8. Budget
 

@@ -176,6 +176,7 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
     if window:  # crop fractions -> full-screenshot fractions
         rec["box_crop"] = b
         rec["out_of_crop"] = any(not 0 <= v <= 1 for v in b.values())  # pointed past the crop edge
+    if window and tuple(window) != (0, 0, W, H):  # a full-screen window is the same image: keep b as is
         b = {"left": (x0 + b["left"] * cw) / W, "right": (x0 + b["right"] * cw) / W,
              "top": (y0 + b["top"] * ch) / H, "bottom": (y0 + b["bottom"] * ch) / H}
     point =[(b["left"] + b["right"]) / 2, (b["top"] + b["bottom"]) / 2]
@@ -201,10 +202,23 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
     return rec
 
 
+_checked = set()
+
+
 def write(out, rec):
     out.parent.mkdir(exist_ok=True)
-    with _lock, open(out, "a") as f:
-        f.write(json.dumps(rec) + "\n")
+    with _lock:
+        if out not in _checked:  # a hard kill can leave a half line: end it so the next record stays readable
+            _checked.add(out)
+            if out.exists() and out.stat().st_size:
+                with open(out, "rb") as f:
+                    f.seek(-1, 2)
+                    tail = f.read(1)
+                if tail != b"\n":
+                    with open(out, "a") as f:
+                        f.write("\n")
+        with open(out, "a") as f:
+            f.write(json.dumps(rec) + "\n")
 
 
 def annotate(orig, gt, b, point, hit, max_w=1000):
@@ -310,8 +324,12 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         return run_one(i, cases=cases, out=zout, pass_id=f"z{pass_id}", annotate_mode=annotate_mode,
                        window=zoom_window(a, W, H), size=a["sent_size"])
 
+    def over_cap():
+        with _lock:
+            return state["spent"] >= max_cost
+
     def job(i):
-        if stop.is_set():
+        if stop.is_set() or over_cap():
             return
         resumed = i in a_done
         if resumed:  # A scored before, only B is missing
@@ -320,7 +338,9 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
             rec = run_one(i, cases=cases, out=out, pass_id=str(pass_id), annotate_mode=annotate_mode)
             new_cost = cost(rec)
         z = None
-        if zoom and rec["status"] in ("ok", "wrong_format") and not rec.get("fatal") and not stop.is_set():
+        with _lock:  # never start B once A has taken the logged spend to the cap (B stays resumable)
+            room = state["spent"] + new_cost < max_cost
+        if zoom and rec["status"] in ("ok", "wrong_format") and not rec.get("fatal") and not stop.is_set() and room:
             z = stage_b(i, rec)
         with _lock:
             state["n"] += 1
@@ -358,6 +378,11 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
                 print(f"  {state['n']}/{len(todo)}  ${state['spent']:.4f}" + (
                     f"  zoom scored {state['zoom_scored']}, infra {state['zoom_infra_error']}" if zoom else ""))
 
+    if spent >= max_cost:
+        print(f"cap already reached (${spent:.4f} logged >= ${max_cost}): rerun with --max-cost raised to the "
+              f"logged total + ~$0.0003 per remaining case")
+        progress(final=True)
+        return
     progress()
     with ThreadPoolExecutor(workers) as ex:
         list(ex.map(job, todo))
@@ -368,20 +393,11 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         print(f"key balance after: {after:.6f}  (billed this run: ${billed:.6f}, logged this run: ${logged:.6f})")
         if logged and abs(billed - logged) > 0.2 * logged:
             print("  note: the balance lags billing; check it again later. Logged usage.cost is the cost of record.")
+    print(f"logged cost this run: ${state['spent'] - spent:.6f} (all stages, incl. billed error bodies)")
     report(out)
     if zoom:
         report(zout)
-        compare(out, zout, methods=True)
-        a = latest(read(out)); z = latest(read(zout))
-        both = [i for i in z if i in a]
-        ca = sum(cost(a[i]) for i in both); cz = sum(cost(z[i]) for i in both)
-        la = [a[i]["seconds"] for i in both if a[i].get("seconds") is not None]
-        lab = [a[i]["seconds"] + z[i]["seconds"] for i in both
-               if a[i].get("seconds") is not None and z[i].get("seconds") is not None]
-        if la and lab:
-            print(f"A alone: ${ca:.4f}, median {statistics.median(la):.3f}s per case | "
-                  f"A+B: ${ca + cz:.4f}, median {statistics.median(lab):.3f}s per case (sequential)")
-
+        zoomstats(out, zout)
 
 def wilson(k, n, z=1.96):
     if not n:
@@ -487,10 +503,13 @@ def mcnemar(b, c):
     return min(1.0, 2 * tail)
 
 
-def compare(p1, p2, methods=False):
+def compare(p1, p2, methods=None):
     """Case-level comparison. methods=False: two runs of the same method (rerun stability).
-    methods=True: raw stage A vs zoom A+B (paired: delta + McNemar, no mean of the two)."""
+    methods=True: raw stage A vs zoom A+B (paired: delta + McNemar, no mean of the two).
+    None: methods if the second file holds stage-B records."""
     a, b = latest(read(p1)), latest(read(p2))
+    if methods is None:
+        methods = any(r.get("stage") == "B" for r in b.values())
     sa = {i: r for i, r in a.items() if r["status"] in ("ok", "wrong_format")}
     sb = {i: r for i, r in b.items() if r["status"] in ("ok", "wrong_format")}
     n = len(load())
@@ -514,12 +533,88 @@ def compare(p1, p2, methods=False):
         print(f"pass {pathlib.Path(p1).stem} {m1:.2f}  pass {pathlib.Path(p2).stem} {m2:.2f}  "
               f"mean {(m1 + m2) / 2:.2f} +- {abs(m1 - m2) / 2:.2f}  (exact McNemar p={p:.4g})")
     line = f"case-level agreement {agree}/{n} ({100 * agree / n:.1f}%), miss->hit {up}, hit->miss {down}"
-    if not methods:  # determinism: byte-identical answers, not just the same hit/miss
-        same = sum(1 for i in sa if sa[i]["status"] == sb[i]["status"] == "ok" and sa[i].get("box") is not None
-                   and sa[i].get("box") == sb[i].get("box") and sa[i].get("confidence") == sb[i].get("confidence"))
-        line += f", identical box+confidence {same}/{n}"
+    if not methods:  # determinism: identical answers, not just the same hit/miss (confidence jitters on its own)
+        same_box = [i for i in sa if sa[i]["status"] == sb[i]["status"] == "ok" and sa[i].get("box") is not None
+                    and sa[i].get("box") == sb[i].get("box")]
+        same = sum(1 for i in same_box if sa[i].get("confidence") == sb[i].get("confidence"))
+        line += f", identical box {len(same_box)}/{n}, identical box+confidence {same}/{n}"
     print(line)
     return agree
+
+
+def paired_ci(xa, xb, reps=10000, seed=0):
+    """95% bootstrap CI (resampling cases) of the paired accuracy delta in pp; deterministic seed."""
+    import random
+    rnd, n = random.Random(seed), len(xa)
+    d = [b - a for a, b in zip(xa, xb)]
+    ds = sorted(100 * sum(d[rnd.randrange(n)] for _ in range(n)) / n for _ in range(reps))
+    return ds[int(0.025 * reps)], ds[int(0.975 * reps) - 1]
+
+
+def zoomstats(pass_file, zoom_file, rerun=None):
+    """Raw stage A vs zoom A+B, paired on the same cases: per cell, per window group, cost and latency.
+    rerun: a second raw pass; its flips vs pass_file are the noise floor for the zoom flips."""
+    a, z = latest(read(pass_file)), latest(read(zoom_file))
+    ok = lambda r: r["status"] in ("ok", "wrong_format")
+    ids = sorted(i for i in z if i in a and ok(a[i]) and ok(z[i]))
+    n_all = len(load())
+    if len(ids) != n_all:
+        print(f"** INCOMPLETE: {len(ids)} of {n_all} cases have both stages scored **")
+    if not ids:
+        return None
+    hit = lambda r: 1 if r.get("hit") else 0
+    def row(name, sel):
+        if not sel:
+            return
+        ha, hz = sum(hit(a[i]) for i in sel), sum(hit(z[i]) for i in sel)
+        up = sum(1 for i in sel if not hit(a[i]) and hit(z[i]))
+        dn = sum(1 for i in sel if hit(a[i]) and not hit(z[i]))
+        print(f"| {name} | {len(sel)} | {100 * ha / len(sel):.2f} | {100 * hz / len(sel):.2f} | "
+              f"{100 * (hz - ha) / len(sel):+.2f} | {up} | {dn} | {mcnemar(up, dn):.3g} |")
+    print("| Group | n | raw A | zoom A+B | delta pp | miss->hit | hit->miss | McNemar p |")
+    print("|---|---|---|---|---|---|---|---|")
+    row("all", ids)
+    cases = load()
+    for p, t in CELLS:
+        row(f"{p} {t}", [i for i in ids if cases[i]["platform"] == p and cases[i]["data_type"] == t])
+    wf = lambda i: z[i].get("window_frac")
+    row("window half (zoom 2x)", [i for i in ids if wf(i) is not None and wf(i) <= ZOOM_F + 0.01])
+    row("window widened", [i for i in ids if wf(i) is not None and ZOOM_F + 0.01 < wf(i) < 0.9999])
+    full = [i for i in ids if wf(i) is not None and wf(i) >= 0.9999]
+    row("window full screen (same image re-asked)", full)
+    row("A wrong_format (no B call)", [i for i in ids if z[i].get("zoom_skipped")])
+    row("A sent at native size (B = upsample only)", [i for i in ids if (a[i].get("scale") or 0) >= 0.999])
+    row("A downscaled (B recovers pixels)", [i for i in ids if 0 < (a[i].get("scale") or 0) < 0.999])
+    lo, hi = paired_ci([hit(a[i]) for i in ids], [hit(z[i]) for i in ids])
+    print(f"paired delta 95% bootstrap CI: {lo:+.2f} to {hi:+.2f} pp")
+    if full:
+        same = sum(1 for i in full if z[i].get("box_crop") == a[i].get("box"))
+        flips = sum(1 for i in full if hit(a[i]) != hit(z[i]))
+        print(f"full-screen group: identical box {same}/{len(full)}, hit flips {flips}/{len(full)} "
+              f"({100 * flips / len(full):.1f}%)")
+    if rerun:
+        r = latest(read(rerun))
+        common = [i for i in ids if i in r and ok(r[i])]
+        rf = sum(1 for i in common if hit(r[i]) != hit(a[i]))
+        zf = sum(1 for i in ids if hit(a[i]) != hit(z[i]))
+        print(f"noise floor: raw rerun flips {rf}/{len(common)} ({100 * rf / max(len(common), 1):.1f}%) vs "
+              f"zoom flips {zf}/{len(ids)} ({100 * zf / len(ids):.1f}%)")
+    both = [i for i in ids if a[i].get("seconds") is not None and z[i].get("seconds") is not None]
+    if both:
+        q = lambda xs: (statistics.median(xs), sorted(xs)[int(0.9 * (len(xs) - 1))])
+        la = q([a[i]["seconds"] for i in both]); lab = q([a[i]["seconds"] + z[i]["seconds"] for i in both])
+        wa = q([a[i]["wall_seconds"] for i in both if a[i].get("wall_seconds") is not None] or [0])
+        wab = q([a[i]["wall_seconds"] + z[i]["wall_seconds"] for i in both
+                 if a[i].get("wall_seconds") is not None and z[i].get("wall_seconds") is not None] or [0])
+        ta = sum((a[i].get("usage") or {}).get("input_tokens") or 0 for i in both)
+        tz = sum((z[i].get("usage") or {}).get("input_tokens") or 0 for i in both)
+        print(f"latency per case over {len(both)} cases (median / p90): A {la[0]:.3f}/{la[1]:.3f}s, "
+              f"A+B {lab[0]:.3f}/{lab[1]:.3f}s; wall incl. retries A {wa[0]:.3f}/{wa[1]:.3f}s, A+B {wab[0]:.3f}/{wab[1]:.3f}s")
+        print(f"input tokens over the same cases: A {ta:,}, B {tz:,} (A+B = {(ta + tz) / max(ta, 1):.2f}x A)")
+    ca = sum(cost(r) for r in read(pass_file)); cz = sum(cost(r) for r in read(zoom_file))
+    print(f"logged cost, all records: A file ${ca:.4f}, zoom file ${cz:.4f}, total ${ca + cz:.4f}")
+    return len(ids)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1].isdigit():
@@ -546,9 +641,15 @@ if __name__ == "__main__":
     cp = sub.add_parser("compare")
     cp.add_argument("pass_a")
     cp.add_argument("pass_b")
+    zs = sub.add_parser("zoomstats")
+    zs.add_argument("pass_file")
+    zs.add_argument("zoom_file")
+    zs.add_argument("--rerun", help="another raw pass of the same method (noise floor), e.g. results/pass1.jsonl")
     args = ap.parse_args()
     if args.cmd == "run":
         run_all(args.pass_id, args.workers, args.max_cost, args.limit, args.annotate, args.zoom)
+    elif args.cmd == "zoomstats":
+        zoomstats(args.pass_file, args.zoom_file, args.rerun)
     elif args.cmd == "compare":
         compare(args.pass_a, args.pass_b)
     else:

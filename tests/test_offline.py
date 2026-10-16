@@ -207,9 +207,15 @@ assert seen[1::2] == [tuple(ra["sent_size"]) for ra in pa], (seen, [ra["sent_siz
 assert all("stage" not in ra for ra in pa)
 calls.clear(); ss.run_all(91, workers=1, max_cost=1.0, limit=3, annotate_mode="none")
 assert len(calls) == 3 and not (tmp / "zoom91.jsonl").exists()
-# Z4. cost cap counts A + B: 0.00017 per call, cap 0.0005 -> stops after 2 cases (4 calls)
+# Z4. cost cap counts A + B: 0.00017 per call, cap 0.0005 -> A+B, A+B would pass the cap, so A, then stop (3 calls)
 calls.clear(); ss.run_all(92, workers=1, max_cost=0.0005, limit=20, annotate_mode="none", zoom=True)
-assert len(calls) == 4, len(calls)
+assert len(calls) == 3, len(calls)
+# a rerun with the cap already reached makes no call at all
+calls.clear(); ss.run_all(92, workers=1, max_cost=0.0005, limit=20, annotate_mode="none", zoom=True)
+assert len(calls) == 0, len(calls)
+# raising the cap resumes: B of case 1 first (A not repeated)
+calls.clear(); ss.run_all(92, workers=1, max_cost=0.0007, limit=1, annotate_mode="none", zoom=True)
+assert len(calls) == 1 and sum(1 for x in ss.read(tmp / "pass92.jsonl") if x["i"] == 1) == 1
 # Z5. resume: B infra error on case 0 -> rerun calls only B for it, A not repeated
 calls.clear()
 def b_fails_once(s, q):
@@ -273,4 +279,22 @@ mock(lambda s, q: (answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}
 ss.run_all(88, workers=1, max_cost=1.0, limit=1, annotate_mode="none", zoom=True)
 pr = json.loads((tmp / "pass88.progress.json").read_text())
 assert pr["a_resumed_this_run"] == 1 and pr["a_scored_total"] == 3 and pr["zoom_scored_total"] == 3, pr
+# Z10. review round 2 fixes
+# full-screen window: B's numbers are kept exactly (no float round trip)
+fb = {"left": 0.31, "right": 0.68, "top": 0.55, "bottom": 0.62}
+mock(lambda s, q: (answer(fb), 0.5, 1))
+c = CASES[1095]; Wf, Hf = Image.open(ss.DATA / "screenspotv2_image" / c["img_filename"]).size
+r = ss.run_one(1095, cases=CASES, out=tmp / "z.jsonl", pass_id="zt", annotate_mode="none", window=(0, 0, Wf, Hf),
+               size=(1568, 882))
+assert r["box"] == fb and r["box_crop"] == fb
+# a half-written last line (hard kill) is ended before the next append: the next record stays readable
+tr = tmp / "trunc.jsonl"
+tr.write_text('{"i": 1, "status": "ok"}\n{"i": 2, "sta')
+ss.write(tr, {"i": 3, "status": "ok"})
+assert [x["i"] for x in ss.read(tr)] == [1, 3]
+# compare auto-detects a zoom file as a method comparison; zoomstats runs on complete files
+assert ss.compare(full, zfull) == 1272
+assert ss.zoomstats(full, zfull, rerun=full) == 1272
+lo, hi = ss.paired_ci([0] * 100, [1] * 10 + [0] * 90)
+assert 4 < lo < 10 < hi < 17, (lo, hi)
 print("\nALL OFFLINE TESTS PASSED")
