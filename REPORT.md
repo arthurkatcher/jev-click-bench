@@ -94,7 +94,7 @@ Full write-up: `analysis/LABELS-audit.md`. The per-case verdicts are in `analysi
 | 21:49-22:01 | Pass 2 + zoom run: A2 84.36%, A+B 87.89%, 0 errors, $0.38 |
 | 22:05-23:15 | Deep audit of all three runs (rescore, image rebuild, logs, billing) and label audit of the 271 missed cases |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), then the audit commit.
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
 
 ## 3. Setup
 
