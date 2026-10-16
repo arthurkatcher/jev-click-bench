@@ -159,4 +159,91 @@ with open(out, "a") as f:
 assert len(ss.read(out)) > 0
 # 16. compare two complete passes
 assert ss.compare(full, full) == 1272
+
+# ---- zoom method (stage B) ----
+import base64, io
+from PIL import Image
+jev.decide = jev_mod.decide = None  # re-mocked below
+importlib.reload(ss); ss.OUT = tmp; jev.balance = lambda: 0.5
+W, H = 2560, 1440
+B = lambda l, t, r, b: {"box": {"left": l, "top": t, "right": r, "bottom": b}}
+# Z1. window: small box -> half the screen, centred; corner -> slid inside; wide box -> grown; full-width -> whole screen
+assert ss.zoom_window(B(0.49, 0.49, 0.51, 0.51), W, H) == (640, 360, 1280, 720)
+assert ss.zoom_window(B(0.0, 0.0, 0.02, 0.02), W, H) == (0, 0, 1280, 720)
+assert ss.zoom_window(B(0.97, 0.97, 0.99, 0.99), W, H) == (1280, 720, 1280, 720)
+x0, y0, cw, ch = ss.zoom_window(B(0.1, 0.5, 0.7, 0.55), W, H)  # 0.6 wide -> k = 0.72
+assert (cw, ch) == (1843, 1037) and x0 <= 0.1 * W and x0 + cw >= 0.7 * W, (x0, cw)
+assert ss.zoom_window(B(0.0, 0.1, 0.95, 0.15), W, H) == (0, 0, W, H)
+x0, y0, cw, ch = ss.zoom_window(B(1.02, 0.5, 0.95, 0.4), W, H)  # inverted + out of range: sorted, clamped, inside
+assert 0 <= x0 and x0 + cw <= W and 0 <= y0 and y0 + ch <= H and cw == 1280
+# Z2. run_one with a window: sent image = A's sent size, box mapped back to the full screenshot, scored as usual
+seen = []
+def capture(fn):
+    def f(s, q):
+        seen.append(Image.open(io.BytesIO(base64.b64decode(s[1]["image_url"]["url"].split(",", 1)[1]))).size)
+        return fn(s, q)
+    return f
+c = CASES[1]; Wc, Hc = Image.open(ss.DATA / "screenspotv2_image" / c["img_filename"]).size
+x, y, w, h = c["bbox"]
+a = {"box": {"left": (x + w * .4) / Wc, "right": (x + w * .6) / Wc, "top": (y + h * .4) / Hc, "bottom": (y + h * .6) / Hc}}
+win = ss.zoom_window(a, Wc, Hc)
+x0, y0, cw, ch = win
+crop_box = {"left": (x + w * .3 - x0) / cw, "right": (x + w * .7 - x0) / cw,
+            "top": (y + h * .3 - y0) / ch, "bottom": (y + h * .7 - y0) / ch}
+mock(capture(lambda s, q: (answer(crop_box), 0.5, 1)))
+r = ss.run_one(1, cases=CASES, out=tmp / "z.jsonl", pass_id="zt", annotate_mode="none", window=win, size=(1568, 1090))
+assert seen[-1] == (1568, 1090) and r["hit"] is True and r["stage"] == "B" and r["box_crop"] == crop_box, r
+assert abs(r["box"]["left"] - (x + w * .3) / Wc) < 1e-9 and abs(r["box"]["bottom"] - (y + h * .7) / Hc) < 1e-9
+assert r["window"] == list(win) and r["window_frac"] == round(cw / Wc, 4)
+# the same crop box read as a full-screen box would miss: mapping really is applied
+assert not ss.inside([(crop_box["left"] + crop_box["right"]) / 2, (crop_box["top"] + crop_box["bottom"]) / 2], r["gt"])
+# Z3. run_all --zoom: A into passN, B into zoomN, B image = A's sent size, raw mode untouched
+seen.clear(); calls.clear()
+mock(capture(lambda s, q: (calls.append(1) or answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}), 0.3, 1)))
+ss.run_all(90, workers=1, max_cost=1.0, limit=4, annotate_mode="none", zoom=True)
+pa, pz = ss.read(tmp / "pass90.jsonl"), ss.read(tmp / "zoom90.jsonl")
+assert len(calls) == 8 and len(pa) == 4 and len(pz) == 4 and all(z["stage"] == "B" and z["pass"] == "z90" for z in pz)
+assert seen[1::2] == [tuple(ra["sent_size"]) for ra in pa], (seen, [ra["sent_size"] for ra in pa])
+assert all("stage" not in ra for ra in pa)
+calls.clear(); ss.run_all(91, workers=1, max_cost=1.0, limit=3, annotate_mode="none")
+assert len(calls) == 3 and not (tmp / "zoom91.jsonl").exists()
+# Z4. cost cap counts A + B: 0.00017 per call, cap 0.0005 -> stops after 2 cases (4 calls)
+calls.clear(); ss.run_all(92, workers=1, max_cost=0.0005, limit=20, annotate_mode="none", zoom=True)
+assert len(calls) == 4, len(calls)
+# Z5. resume: B infra error on case 0 -> rerun calls only B for it, A not repeated
+calls.clear()
+def b_fails_once(s, q):
+    calls.append(1)
+    if len(calls) == 2:
+        raise jev.JevError("ReadTimeout", None, None, 5)
+    return answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}), 0.3, 1
+mock(b_fails_once)
+ss.run_all(93, workers=1, max_cost=1.0, limit=3, annotate_mode="none", zoom=True)
+assert ss.latest(ss.read(tmp / "zoom93.jsonl"))[0]["status"] == "infra_error"
+calls.clear(); mock(lambda s, q: (calls.append(1) or answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}), 0.3, 1))
+ss.run_all(93, workers=1, max_cost=1.0, limit=3, annotate_mode="none", zoom=True)
+assert len(calls) == 1 + 2 * 2, len(calls)  # B of case 0, then A+B of cases 3, 4
+assert sum(1 for x in ss.read(tmp / "pass93.jsonl") if x["i"] == 0) == 1
+assert ss.latest(ss.read(tmp / "zoom93.jsonl"))[0]["status"] == "ok"
+# Z6. A wrong_format -> zoom record is the same miss, no B call, no cost
+calls.clear()
+mock(lambda s, q: (calls.append(1) or answer({"left": "x", "right": 0.2, "top": 0.1, "bottom": 0.2}), 0.5, 1))
+ss.run_all(94, workers=1, max_cost=1.0, limit=2, annotate_mode="none", zoom=True)
+pz = ss.read(tmp / "zoom94.jsonl")
+assert len(calls) == 2 and all(z["status"] == "wrong_format" and z["zoom_skipped"] and "usage" not in z for z in pz)
+# Z7. a fatal 402 on B stops the run
+calls.clear()
+def b_402(s, q):
+    calls.append(1)
+    if len(calls) == 2:
+        raise jev.JevError("HTTP 402", 402, "out of credit", 1)
+    return answer({"left": 0.4, "right": 0.6, "top": 0.4, "bottom": 0.6}), 0.3, 1
+mock(b_402)
+ss.run_all(95, workers=1, max_cost=1.0, limit=10, annotate_mode="none", zoom=True)
+assert len(calls) == 2, len(calls)
+# Z8. report + compare read a zoom file like any pass
+zfull = tmp / "zoom97.jsonl"
+for line in open(full):
+    rec = json.loads(line); rec.update(stage="B", **{"pass": "z97"}); ss.write(zfull, rec)
+assert ss.report(zfull) is True and ss.compare(full, zfull) == 1272
 print("\nALL OFFLINE TESTS PASSED")

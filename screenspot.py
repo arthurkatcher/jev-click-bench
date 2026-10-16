@@ -6,7 +6,7 @@ Every case gets a record. A malformed answer is a miss ("wrong_format"), like th
 An infrastructure failure ("infra_error") is not scored: it is retried by re-running the pass.
 
   python3 screenspot.py 0 [--dry]               # one case, dev log results/runs.jsonl
-  python3 screenspot.py run --pass 1 [--workers 4] [--max-cost 0.30] [--limit N]
+  python3 screenspot.py run --pass 1 [--workers 4] [--max-cost 0.30] [--limit N] [--zoom]
   python3 screenspot.py report results/pass1.jsonl
   python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
 """
@@ -85,11 +85,36 @@ def now():
     return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 
 
-def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode="misses"):
+ZOOM_F, ZOOM_MARGIN = 0.5, 0.1  # frozen before the zoom run (README "Zoom method")
+
+
+def zoom_window(a, W, H):
+    """Stage-B crop from stage A's record: half of each side of the screenshot around A's box,
+    grown to hold A's whole box + 10% margin per side (capped at the full screen), same aspect as
+    the screenshot, slid to stay inside it. -> (x0, y0, cw, ch) in original pixels."""
+    b = {k: min(1.0, max(0.0, v)) for k, v in a["box"].items()}
+    l, r = sorted((b["left"], b["right"]))
+    t, bo = sorted((b["top"], b["bottom"]))
+    k = max(ZOOM_F, min(1.0, max((r - l), (bo - t)) * (1 + 2 * ZOOM_MARGIN)))
+    cw, ch = max(1, round(k * W)), max(1, round(k * H))
+    x0 = min(max(round((l + r) / 2 * W - cw / 2), 0), W - cw)
+    y0 = min(max(round((t + bo) / 2 * H - ch / 2), 0), H - ch)
+    return x0, y0, cw, ch
+
+
+def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode="misses", window=None, size=None):
+    """window=(x0, y0, cw, ch) in original px + size=(w, h): stage B of the zoom method. The crop is
+    resized to `size` (stage A's sent size, so the same tokens) and the box is mapped back to the
+    full screenshot before scoring. Everything else (prompt, question, scoring) is identical."""
     case = (cases or load())[i]
     orig = Image.open(DATA / "screenspotv2_image" / case["img_filename"])
     W, H = orig.size
-    img, scale = jev.fit(orig)
+    if window:
+        x0, y0, cw, ch = window
+        img = orig.crop((x0, y0, x0 + cw, y0 + ch)).resize(tuple(size), resample=3)  # 3 = BICUBIC, as fit()
+        scale = size[0] / cw
+    else:
+        img, scale = jev.fit(orig)
     state, questions, text = request(case, img)
     x, y, w, h = case["bbox"]
     gt = [x / W, y / H, (x + w) / W, (y + h) / H]  # normalized x1, y1, x2, y2 (SeeClick conversion)
@@ -97,6 +122,8 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
            "source": case["data_source"], "type": case["data_type"], "instruction": case["instruction"],
            "instructions_sent": text, "prompt_version": PROMPT_VERSION, "template_hash": TEMPLATE_HASH,
            "requested_model": jev.MODEL, "orig_size": [W, H], "sent_size": list(img.size), "gt": gt}
+    if window:
+        rec.update(stage="B", window=list(window), window_frac=round(cw / W, 4))
     if dry:
         print(json.dumps(rec, indent=1), "\nquestions:", json.dumps(questions),
               f"\nimage part: {len(state[1]['image_url']['url']) // 1024} KB base64")
@@ -139,7 +166,12 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
         rec.update(status="wrong_format", hit=False, hit_tolerant=False, error=f"{type(e).__name__}: {e}")
         write(out, rec)
         return rec
-    point = [(b["left"] + b["right"]) / 2, (b["top"] + b["bottom"]) / 2]
+    out_of_range = any(not 0 <= v <= 1 for v in b.values())  # edges outside the image Jev saw
+    if window:  # crop fractions -> full-screenshot fractions
+        rec["box_crop"] = b
+        b = {"left": (x0 + b["left"] * cw) / W, "right": (x0 + b["right"] * cw) / W,
+             "top": (y0 + b["top"] * ch) / H, "bottom": (y0 + b["bottom"] * ch) / H}
+    point =[(b["left"] + b["right"]) / 2, (b["top"] + b["bottom"]) / 2]
     # hit = the official rule exactly (SeeClick / ScreenSpot-Pro: strict float compare, edges inclusive).
     # hit_tolerant adds 1e-9 so float noise on a 2-decimal centre that sits exactly on an edge cannot
     # flip it; reported next to the headline, never instead of it.
@@ -148,7 +180,6 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
     on_edge = any(abs(point[k % 2] - gt[k]) < EPS for k in range(4))
     # Official rule scores the centre whatever the box shape or range; both are flagged and counted.
     degenerate = b["right"] <= b["left"] or b["bottom"] <= b["top"]
-    out_of_range = any(not 0 <= v <= 1 for v in b.values())
     rec.update(status="ok", box=b, point=point, confidence=conf, hit=hit, hit_tolerant=hit_tolerant,
                degenerate=degenerate, out_of_range=out_of_range, on_edge=on_edge)
     if not isinstance((meta.get("usage") or {}).get("cost") if isinstance(meta.get("usage"), dict) else None, (int, float)):
@@ -206,18 +237,27 @@ def latest(recs):
     return by
 
 
-def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses"):
+def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses", zoom=False):
+    """zoom=False: the raw bench. zoom=True: the same raw call (stage A, into pass<N>.jsonl, so it is
+    also a plain raw pass) followed by stage B on the zoom crop (into zoom<N>.jsonl). The cost cap
+    covers both files."""
     cases = load()
     out = OUT / f"pass{pass_id}.jsonl"
-    done = {i for i, r in latest(read(out)).items() if r["status"] in ("ok", "wrong_format")} if out.exists() else set()
-    spent = sum(cost(r) for r in read(out)) if out.exists() else 0.0
+    zout = OUT / f"zoom{pass_id}.jsonl"
+    scored = lambda path: ({i: r for i, r in latest(read(path)).items() if r["status"] in ("ok", "wrong_format")}
+                           if path.exists() else {})
+    a_done = scored(out)
+    z_done = scored(zout) if zoom else {}
+    done = {i for i in a_done if not zoom or i in z_done}
+    spent = sum(cost(r) for path in ((out, zout) if zoom else (out,)) if path.exists() for r in read(path))
     todo = [c["i"] for c in cases if c["i"] not in done][:limit]
-    print(f"pass {pass_id}: {len(done)} done, {len(todo)} to run, ${spent:.4f} logged so far, cap ${max_cost}")
+    print(f"pass {pass_id}{' + zoom' if zoom else ''}: {len(done)} done, {len(todo)} to run, "
+          f"${spent:.4f} logged so far, cap ${max_cost}")
     before = jev.balance()
     print(f"key balance before: {before}")
     stop = threading.Event()
     state = {"spent": spent, "n": 0, "hits": 0, "ok": 0, "wrong_format": 0, "infra_error": 0, "secs": [],
-             "tokens": 0, "t0": time.time()}
+             "tokens": 0, "t0": time.time(), "zoom_hits": 0, "zoom_scored": 0}
     prog = OUT / f"pass{pass_id}.progress.json"
 
     def progress(final=False):
@@ -233,22 +273,53 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
             "spent_logged_total": round(state["spent"], 6), "input_tokens_this_run": state["tokens"],
             "median_latency_s": round(statistics.median(state["secs"]), 3) if state["secs"] else None,
             "elapsed_s": round(el, 1), "eta_s": round(el / n * (len(todo) - n), 1) if n else None,
-            "stopped": stop.is_set()}))
+            "stopped": stop.is_set(), "zoom": zoom, "zoom_scored_this_run": state["zoom_scored"],
+            "zoom_running_acc_this_run": round(100 * state["zoom_hits"] / state["zoom_scored"], 2)
+            if state["zoom_scored"] else None}))
         os.replace(tmp, prog)
+
+    def stage_b(i, a):
+        """Stage B for case i from stage A's scored record. A wrong_format A has no box to zoom on:
+        the zoom answer is the same miss (copied, no cost)."""
+        if a["status"] != "ok":
+            z = {k: v for k, v in a.items() if k not in ("usage", "raw")}
+            z.update({"pass": f"z{pass_id}", "stage": "B", "zoom_skipped": "stage A wrong_format", "ts": now()})
+            write(zout, z)
+            return z
+        W, H = a["orig_size"]
+        return run_one(i, cases=cases, out=zout, pass_id=f"z{pass_id}", annotate_mode=annotate_mode,
+                       window=zoom_window(a, W, H), size=a["sent_size"])
 
     def job(i):
         if stop.is_set():
             return
-        rec = run_one(i, cases=cases, out=out, pass_id=str(pass_id), annotate_mode=annotate_mode)
+        resumed = i in a_done
+        if resumed:  # A scored before, only B is missing
+            rec, new_cost = a_done[i], 0.0
+        else:
+            rec = run_one(i, cases=cases, out=out, pass_id=str(pass_id), annotate_mode=annotate_mode)
+            new_cost = cost(rec)
+        z = None
+        if zoom and rec["status"] in ("ok", "wrong_format") and not rec.get("fatal") and not stop.is_set():
+            z = stage_b(i, rec)
         with _lock:
             state["n"] += 1
-            state["spent"] += cost(rec)
-            state[rec["status"]] = state.get(rec["status"], 0) + 1
-            state["hits"] += 1 if rec.get("hit") else 0
-            if rec.get("seconds") is not None:
-                state["secs"].append(rec["seconds"])
-            u = rec.get("usage") if isinstance(rec.get("usage"), dict) else {}
-            state["tokens"] += u.get("input_tokens") or 0 if isinstance(u.get("input_tokens"), int) else 0
+            state["spent"] += new_cost + (cost(z) if z else 0.0)
+            if z:
+                if z["status"] in ("ok", "wrong_format"):
+                    state["zoom_scored"] += 1
+                    state["zoom_hits"] += 1 if z.get("hit") else 0
+                if z.get("fatal"):
+                    print(f"FATAL {z['error']} on #{i} (zoom): stopping the run", file=sys.stderr)
+                    stop.set()
+            if not resumed:  # the A counters are this run's A calls only
+                state[rec["status"]] = state.get(rec["status"], 0) + 1
+                state["hits"] += 1 if rec.get("hit") else 0
+                if rec.get("seconds") is not None:
+                    state["secs"].append(rec["seconds"])
+            for x in ((rec,) if not resumed else ()) + ((z,) if z else ()):
+                u = x.get("usage") if isinstance(x.get("usage"), dict) else {}
+                state["tokens"] += u["input_tokens"] if isinstance(u.get("input_tokens"), int) else 0
             progress()
             if rec.get("fatal"):
                 print(f"FATAL {rec['error']} on #{i}: stopping the run", file=sys.stderr)
@@ -268,6 +339,9 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         print(f"key balance after: {after:.6f}  (billed this run: ${before - after:.6f}, "
               f"logged this run: ${state['spent'] - spent:.6f})")
     report(out)
+    if zoom:
+        report(zout)
+        compare(out, zout)
 
 
 def wilson(k, n, z=1.96):
@@ -397,6 +471,7 @@ if __name__ == "__main__":
     r.add_argument("--max-cost", type=float, default=0.30)
     r.add_argument("--limit", type=int)
     r.add_argument("--annotate", choices=["misses", "all", "none"], default="misses")
+    r.add_argument("--zoom", action="store_true", help="A then B on the zoom crop (README: Zoom method)")
     rp = sub.add_parser("report")
     rp.add_argument("path")
     cp = sub.add_parser("compare")
@@ -404,7 +479,7 @@ if __name__ == "__main__":
     cp.add_argument("pass_b")
     args = ap.parse_args()
     if args.cmd == "run":
-        run_all(args.pass_id, args.workers, args.max_cost, args.limit, args.annotate)
+        run_all(args.pass_id, args.workers, args.max_cost, args.limit, args.annotate, args.zoom)
     elif args.cmd == "compare":
         compare(args.pass_a, args.pass_b)
     else:

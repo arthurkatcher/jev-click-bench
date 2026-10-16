@@ -20,6 +20,8 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction 
     python3 screenspot.py run --pass 1 --workers 4      # full pass (cap $0.30 by default)
     python3 screenspot.py report results/pass1.jsonl
     python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
+    python3 screenspot.py run --pass 2 --zoom --max-cost 0.40   # raw pass 2 + zoom in one run
+    python3 screenspot.py compare results/pass2.jsonl results/zoom2.jsonl   # A vs A+B, flips both ways
 
 ## Protocol (frozen before the full run)
 - Prompt v2: box instruction `In the screenshot, the UI element to use for this task: <instruction>`, instruction whitespace-normalised and passed unquoted (21 contain their own quotes, 40 start with "click", 17 with "tap"). No wording iteration on ScreenSpot-v2 rows; any wording ablation runs off-benchmark and is reported separately.
@@ -31,6 +33,14 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction 
 - Pass 2 = same protocol, own file. Report pass 1 as the headline, pass 2, the case-level agreement and mean ± half the difference. Never best-of-two or union.
 - Model pinned to `typesafe/jev-1.14` (jev-latest flips ~Oct 21); the resolved dated id is logged per case.
 - Stated caveats: OpenRouter runs every image request in TypeSafe's long-context mode ("slower and less accurate"); 1,034 of 1,272 cases are downscaled to fit 1568 px (median 0.62x, mean 0.65x, min 0.54x), which hurts small icons.
+
+## Zoom method (frozen Oct 16 2026, before any zoom call)
+A separate method, never the headline. Two `box` calls per case:
+- Stage A = the raw call, byte-identical to a normal pass, written to `results/pass<N>.jsonl`. So a zoom run is also a full raw pass (pass 2 = the rerun/stability check).
+- Stage B = the same prompt and question on a crop of the ORIGINAL screenshot: half of each side (`ZOOM_F = 0.5`) centred on A's box, grown to contain A's whole box + 10% margin per side (`ZOOM_MARGIN`, capped at the full screen), same aspect ratio, slid to stay inside the image. The crop is resized (bicubic) to A's sent size, so B costs the same tokens as A and the zoom is 1/k (2x for a small box). B's box (fractions of the crop) is mapped back to the full screenshot and scored with the same official rule, written to `results/zoom<N>.jsonl` (`stage: "B"`, `window`, `window_frac`, raw `box_crop`).
+- B runs on every case (no confidence gate). A wrong_format A gives a copied wrong_format zoom record, no call. Resume re-runs only the missing stage; `--max-cost` covers both stages; 401/402/403 on either stage stops the run.
+- Report: raw pass 1 (headline), raw pass 2 (stage A) + pass-1/pass-2 agreement, zoom (A+B) + miss->hit / hit->miss vs its own A, cost and latency of A+B vs A.
+- How the crop was chosen (stated in any write-up): from pass-1 answers, offline, no calls. Accuracy by target size saturates around 60 sent px; a replay estimated ~86% for this crop (anchored model, each case keeps its pass-1 difficulty) with diminishing returns past 2x and targets falling out of tighter crops; centring on A's click alone cut the target out of too-wide misses (#744), so the window must contain A's box. Choosing the crop from pass-1 data is light test-set selection; 0.5 is also the round 2x choice.
 
 ## Budget
 Cost = input tokens x $0.042/M, about 614 + 0.0024 tokens per sent pixel: ~$0.19 per pass. The current key (~$0.63 left) fits two passes. `--max-cost` (default $0.30) stops a pass early.
