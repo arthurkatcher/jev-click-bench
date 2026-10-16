@@ -1,0 +1,213 @@
+i,platform,type,source,instruction,hit,confidence,file,dist_orig_px,dist_sent_px,dist_pct_diag,off_x_rel,off_y_rel,dir,tgt_sent_w,tgt_sent_h,jev_box_sent_w,jev_box_sent_h,box_contains_target_centre
+774,desktop,icon,macos,rotate title box,False,0.54,pc_9eebe928-6d8a-4de5-8212-039d0282b082.png,0.44,0.315,0.016,0.283,0.507,down,49.358,42.92,15.68,24.378,False
+752,desktop,icon,macos,back to previous folder,False,0.84,pc_01625ab1-9757-4dc4-8da0-a9c946d3b76a.png,0.48,0.471,0.026,0.508,0.123,-right,58.874,44.155,94.08,43.861,True
+805,desktop,icon,macos,enlarge the font,False,0.76,pc_97ce9c11-f20b-4294-982a-f01241c81576.png,0.8,0.8,0.043,-0.513,0.069,-left,62.0,65.0,55.2,62.2,False
+783,desktop,icon,macos,select python interpreter,False,0.49,pc_8c77197f-8be9-485a-bf32-989a8a66fbae.png,1.3,1.131,0.057,-0.02,0.525,down,832.728,44.377,878.08,73.197,True
+535,desktop,icon,windows,maximize window,False,0.95,pc_488287f0-9da5-4c6a-b236-109d3df56137.png,1.4,1.4,0.127,-0.534,0.015,-left,41.0,33.0,38.4,21.6,False
+746,desktop,icon,macos,back to previous page,False,0.63,pc_6d0b3e39-872b-48ec-b894-0490106eb629.png,2.0,1.568,0.082,-0.529,0.123,-left,54.88,58.8,47.04,32.269,False
+591,desktop,icon,windows,input a url,False,0.25,pc_6a8d5384-ca12-4ae2-b14c-4c9dc08d4896.png,2.2,1.797,0.1,-0.018,0.563,down,1266.651,28.583,1160.32,26.46,False
+502,desktop,icon,windows,minimize this window,False,0.57,pc_5e09e8e9-7ef6-44be-ad54-aeaeac151897.png,2.4,2.4,0.218,0.439,0.58,down,36.0,30.0,48.0,32.4,False
+527,desktop,icon,windows,undo,False,0.87,pc_1f371830-d909-41ac-a340-921a594f05b0.png,2.4,2.4,0.218,0.188,0.58,down,32.0,30.0,28.8,32.4,False
+524,desktop,icon,windows,view the personal account,False,0.69,pc_bd6711e1-ddc1-4873-8cf1-19654285f4ea.png,3.1,3.1,0.281,0.22,0.597,down,40.0,32.0,38.4,27.0,False
+821,desktop,icon,shop,center the selected text,False,0.58,pc_oyo43s.png,5.814,3.561,0.198,0.645,-0.513,up-right,24.5,19.6,0.0,35.28,False
+600,desktop,icon,windows,set the second photo as wallpaper,False,0.8,pc_4392332d-683f-4746-bbb2-e9287d9cdae0.png,5.6,5.6,0.508,-0.569,0.04,-left,81.0,84.0,86.4,54.0,False
+518,desktop,icon,windows,open settings,False,0.83,pc_a8b0f843-7aaf-4369-ac2b-a121f1ccb024.png,6.0,6.0,0.545,0.646,-0.023,-right,41.0,39.0,57.6,21.6,True
+501,desktop,icon,windows,close this window,False,0.87,pc_ede36f9b-1154-4f76-b7f8-c15d7d3f9b6e.png,7.6,7.6,0.69,-0.673,0.065,-left,44.0,34.0,57.6,21.6,False
+618,desktop,icon,windows,"click the ""back to previous page"" button",False,0.82,pc_17b94559-9897-4b8e-ae34-c47ce5b5d46f.png,8.82,8.82,0.583,0.715,0.173,-right,41.0,30.0,83.72,27.81,True
+533,desktop,icon,windows,fill in red,False,0.7,pc_61beef4d-1a93-47b3-8aff-ba0f7774cb43.png,9.8,9.8,0.89,-1.076,-0.129,-left,17.0,17.0,38.4,16.2,True
+817,desktop,icon,shop,add current webpage to favourites,False,0.61,pc_krzgko.png,24.8,15.19,0.844,1.327,0.057,-right,18.375,17.15,47.04,26.46,False
+515,desktop,icon,windows,network and internet settings,False,0.38,pc_ad16765f-de52-4903-b406-fb5213b94db9.png,16.8,16.8,1.525,-1.009,-0.236,-left,33.0,44.0,48.0,32.4,False
+707,desktop,icon,macos,add a device,False,0.51,pc_2773ea59-8493-4c89-957a-d2ec661e6384.png,18.56,18.56,1.009,0.864,0.142,-right,51.0,47.0,133.2,38.04,True
+779,desktop,icon,macos,debug,False,0.64,pc_ac718327-53b2-49c1-8707-d12220913fc1.png,27.5,18.748,0.984,-0.974,0.471,-left,39.541,39.541,47.04,43.359,False
+731,desktop,icon,macos,delete this email,False,0.7,pc_75eae2f4-193e-4365-a5f1-b9b5340d02ff.png,26.04,21.422,1.118,-0.789,0.195,-left,74.04,87.202,62.72,55.119,False
+760,desktop,icon,macos,save file,False,0.52,pc_e73c6749-043f-4a24-8e56-6c829f78255d.png,23.591,21.632,1.021,0.87,0.614,down-right,55.934,55.934,109.76,99.747,True
+580,desktop,icon,windows,adjust the volume,False,0.49,pc_8c0c6fa3-39d8-4633-aeb1-6544036c85bf.png,25.0,25.0,2.27,-1.333,-0.325,-left,30.0,36.0,67.2,27.0,False
+606,desktop,icon,windows,click to play the next track,False,0.89,pc_471e7c2d-8c16-4626-9b8e-7e0fd79e3a32.png,27.4,27.4,2.488,-1.384,0.023,-left,31.0,52.0,76.8,32.4,False
+647,desktop,icon,windows,rotate left,False,0.41,pc_050e2feb-60bf-401e-b6b0-28c0fe490347.png,29.28,29.28,1.928,1.251,-0.021,-right,39.0,44.0,47.92,46.7,False
+649,desktop,icon,windows,view in youtube,False,0.77,pc_7b437f7a-8819-467b-b5a6-96e8588f15a2.png,58.24,58.24,3.826,-1.382,-0.084,-left,66.0,56.0,96.16,56.04,False
+833,desktop,icon,shop,"adjust the options of  ""show previous""",False,0.39,pc_zuyj00.png,260.8,141.991,7.679,-1.511,-0.028,-left,140.467,28.856,517.44,39.2,True
+640,desktop,icon,windows,insert an image,False,0.19,pc_639ab093-46ed-4332-9229-125647aad9da.png,185.66,185.66,38.796,-5.141,-0.069,-left,40.0,36.0,28.96,21.91,False
+734,desktop,icon,macos,view attachment,False,0.11,pc_1e16b18c-5d91-4155-9e49-4ad5d9453fc7.png,211.88,211.88,12.808,2.805,-1.329,up-right,90.0,52.0,9.7,13.4,False
+740,desktop,icon,macos,open the image in memo,False,0.34,pc_fe30b885-865a-442e-a8f5-0e9924f256fd.png,481.85,481.85,26.429,0.161,-1.155,up,1183.0,736.0,76.08,65.5,False
+744,desktop,icon,macos,next page,False,0.22,pc_1d6fb8dc-8ba5-4c0d-a532-188e5d579686.png,689.46,541.62,28.958,-9.227,0.084,-left,62.06,112.337,1176.0,61.18,True
+827,desktop,text,shop,do not save this file,False,0.84,pc_suf989.png,1.4,0.858,0.048,0.118,0.528,down,129.238,30.625,125.44,35.28,True
+589,desktop,text,windows,go to the desktop,False,0.3,pc_79eaf625-93f5-42a4-977e-71aba5418ff4.png,1.1,1.1,0.1,-0.112,0.55,down,145.0,22.0,57.6,37.8,True
+563,desktop,text,windows,switch to english,False,0.59,pc_ecf34119-ce66-4699-a169-60e5279a650f.png,4.8,4.8,0.436,-0.042,0.575,down,299.0,64.0,268.8,97.2,True
+816,desktop,text,shop,click to restart the computer,False,0.45,pc_js1st2.png,8.2,5.022,0.279,0.025,-0.765,up,163.538,18.988,78.4,52.92,True
+564,desktop,text,windows,open the file,False,0.51,pc_445877f4-ba58-468b-97b6-e770b1a9f02a.png,9.8,9.8,0.89,-0.007,0.85,down,282.0,28.0,259.2,54.0,True
+688,desktop,text,macos,switch to device,False,0.62,pc_33eb9249-4ee4-4752-9541-8466efda3845.png,13.32,10.178,0.507,-0.571,-0.074,-left,142.893,34.386,125.44,37.641,False
+799,desktop,text,macos,switch to apps,False,0.82,pc_2c2b6cbd-39cf-4bd2-80aa-d953890c21e5.png,13.04,11.513,0.578,-0.551,0.084,-left,226.901,38.847,203.84,36.869,False
+814,desktop,text,shop,open google drive,False,0.89,pc_gtda7d.png,31.403,19.234,1.069,-0.874,0.505,down-left,51.45,48.388,109.76,61.74,True
+658,desktop,text,windows,check microphone,False,0.29,pc_731487b7-f192-464c-8fc7-95af0962861f.png,29.33,29.33,4.853,-0.384,1.043,down,334.0,54.0,35.91,49.94,False
+727,desktop,text,macos,view firewall,False,0.45,pc_cb3fc7f0-9ed8-4692-8610-0f32b929a5a3.png,34.68,34.68,1.952,-0.749,0.236,-left,139.0,46.0,373.52,46.96,True
+623,desktop,text,windows,view the game for me,False,0.53,pc_5377c04c-7d8f-4377-b1ed-d7994722871f.png,40.28,40.28,4.007,-0.112,1.685,down,132.0,34.0,93.6,76.08,False
+625,desktop,text,windows,click to choose shapes,False,0.27,pc_70f27c18-7de8-4445-b6fe-202fa17bbe04.png,45.26,45.26,4.294,-0.246,1.176,down,42.0,67.0,33.56,191.4,True
+718,desktop,text,macos,switch to privacy,False,0.68,pc_63f20c0b-0abc-4cd5-a3cb-2ea0cb2ba3c8.png,45.68,45.68,2.527,-0.813,-0.001,-left,146.0,46.0,280.56,48.72,True
+719,desktop,text,macos,switch to alerts mode,False,0.4,pc_514bf9d5-ca63-4d33-94cb-dc1b11994199.png,309.24,309.24,15.661,-1.959,-0.034,-left,212.0,186.0,173.68,130.86,False
+262,mobile,icon,ios,remove maps from the desktop,False,0.67,mobile_3d3cacff-2019-4577-9395-21b45a0c548b.png,5.2,3.455,0.181,0.596,0.472,-right,35.878,38.536,62.72,21.793,False
+264,mobile,icon,ios,remove chrome from the desktop,False,0.74,mobile_6778b255-174f-401e-ab98-b5bbe554a141.png,5.2,3.455,0.181,0.59,0.289,-right,38.536,37.207,62.72,32.689,True
+346,mobile,icon,android,open night mode,False,0.43,mobile_b7323848-f2e7-492c-95aa-e33e731ff196.png,7.0,4.573,0.266,0.079,0.621,down,80.36,37.893,70.56,78.4,True
+25,mobile,icon,ios,search in this note,False,0.89,mobile_a8181231-d30c-4051-9ff2-16808694adbf.png,38.4,25.513,1.336,-0.999,0.1,-left,51.159,43.851,62.72,32.689,False
+12,mobile,icon,ios,add an event,False,0.71,mobile_c71efbd9-cd10-4564-949e-50b3b034328a.png,57.8,38.403,2.011,-1.303,-0.088,-left,47.837,45.844,62.72,43.585,False
+118,mobile,icon,ios,favorite the music,False,0.45,mobile_a14fb632-fab9-4537-8c7b-8c650fd91bd7.png,69.1,42.792,2.477,-1.123,0.087,-left,68.739,75.551,28.982,31.36,False
+18,mobile,icon,ios,adjust the voice,False,0.71,mobile_1c1d54b4-5ac1-40cd-9dc6-21a8d3c97d6e.png,69.0,45.844,2.401,-0.993,0.029,-left,93.017,190.02,109.76,152.548,False
+281,mobile,icon,ios,choose watercolor brush style,False,0.22,mobile_d97a442a-6912-4a26-9387-fe5dee9b3d0a.png,86.7,53.691,3.108,1.35,-0.01,-right,63.166,137.479,43.473,109.76,False
+341,mobile,icon,android,display public ip address,False,0.64,mobile_aacb7bd4-e54a-4798-876a-eef079e17b2d.png,96.2,62.851,3.655,1.218,0.491,-right,87.547,70.56,282.24,125.44,True
+431,mobile,icon,ios,View AirPods playback setting,False,0.51,mobile_16545bc1-c614-4dc3-a81c-3d349a93e07d.png,103.02,63.798,3.693,-0.15,1.5,down,63.785,63.785,79.7,235.2,True
+411,mobile,icon,android,tap a button to open table lamp in bedroom,False,0.71,mobile_6ad7dd8f-82d3-4e73-b437-667dc1b24574.png,116.6,76.179,4.43,-1.58,-0.388,-left,70.56,87.547,303.408,235.2,True
+226,mobile,icon,android,click power on,False,0.11,mobile_63949247-1001-4d4e-9f49-81c85f7308e8.png,129.0,84.28,4.902,0.056,-0.923,up,441.0,199.267,225.792,486.08,True
+202,mobile,icon,android,change battery setting for better performance,False,0.27,mobile_04545977-3f36-4a33-a787-72ec8a9dd4f2.png,151.4,98.915,5.753,-0.905,-0.057,-left,244.347,138.507,585.648,94.08,True
+340,mobile,icon,android,display phone files,False,0.19,mobile_b92938f8-6822-49e4-9612-67debab64e9d.png,164.0,107.147,6.231,-1.488,-0.155,-left,108.453,96.693,331.632,62.72,True
+218,mobile,icon,android,show week steps recordings,False,0.41,mobile_df5320bc-03e4-4e4e-bcc2-67cfd9b344ec.png,164.4,107.408,6.247,-1.142,0.052,-left,167.253,132.627,197.568,78.4,False
+5,mobile,icon,ios,select source language,False,0.68,mobile_6949b916-64c8-431f-8842-a29a9a557641.png,239.2,158.926,8.323,-3.1,0.034,-left,61.125,76.407,454.72,98.066,True
+169,mobile,icon,android,start the stopwatch,False,0.46,mobile_1c87bbf1-afc8-4fe3-aaf0-d3bacc52a2bf.png,270.2,176.531,10.267,-1.475,-0.092,-left,180.973,124.787,98.784,125.44,False
+398,mobile,icon,android,Set to use the largest font size,False,0.2,mobile_99daacb4-408c-4cdf-8f14-2c01675fda1f.png,328.0,214.293,12.463,-3.748,0.391,-left,65.987,77.747,550.368,47.04,False
+385,mobile,icon,android,add a emoji,False,0.19,mobile_1931c317-b01b-46c9-8c28-a5b81ad5495b.png,370.4,241.995,14.074,-2.937,0.206,-left,99.307,111.067,656.208,78.4,True
+331,mobile,icon,android,search games,False,0.25,mobile_07c1d6c0-7f94-457e-94b4-1e855dc1aded.png,411.2,268.651,15.624,-4.874,0.044,-left,61.413,51.613,649.152,78.4,True
+298,mobile,icon,ios,open additional options,False,0.17,mobile_a2cdff8e-fd92-46fb-8d83-228f2116c087.png,443.0,274.338,15.882,-4.491,0.015,-left,68.739,78.028,652.094,62.72,True
+437,mobile,icon,ios,play next song,False,0.46,mobile_f6313b8a-4258-47d1-97af-7868e04979a4.png,535.75,331.776,19.208,-3.305,0.037,-left,118.281,118.281,94.191,62.72,False
+121,mobile,icon,ios,play next song,False,0.29,mobile_a14fb632-fab9-4537-8c7b-8c650fd91bd7.png,557.7,345.369,19.995,-6.022,0.101,-left,62.547,67.501,72.455,78.4,False
+228,mobile,icon,android,raise air conditioner temperature,False,0.3,mobile_63949247-1001-4d4e-9f49-81c85f7308e8.png,546.0,356.72,20.746,-2.135,-0.091,-left,218.213,196.653,63.504,109.76,False
+129,mobile,icon,android,customize focus time,False,0.5,mobile_8d5dea76-69b8-4076-82ef-38b2fb8a1b30.png,612.4,400.101,23.269,-3.01,0.036,-left,159.413,146.347,141.12,156.8,False
+387,mobile,icon,android,tap the icon for displaying more functional,False,0.6,mobile_df977636-55ed-4c99-8ff1-569ef8e6c78a.png,749.0,489.346,28.46,-0.394,6.444,down,82.32,82.32,56.448,78.4,False
+94,mobile,icon,ios,view ore details,False,0.26,mobile_efa861a6-0810-4c8a-9bca-4f481641d03d.png,882.942,546.782,31.655,-6.179,9.43,down-left,50.78,52.019,637.603,109.76,False
+455,mobile,icon,shop,switch to uppercase input,False,0.2,mobile_51nu75.png,897.732,596.46,31.238,3.822,1.518,down-right,177.397,90.359,1505.28,76.274,False
+4,mobile,icon,ios,view the menu,False,0.36,mobile_6949b916-64c8-431f-8842-a29a9a557641.png,1036.4,688.591,36.063,13.455,-0.103,-right,53.153,43.851,62.72,76.274,False
+461,mobile,icon,shop,Adjust the camera focus,False,0.1,mobile_8u6mj9.png,1090.0,724.204,37.928,16.297,-0.012,-right,45.844,377.383,1505.28,174.34,True
+457,mobile,icon,shop,view the calandar ,False,0.04,mobile_5a33tm.png,1161.589,771.768,40.419,2.213,2.363,down-right,405.288,180.719,47.04,958.872,False
+89,mobile,icon,ios,view more information,False,0.5,mobile_8da8fbf4-c2b0-495f-88d3-9eb682c15ce7.png,1345.16,833.021,48.227,-0.359,16.141,down,53.257,53.257,65.209,31.36,False
+458,mobile,icon,shop,switch on automatic downloads using cellular data,False,0.66,mobile_6edzq7.jpg,1486.294,840.126,48.65,3.501,9.704,down-right,150.921,76.874,108.528,109.76,False
+406,mobile,icon,android,show all downloading apps,False,0.07,mobile_bce7a892-9cb2-432a-b678-2429d4f51d3d.png,1986.0,1297.519,75.462,-0.133,13.919,down,75.133,96.693,42.336,78.4,False
+27,mobile,icon,ios,get more information,False,0.09,mobile_a8181231-d30c-4051-9ff2-16808694adbf.png,2002.708,1330.613,69.686,-26.508,0.77,down-left,51.159,51.159,47.04,54.481,False
+196,mobile,icon,android,return upper page,False,0.41,mobile_d52263df-908a-4f53-93de-b51d691ad995.png,2112.0,1379.839,80.249,-0.001,14.487,down,101.267,98.653,35.28,47.04,False
+464,mobile,text,shop,show more awards,False,0.67,mobile_ax0vnf.jpg,3.12,1.764,0.102,-0.014,-0.534,up,166.748,52.568,137.469,62.72,True
+342,mobile,text,android,turn off rule-based mode,False,0.5,mobile_aacb7bd4-e54a-4798-876a-eef079e17b2d.png,6.0,3.92,0.228,-0.091,0.564,down,254.8,61.413,169.344,47.04,False
+407,mobile,text,android,show softwares,False,0.59,mobile_bce7a892-9cb2-432a-b678-2429d4f51d3d.png,6.0,3.92,0.228,0.019,0.579,down,169.867,49.653,134.064,94.08,True
+11,mobile,text,ios,check shared files,False,0.76,mobile_a1366f87-f1f1-402c-911a-d239eb60eac8.png,17.0,11.295,0.592,-0.632,-0.001,-left,85.709,85.709,78.4,65.378,False
+278,mobile,text,ios,switch the map style to satellite,False,0.23,mobile_acb1d28f-ddf9-4098-b749-51bf6600705b.png,24.0,14.863,0.86,-0.547,-0.02,-left,317.068,226.654,666.585,235.2,True
+374,mobile,text,android,display more information,False,0.32,mobile_508e7610-9e30-4626-9ea3-37bf194cb1dd.png,27.0,17.64,1.026,0.014,0.891,down,186.2,45.08,148.176,31.36,False
+247,mobile,text,ios,switch to show link attributes,False,0.51,mobile_6ded1777-d4c3-485f-b28a-7754e0e9c024.png,33.4,22.191,1.162,0.007,0.884,down,884.326,57.803,878.08,65.378,False
+297,mobile,text,ios,apply the smooth filter,False,0.25,mobile_a2cdff8e-fd92-46fb-8d83-228f2116c087.png,116.55,72.176,4.179,-1.063,-0.074,-left,128.19,183.924,355.029,94.08,True
+127,mobile,text,android,set focus time to 60 mins,False,0.44,mobile_8d5dea76-69b8-4076-82ef-38b2fb8a1b30.png,113.6,74.219,4.316,-1.026,0.024,-left,141.12,138.507,127.008,156.8,False
+98,mobile,text,ios,view shared,False,0.27,mobile_7d7609e2-696b-449e-a230-792dce8dd134.png,134.45,83.261,4.82,-1.32,-0.039,-left,101.561,92.272,311.556,94.08,True
+37,mobile,text,ios,open the app store,False,0.3,mobile_93dec21b-d612-41df-9f76-933ceadaba66.png,153.1,94.811,5.489,-1.285,-0.068,-left,120.758,152.341,101.437,125.44,False
+487,mobile,text,shop,switch the temperature display to Fahrenheit,False,0.86,mobile_q24p8x.png,159.4,105.906,5.547,0.027,2.493,down,325.559,53.153,329.28,54.481,False
+227,mobile,text,android,change mode,False,0.29,mobile_63949247-1001-4d4e-9f49-81c85f7308e8.png,164.4,107.408,6.247,-0.986,0.072,-left,220.827,204.493,21.168,203.84,False
+86,mobile,text,ios,view library,False,0.28,mobile_0affae67-191e-43fa-890d-778555ffbab0.png,215.1,133.206,7.712,-1.844,-0.045,-left,99.084,93.51,405.748,62.72,True
+61,mobile,text,ios,choose last 10 days data details of battery,False,0.5,mobile_e3249127-d727-4553-9a2a-db645f430d9b.png,226.0,139.956,8.103,-0.956,0.11,-left,307.159,54.496,304.311,78.4,False
+224,mobile,text,android,tap continue button,False,0.36,mobile_f515dd3d-41eb-4fe9-b74a-ac66e60a8b75.png,234.8,153.403,8.922,-1.04,-0.167,-left,284.2,111.72,254.016,141.12,False
+194,mobile,text,android,use dark mode display,False,0.36,mobile_d52263df-908a-4f53-93de-b51d691ad995.png,259.2,169.344,9.849,-1.018,-0.083,-left,326.667,518.093,324.576,407.68,False
+88,mobile,text,ios,shuffle the music list,False,0.34,mobile_8da8fbf4-c2b0-495f-88d3-9eb682c15ce7.png,296.1,183.367,10.616,-1.095,-0.115,-left,308.398,91.033,304.311,125.44,False
+91,mobile,text,ios,view more information about classical christmas,False,0.5,mobile_8da8fbf4-c2b0-495f-88d3-9eb682c15ce7.png,379.395,234.949,13.602,-3.08,-0.615,up-left,91.033,45.826,637.603,47.04,False
+473,mobile,text,shop,update Google chrome,False,0.26,mobile_f4j7l5.jpg,722.8,408.562,23.659,-3.45,-0.152,-left,138.486,55.96,94.057,62.72,False
+314,mobile,text,ios,search for the privacy report of a website,False,0.36,mobile_79ef2997-19a2-4520-8647-b1ad1fc00ce8.png,1407.06,871.354,50.446,-0.0,-10.696,up,623.608,85.46,130.419,109.76,False
+1249,web,icon,shop,upvote MagicJoshByGosh's reply,False,0.88,web_jn0jbi.png,0.6,0.49,0.027,-0.161,-0.526,up,48.183,18.783,31.36,17.64,False
+983,web,icon,forum,support the second book,False,0.38,web_aa8f1636-1c5c-4a79-b8d9-f92956ba78e9.png,0.825,0.505,0.028,0.504,0.516,down-right,34.913,30.013,62.72,44.1,True
+1033,web,icon,forum,close the ad banner,False,0.61,web_d9841866-2ee7-4afd-a77a-8c0e52f6691c.png,1.0,0.613,0.034,0.162,0.528,down,25.725,22.05,31.36,52.92,True
+1069,web,icon,tool,close the location labels on the map,False,0.39,web_fa131c38-3d94-4e5a-ba3a-269724d93a30.png,1.6,0.98,0.054,0.544,-0.294,-right,22.05,22.05,62.72,79.38,True
+1082,web,icon,tool,Click on the marker already added to the map,False,0.85,web_c5db0d44-6584-42e2-85c7-e4802276bad0.png,2.0,1.225,0.068,0.538,0.442,-right,31.85,33.688,47.04,52.92,True
+1153,web,icon,tool,change page language,False,0.78,web_1d69cea6-1be7-4314-8bf1-5cd8e1939911.png,2.6,1.593,0.089,-0.089,0.542,down,208.25,37.975,156.8,61.74,True
+1052,web,icon,tool,locate to my position,False,0.61,web_f2db3d49-18fb-4517-8de8-bd5d73efecb9.png,2.8,1.715,0.095,-0.539,-0.061,-left,43.488,50.225,62.72,44.1,True
+899,web,icon,gitlab,comment to administrator,False,0.41,web_6466b8cc-deea-451a-8019-d0684052d771.png,3.0,1.838,0.102,-0.542,-0.383,-left,43.488,32.463,47.04,52.92,False
+936,web,icon,shop,delete carnation breakfast essentials nutritional drink in cart,False,0.57,web_f4ee1ae3-a244-40f8-90cb-e68411f00636.png,3.2,1.96,0.109,-0.543,-0.283,-left,45.938,56.35,78.4,35.28,True
+1258,web,icon,shop,Follow the Twitter account of 'Ask PayPal',False,0.83,web_qltu7f.png,2.6,2.123,0.118,-0.53,-0.186,-left,71.867,28.583,62.72,26.46,False
+1002,web,icon,forum,toggle the open external links in the new tab option,False,0.92,web_6c4e07ff-3589-4a78-99cf-fcf703a33a74.png,4.4,2.695,0.15,0.6,-0.032,-right,26.95,26.95,94.08,17.64,True
+836,web,icon,gitlab,view my account profile,False,0.69,web_213f816e-8e80-4d13-970d-1347bbc7a2a8.png,4.4,2.695,0.15,-0.221,0.565,down,67.988,41.65,62.72,35.28,False
+904,web,icon,gitlab,copy the http link,False,0.75,web_586be1bf-6fab-43bf-adad-640eaab4a0df.png,6.4,3.92,0.218,-0.597,-0.091,-left,40.425,42.875,78.4,26.46,True
+1262,web,icon,shop,View my shopping cart,False,0.73,web_s6sun5.png,4.8,3.92,0.218,-0.604,0.421,-left,37.567,26.95,62.72,44.1,True
+1196,web,icon,shop,check the information about the first item,False,0.16,web_889c379a-7f36-4aad-9516-b09773cd6b84.png,7.0,4.288,0.238,-0.152,0.513,down,232.138,320.95,188.16,52.92,False
+1112,web,icon,tool,switch language of current page,False,0.88,web_6f93090a-81f6-489e-bb35-1a2838b18c01.png,8.0,4.9,0.272,-0.024,0.64,down,109.025,34.913,47.04,52.92,True
+1206,web,icon,shop,go to the second page,False,0.64,web_b5c8e65b-1d1e-4fad-8064-a3b7119d1eaa.png,8.4,5.145,0.286,0.865,0.355,-right,14.088,17.763,62.72,44.1,True
+863,web,icon,gitlab,Click the thumbs down icon on this issue,False,0.91,web_b97bb6a3-999c-463a-b957-5584c14c8395.png,9.2,5.635,0.313,-0.584,-0.106,-left,66.763,39.2,109.76,26.46,True
+1214,web,icon,shop,Switch the language that needs to be translated to Chinese,False,0.25,web_3dpus9.png,7.443,6.079,0.338,-0.58,0.529,down-left,75.133,22.867,94.08,35.28,True
+1256,web,icon,shop,View the comments on the first article about Musk on the page,False,0.73,web_q8t3el.png,8.2,6.697,0.372,-0.626,-0.3,-left,53.083,26.95,62.72,26.46,False
+1237,web,icon,shop,Modify the display font size,False,0.59,web_e21gwr.png,9.2,7.513,0.418,-0.621,-0.055,-left,62.067,43.283,141.12,61.74,True
+1186,web,icon,shop,check the price changes for the first item,False,0.65,web_2450df5d-6082-4941-8fe5-ee61df8e7021.png,13.328,8.164,0.454,-0.755,-0.649,up-left,28.788,23.888,47.04,44.1,True
+1235,web,icon,shop,Click to mark Anna's comment as unhelpful,False,0.68,web_dho92e.png,10.0,8.167,0.454,-0.654,0.3,-left,53.083,22.867,78.4,17.64,True
+1004,web,icon,forum,don't show post previews,False,0.94,web_6c4e07ff-3589-4a78-99cf-fcf703a33a74.png,17.2,10.535,0.586,0.891,0.127,-right,26.95,27.563,78.4,26.46,True
+1233,web,icon,shop,"switch off ""keep me logged in"" setting",False,0.74,web_coivm6.png,14.6,11.923,0.663,1.041,-0.042,-right,22.05,19.6,62.72,17.64,True
+897,web,icon,gitlab,enable static application security testing,False,0.86,web_463c0536-492e-475c-930d-d95ee476ec3c.png,19.6,12.005,0.667,0.908,0.261,-right,29.4,31.238,47.04,44.1,False
+896,web,icon,gitlab,switch to private visibility level,False,0.83,web_463c0536-492e-475c-930d-d95ee476ec3c.png,20.6,12.618,0.701,0.875,-0.029,-right,33.688,27.563,47.04,26.46,False
+903,web,icon,gitlab,copy the ssh link,False,0.78,web_586be1bf-6fab-43bf-adad-640eaab4a0df.png,22.2,13.598,0.756,-0.852,0.204,-left,38.588,41.038,94.08,35.28,True
+993,web,icon,forum,choose tag,False,0.23,web_f9bf7ee5-1966-4261-bf9e-76202c196a55.png,26.2,16.047,0.892,-0.008,0.703,down,755.825,79.013,736.96,26.46,False
+1188,web,icon,shop,switch the product arrangement to a 2*2 grid,False,0.6,web_2450df5d-6082-4941-8fe5-ee61df8e7021.png,26.4,16.17,0.899,-0.79,0.175,-left,55.738,49.0,78.4,44.1,False
+1172,web,icon,shop,confirm leaving the shopping cart,False,0.64,web_e103f2b7-edaf-4acc-8b85-6cfb0b9c024c.png,28.8,17.64,0.981,-0.757,-0.122,-left,68.6,44.713,125.44,44.1,True
+843,web,icon,gitlab,fork the a11y project,False,0.29,web_4e1d5837-4731-43f3-8101-52375498c4ad.png,30.6,18.742,1.042,0.869,0.212,-right,50.838,36.138,94.08,35.28,True
+1036,web,icon,forum,share to facebook,False,0.77,web_d86766a4-4d7f-467a-899e-dcde8472e632.png,31.2,19.11,1.062,1.112,-0.113,-right,31.238,29.4,47.04,26.46,False
+853,web,icon,gitlab,full screen display,False,0.33,web_6c677961-e540-4cc5-b725-5e301019a9f9.png,35.4,21.682,1.205,-0.978,-0.179,-left,45.325,40.425,78.4,26.46,False
+1192,web,icon,shop,check the second image,False,0.85,web_8c185a73-f24a-4548-851f-eae8962b2649.png,36.6,22.417,1.246,-0.691,-0.076,-left,117.6,120.663,172.48,114.66,True
+1200,web,icon,shop,rate this product with four stars,False,0.64,web_29f17af5-5e60-41a0-8a0c-36a991a0a19d.png,39.0,23.888,1.328,-1.758,0.435,-left,18.988,33.688,109.76,35.28,True
+1161,web,icon,tool,select to search in all area,False,0.24,web_147f0485-994a-4176-bd82-88d81ab8607a.png,40.4,24.745,1.375,-1.277,-0.26,-left,31.85,36.75,15.68,26.46,False
+1159,web,icon,tool,delete the 'article' tag for searching,False,0.78,web_df804fb9-f96e-425e-b1a3-fe8f6810a1de.png,42.6,26.092,1.45,-1.275,0.013,-left,33.688,33.688,109.76,35.28,True
+1243,web,icon,shop,click to close the privacy information bar,False,0.54,web_hnoy0b.png,34.0,27.767,1.543,-1.067,-0.249,-left,49.0,31.85,94.08,35.28,False
+864,web,icon,gitlab,reply to emoticon,False,0.75,web_b97bb6a3-999c-463a-b957-5584c14c8395.png,55.4,33.932,1.886,-1.327,0.112,-left,41.038,41.65,109.76,8.82,False
+940,web,icon,shop,go to next page,False,0.85,web_9043e264-b5ec-4da5-ae7a-b19cfc1d178b.png,58.6,35.892,1.995,-1.223,0.0,-left,49.613,44.1,78.4,35.28,False
+1236,web,icon,shop,Choose to sort from oldest to newest,False,0.9,web_dkh41m.png,48.2,39.363,2.188,2.508,-0.441,-right,19.6,22.05,94.08,44.1,False
+1179,web,icon,shop,add the creole seasoning to favorites,False,0.86,web_8998df3c-ece5-4f78-9f34-8b6ef91b1ddb.png,65.0,39.812,2.213,-1.583,0.206,-left,36.75,28.788,109.76,44.1,False
+951,web,icon,shop,sort from largest to smallest,False,0.61,web_844d70be-3743-409c-abf0-a148975fdbc8.png,66.0,40.425,2.247,-1.443,0.085,-left,42.875,40.425,109.76,26.46,False
+839,web,icon,gitlab,go to personal homepage,False,0.22,web_fd8d71f6-4229-4458-a77e-7d8a6347c8e9.png,69.8,42.753,2.376,0.12,0.873,down,294.613,114.538,141.12,343.98,True
+910,web,icon,shop,has question about scope,False,0.59,web_7d1b09cc-3602-4670-9fb2-d81afb5ec381.png,81.6,49.98,2.778,-1.368,-0.021,-left,57.575,57.575,235.2,35.28,True
+1248,web,icon,shop,Close the pop-up window in the bottom right corner,False,0.57,web_j7u75j.png,66.6,54.39,3.023,-2.967,-0.463,-left,22.05,22.05,109.76,26.46,False
+856,web,icon,gitlab,click the icon to sort by created date,False,0.66,web_9443f61f-7d14-4e60-8297-29df73b7cbdd.png,100.4,61.495,3.418,-1.999,-0.185,-left,41.038,41.65,125.44,44.1,False
+860,web,icon,gitlab,delete the byte blaze assignee,False,0.27,web_6b685114-53fc-40a1-ac42-3b8fbdd27fdd.png,103.6,63.455,3.527,-2.119,-0.029,-left,39.2,31.238,141.12,26.46,False
+1024,web,icon,forum,check the third result,False,0.39,web_28c3aef4-8c82-4746-8cfa-3aa747127c97.png,104.8,64.19,3.568,-0.478,-0.992,up,1379.35,130.463,109.76,88.2,False
+972,web,icon,forum,add comment,False,0.26,web_fd8befe1-4e5b-4de2-9978-db25d2be2173.png,115.0,70.438,3.915,0.002,0.906,down,686.0,173.338,689.92,70.56,False
+1035,web,icon,forum,log in by x account,False,0.37,web_d9841866-2ee7-4afd-a77a-8c0e52f6691c.png,121.2,74.235,4.126,-2.207,0.097,-left,43.488,36.138,62.72,26.46,False
+1009,web,icon,forum,close the message box,False,0.39,web_516f6429-4157-45f8-93a4-db1d525cedb9.png,184.8,113.19,6.292,-4.517,0.429,-left,28.175,27.563,250.88,35.28,False
+1195,web,icon,shop,search the products about football,False,0.71,web_889c379a-7f36-4aad-9516-b09773cd6b84.png,198.4,121.52,6.755,-2.98,0.032,-left,49.0,41.65,313.6,35.28,True
+926,web,icon,shop,go to next page,False,0.74,web_dd867d69-511e-4ab2-834e-2e111c7b3198.png,206.4,126.42,7.027,-2.793,0.083,-left,55.125,43.488,62.72,44.1,False
+1165,web,icon,tool,show content of reinforcement learning,False,0.74,web_78657904-325d-4ee2-b319-36dc1abe7e54.png,220.0,134.75,7.49,-2.866,-0.243,-left,56.963,25.725,329.28,26.46,True
+1073,web,icon,tool,Click the button to inspect map features and view details,False,0.57,web_833f9d90-a50c-4f03-9eb6-e740aa811fa0.png,269.6,165.13,9.179,-0.211,-3.399,up,55.125,56.963,47.04,61.74,False
+1135,web,icon,tool,let website remember account information for no logging in the next year,False,0.38,web_0092e09d-acc7-4ced-8871-47cb05a0a554.png,299.8,183.627,10.207,5.76,0.061,-right,34.913,34.913,439.04,26.46,True
+1160,web,icon,tool,input keyword in the searchbar,False,0.6,web_df804fb9-f96e-425e-b1a3-fe8f6810a1de.png,376.6,230.668,12.822,0.309,-5.88,up,919.363,42.875,611.52,70.56,False
+1095,web,icon,tool,search result,False,0.38,web_467ae916-9a16-4517-85cc-f439c79e8c44.png,385.8,236.302,13.135,-3.562,0.008,-left,77.175,65.538,580.16,61.74,True
+1058,web,icon,tool,click the button to navigate to boston,False,0.19,web_bbe84736-3a87-4cc1-b9f1-e10144d28f94.png,405.75,248.522,13.814,-3.933,4.938,down-left,48.388,41.65,344.96,26.46,False
+865,web,icon,gitlab,click to view more information of this issue,False,0.21,web_b97bb6a3-999c-463a-b957-5584c14c8395.png,492.6,301.717,16.771,-6.735,-0.162,-left,48.388,47.775,31.36,35.28,False
+1240,web,icon,shop,View the next page of the browse by category section,False,0.33,web_gflr2y.png,893.4,729.61,40.555,-20.805,0.061,-left,35.933,91.467,94.08,79.38,False
+1114,web,text,tool,open wikidata article upon earth item,False,0.59,web_c95137ce-a84e-4c7c-9845-65157033e501.png,1.4,0.857,0.048,-0.028,-0.534,up,96.775,25.113,156.8,44.1,True
+848,web,text,gitlab,create a new issue,False,0.68,web_e0f18fd6-2a59-4fab-89f0-864c70bba241.png,1.6,0.98,0.054,-0.508,-0.123,-left,116.375,42.875,78.4,52.92,False
+920,web,text,shop,use filters,False,0.75,web_de7dcaf3-f2e3-49f4-84fd-36088f39238c.png,1.8,1.103,0.061,0.033,0.526,down,123.725,41.65,125.44,44.1,True
+1194,web,text,shop,sign in the website,False,0.84,web_2e26b177-1a3c-4e1d-b961-a584add014b7.png,2.4,1.47,0.082,-0.521,0.257,-left,68.6,28.788,109.76,35.28,True
+1093,web,text,tool,look into wikidata,False,0.76,web_c6e1ac03-ebaf-4ebe-8fb2-5d6f8769f385.png,3.0,1.838,0.102,-0.148,0.591,down,83.913,20.213,141.12,52.92,True
+1070,web,text,tool,"check the direction of ""slight left onto hancock street""",False,0.72,web_fa131c38-3d94-4e5a-ba3a-269724d93a30.png,3.4,2.083,0.116,-0.126,0.53,down,441.613,70.438,297.92,70.56,False
+1252,web,text,shop,view the community of minecraft,False,0.87,web_mqbuo5.png,2.8,2.287,0.127,-0.52,0.078,-left,113.517,58.8,141.12,44.1,True
+1134,web,text,tool,open 'retrospect and prospect in computer-based translation' paper,False,0.67,web_22e2b9c7-0140-47aa-8e14-cfd883f3baaf.png,5.0,3.062,0.17,-0.04,0.591,down,507.15,33.688,580.16,79.38,True
+870,web,text,gitlab,switch to groups view,False,0.83,web_e640514e-5946-4808-922f-f50c51b0da78.png,5.8,3.552,0.197,-0.541,0.057,-left,86.363,56.35,125.44,26.46,True
+1155,web,text,tool,switch to talk column,False,0.86,web_1d69cea6-1be7-4314-8bf1-5cd8e1939911.png,6.4,3.92,0.218,-0.58,0.112,-left,49.0,31.85,62.72,35.28,True
+1109,web,text,tool,open wikispecies,False,0.81,web_dc5cf80d-74c4-475e-928f-ee6b7ef254a1.png,6.6,4.042,0.225,-0.274,0.683,down,110.25,22.05,172.48,52.92,True
+1087,web,text,tool,start mapping,False,0.64,web_adbf2de0-3a79-4ffd-b344-b4a068f192ea.png,7.0,4.288,0.238,-0.521,-0.08,-left,205.8,50.225,313.6,70.56,True
+1234,web,text,shop,choose downloading docker in mac-apple silicon,False,0.78,web_d1bbz4.png,5.8,4.737,0.263,-0.03,-0.618,up,283.383,40.017,235.2,44.1,False
+1228,web,text,shop,view more information about the airpods item,False,0.59,web_asqyu8.png,7.2,5.88,0.327,-0.592,-0.147,-left,63.7,31.033,47.04,35.28,False
+1092,web,text,tool,download in apple app store,False,0.4,web_c6e1ac03-ebaf-4ebe-8fb2-5d6f8769f385.png,10.6,6.493,0.361,-0.545,0.216,-left,145.775,48.388,219.52,44.1,True
+1063,web,text,tool,check communities,False,0.89,web_4b78be88-30cd-401d-8d6d-4ef5a035fbda.png,11.6,7.105,0.395,-0.557,0.269,-left,125.563,31.85,188.16,52.92,True
+886,web,text,gitlab,view supported cloud,False,0.68,web_32fce6b7-8437-4877-8436-f67c99d82f81.png,11.8,7.227,0.402,-0.025,-0.627,up,295.838,56.963,266.56,97.02,True
+1265,web,text,shop,"check shoes under 50 dollars in ""shop deals in fashion"" part",False,0.51,web_tpwp1v.png,9.2,7.513,0.418,-0.559,-0.049,-left,127.4,114.333,94.08,123.48,False
+1224,web,text,shop,install a steam desktop application,False,0.85,web_92ejhx.png,9.2,7.513,0.418,0.017,0.807,down,96.367,24.5,94.08,52.92,True
+1221,web,text,shop,view drama books,False,0.91,web_8u9hc4.png,10.6,8.657,0.481,-0.108,-0.982,up,122.5,17.967,78.4,35.28,True
+989,web,text,forum,check the profile of user knittedjedi,False,0.75,web_0481a1db-93fd-4d1e-9146-15526e37eacd.png,14.2,8.697,0.483,0.619,0.378,-right,72.888,36.138,156.8,44.1,True
+1110,web,text,tool,open mediawiki,False,0.66,web_dc5cf80d-74c4-475e-928f-ee6b7ef254a1.png,14.4,8.82,0.49,-0.224,0.869,down,111.475,23.888,141.12,70.56,True
+1148,web,text,tool,open keras,False,0.81,web_43eca188-6adf-4bfe-bb49-56dad5717132.png,18.2,11.148,0.62,0.302,0.967,down,72.888,23.888,78.4,61.74,True
+894,web,text,gitlab,switch to create,False,0.83,web_94a52247-8dd4-4f19-82ea-19185a9b2649.png,21.6,13.23,0.735,-0.605,0.035,-left,125.563,102.288,141.12,70.56,False
+1217,web,text,shop,Click the current date,False,0.9,web_7bnnwq.png,16.8,13.72,0.763,-0.569,-0.186,-left,200.083,45.733,360.64,35.28,True
+1096,web,text,tool,check wikipedia,False,0.61,web_df166734-1f33-4e1d-887f-292ee9c21502.png,28.6,17.517,0.974,-0.709,0.194,-left,83.913,22.05,62.72,52.92,False
+841,web,text,gitlab,switch to explore projects,False,0.78,web_4e1d5837-4731-43f3-8101-52375498c4ad.png,30.2,18.497,1.028,-0.701,0.062,-left,91.875,58.8,141.12,35.28,True
+1060,web,text,tool,need help,False,0.42,web_da9f908d-568d-4d65-8587-47870f78f678.png,33.084,20.264,1.126,0.905,0.653,down-right,48.388,33.688,125.44,52.92,True
+953,web,text,shop,page 5,False,0.81,web_e891e448-0f8e-4673-9122-405a48cabad3.png,33.6,20.58,1.144,-1.23,-0.051,-left,28.175,47.775,62.72,26.46,False
+1051,web,text,tool,export the map data,False,0.19,web_f2db3d49-18fb-4517-8de8-bd5d73efecb9.png,34.752,21.286,1.183,-0.569,1.006,down-left,85.138,40.425,109.76,61.74,False
+1142,web,text,tool,switch to the discussion page,False,0.85,web_dd6b5395-a2da-4d88-a971-c2815899f84d.png,40.2,24.622,1.369,-0.702,-0.217,-left,121.888,28.175,109.76,35.28,False
+1074,web,text,tool,goto openstreetmap france,False,0.63,web_833f9d90-a50c-4f03-9eb6-e740aa811fa0.png,49.4,30.258,1.682,-0.099,-1.997,up,175.788,20.213,156.8,88.2,True
+1072,web,text,tool,"change the area bounding numbered ""42.3768""",False,0.5,web_daa46aa2-e1ee-4391-9c27-578d5ed73cbc.png,52.8,32.34,1.798,0.014,1.121,down,132.3,52.063,188.16,167.58,True
+1084,web,text,tool,select the html as share format,False,0.66,web_e0425287-c246-4122-a26e-6e0ca5958d4e.png,62.4,38.22,2.124,-1.007,-0.007,-left,75.338,43.488,203.84,44.1,True
+1038,web,text,forum,follow sadie gurman,False,0.9,web_6df9c1d5-2acf-4f59-94d6-2fd9362dd8af.png,85.6,52.43,2.914,-1.153,0.118,-left,80.238,33.688,109.76,35.28,False
+1141,web,text,tool,return the homepage of mediawiki,False,0.63,web_dd6b5395-a2da-4d88-a971-c2815899f84d.png,103.8,63.578,3.534,-0.02,1.275,down,297.675,82.075,282.24,105.84,False
+986,web,text,forum,view the comments of the first book,False,0.45,web_a43882ed-3d5d-40c3-b077-a256acf058ec.png,111.2,68.11,3.786,-0.041,-2.817,up,114.538,29.4,109.76,176.4,True
+1075,web,text,tool,"click the ""starbucks"" located in auburn street",False,0.76,web_2345b5ec-6280-470e-9a6d-92a85d8b8873.png,128.413,78.653,4.372,1.347,0.932,down-right,91.875,26.95,407.68,61.74,True
+1147,web,text,tool,open arsenal f.c. records and player records webpage,False,0.42,web_e32af83c-f30c-4104-82b3-d5b9a84ad5ee.png,152.4,93.345,5.189,-0.743,-0.058,-left,383.425,31.85,940.8,35.28,True
+1264,web,text,shop,Click to send the verification code to the specified email address,False,0.51,web_tpgtas.png,140.8,114.987,6.392,-1.233,-0.19,-left,156.8,49.0,454.72,35.28,True
+954,web,text,shop,details about dead sea collection salt,False,0.21,web_a6e78bca-0f72-405b-8bda-7c0edc617b4e.png,226.4,138.67,7.708,-2.051,0.023,-left,89.425,61.863,423.36,61.74,True
+1219,web,text,shop,switch the payment option to upgrade program,False,0.21,web_7ywy7e.png,215.2,175.747,9.769,-1.139,0.005,-left,275.217,151.9,815.36,149.94,True
+1216,web,text,shop,add wikipedia to wishlist,False,0.28,web_50x1xn.png,239.0,195.183,10.849,-0.318,-6.475,up,115.967,32.667,62.72,114.66,False
+1037,web,text,forum,check the weather news,False,0.44,web_11acd5dc-63ab-415f-823d-10cd68acef01.png,597.8,366.152,20.353,-3.044,-0.198,-left,143.938,63.7,78.4,44.1,False
+869,web,text,gitlab,check my followers,False,0.31,web_e640514e-5946-4808-922f-f50c51b0da78.png,653.6,400.33,22.252,3.471,-0.056,-right,134.75,44.1,94.08,35.28,False
+1097,web,text,tool,goto france wikipedia,False,0.4,web_df166734-1f33-4e1d-887f-292ee9c21502.png,1058.82,648.527,36.048,5.155,21.447,down-right,91.875,23.275,47.04,52.92,False
+1031,web,text,forum,create a new page,False,0.21,web_533f02b1-e687-462f-9d14-5a25f54d9464.png,1667.8,1021.527,56.782,6.115,0.365,-right,181.913,52.675,203.84,35.28,False
