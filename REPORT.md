@@ -103,6 +103,13 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 - **ScreenSpot-Pro** (`screenspot-pro.md`, 95 rows, plus the official leaderboard data): no-tools leader GPT-6 Astra 92.7 (OpenAI; XPeng re-ran it at 93.17), then Claude Mythos 5 87.3 and Opus 4.8 82.3. With tools (Python or crop): Claude Mythos Preview 93.0, Mythos 5 90.7, Opus 4.8 87.9, GPT-5.2 86.3. Best open models: Qwen-UI-Agent-27B 76.6 single-shot, GroundCascade 85.1 with zoom. Aggregators mix the two setups in one column, so charts must split them.
 - Self-reported scores often disagree with third-party runs (GPT-5.6 Sol 76.9 vs 81.3; Opus 4.6 57.7 vs 49.5; Qwen3-VL-32B on v2 93.0 vs 95.8). Charts mark who measured each number.
 
+### How the leaders' techniques compare to our zoom
+- **Same idea as ours ("zoom-in"):** MAI-UI, Qwen3.7-Plus, Qwen-UI-Agent and Indeed-UI guess, crop around the guess, enlarge and guess again. GroundCascade uses the same 0.5 window (2x). Their gains: MAI-UI-32B 67.9 -> 73.5, Qwen3.7-Plus 68.9 -> 79.0. Our method is the standard one; the gap is mostly the model.
+- **Beyond ours (1): the model drives the zoom.** "Python tools" (Claude Mythos, Opus 4.8, GPT-5.2, Muse Spark): the model gets a crop tool, picks where and how much to zoom, and can repeat with thinking in between. Smarter, but many calls and thinking tokens per answer.
+- **Beyond ours (2): more looks plus a vote or a combination.** GroundCascade combines 2 models over ~2.6 calls per case, MAI-UI MVP votes over several crops (77.5), Holo2 agentic takes 3 steps (78.5).
+- Jev has no tools (one box question per call), but a harness can imitate both tricks (repeated zoom steps, multi-crop vote). Possible later arms, each declared before a run. Setups come from the research agent's labels; the exact recipes in each paper were not read.
+- Holo family (addenda in `analysis/leaderboard/`): Holo3-122B 72.2, Holo3.1-35B 71.5 and Holo3-35B 67.6 on Pro (no v2 number); Holo4 publishes no ScreenSpot number. H Company's own run of Claude Sonnet 4: v2 93.0, Pro 19.1.
+
 ### Upstream report
 - Posted Oct 17 08:30 CEST: https://github.com/OS-Copilot/OS-Atlas/issues/65 ("ScreenSpot-v2: 4 wrong answer boxes and 1 duplicate case"). Draft, figures and script in `analysis/upstream-issue/`; figures hosted in a gist. Jev is not named in it. The HF discussion draft (`HF-DISCUSSION.md`) is not posted.
 - No earlier report anywhere (`PRIOR-REPORTS.md`): all OS-Atlas and SeeClick issues and PRs, the HF discussions, v2 mirrors, web search.
