@@ -248,7 +248,7 @@ The structure is the same as the v2 audit (1c, 1d).
 | Oct 17 09:36-09:54 | Pro run 2: A2 18.66%, A2+B (2x zoom) 42.76%, 0 errors, $0.50; official re-score and diagnostics |
 | Oct 17 09:58-11:15 | Pro deep audit, label audit of B's 905 misses, upstream draft |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2).
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2), c0f8b30 (Pro deep audit and label audit).
 
 ## 3. Setup
 
