@@ -1,5 +1,6 @@
-<!-- DRAFT, not posted. Target: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/new
-     Figures are the local fig_*.png files in this folder. Host them first (OS-Atlas #65 used a gist) and swap the paths.
+<!-- POSTED Oct 17 2026 12:10 CEST: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32 (figures hosted in gist 8fc2cc74272e1a78ec678b48d198a300, raw links pinned to a8c6438). HF version not posted yet.
+     This file is the posted text, with local figure paths. Edits to the draft before posting (Arthur's choices): no miss count in Scope,
+     and only the meaning-changing wording cases (the 5 word-for-word ones now count as loosely worded in section 6, 49 -> 54).
      Checks behind every line: VERIFY.md. Prior reports: PRIOR-REPORTS.md. -->
 
 **Title:** ScreenSpot-Pro: 3 wrong labels, 1 contradictory pair and 2 near-duplicate cases
@@ -53,20 +54,12 @@ Each pair has the same instruction and the same key on a re-shot of the same scr
 
 On the Chinese-UI apps, many English instructions read like word-for-word translations of the Chinese labels on screen. That mostly still works, since the words stay close to the labels. In a few cases, though, the English points at something else, and a few English-UI cases are cut short. Where the English and `instruction_cn` disagree, the Chinese is usually the one that matches the screen. The keys are right in all of these.
 
-Where the English changes the meaning or is cut short:
 - **`inventor_windows_68`** `inventor_windows/screenshot_2024-11-24_12-35-54.png`, "Front view" (主视图). The key `[1147, 97, 1211, 122]` is the 主视图 button, which is Home View (house icon). 主视图 also means front view in technical drawing, and the same screenshot shows the ViewCube's 前 (Front) face. Suggested English: "home view".
 - **`inventor_windows_54`** `inventor_windows/screenshot_2024-11-23_11-15-28.png`, "Draw a curve." (画圆弧, draw an arc). The key `[156, 49, 195, 111]` is 圆弧, Arc.
 - **`origin_windows_42`** `origin_windows/screenshot_2024-12-05_16-55-42.png`, "import into excel" (导入到Excel). The key `[1300, 74, 1323, 95]` is Import Excel, which imports from Excel. Both languages reverse it.
 - **`powerpoint_windows_1`** `ppt_windows/screenshot_2024-10-25_15-57-36.png`, "Und" (撤销). Cut short; the key `[45, 5, 80, 30]` is Undo.
 - **`vivado_windows_56`** `vivado_windows/screenshot_2024-12-09_22-45-23.png`, "open IP properties in vivado". The IP Properties pane is already open, and the key `[1035, 773, 1052, 798]` is its ? button. Similar cases say "open help of IP catalog in vivado" (`vivado_windows_34`) and "open help of source in vivado" (`vivado_windows_59`), so "help of" looks dropped, in both languages.
 - **`fruitloops_windows_21`** `fruitloops_windows/screenshot_2024-10-31_19-21-15.png`, "use smart fine tool" (使用智能精细工具). The key `[49, 85, 67, 105]` is the Browser's Search button, so "fine" is probably "find".
-
-Word-for-word translations of the label, hard to read in English:
-- **`solidworks_windows_18`** `solidworks_windows/screenshot_2024-11-24_21-29-49.png`: "Shedding the shell" for 抽壳, which is Shell.
-- **`solidworks_windows_54`** `solidworks_windows/screenshot_2024-11-24_20-52-31.png`: "Insert coordination" for 插入配合, Insert > Mate.
-- **`solidworks_windows_70`** `solidworks_windows/screenshot_2024-12-01_20-47-32.png`: "Annotation size" for 标注尺寸 (add a dimension). The key is 智能尺寸, Smart Dimension.
-- **`autocad_windows_21`** `autocad_windows/screenshot_2024-12-05_10-39-16.png`: "Benchmark Identifier" for 基准标识, the datum identifier.
-- **`autocad_windows_30`** `autocad_windows/screenshot_2024-12-05_10-23-38.png`: "Extract Annotation" for 引出注释. The button itself reads 引线注释, Leader Note.
 
 ![inventor_windows_68](fig_inventor_68_home_view.png)
 
@@ -77,7 +70,7 @@ Word-for-word translations of the label, hard to read in English:
 
 ## 6. Judgment calls (opinions, unlike the above)
 
-Separately, 49 of the missed cases have an instruction that I think fits another element about as well as the key: 23 with two valid answers, 18 where the key covers only part of one control (for example a checkbox square but not its label), and 8 loosely worded. Any of them could reasonably stay as they are. Three examples:
+Separately, 54 of the missed cases have an instruction that I think fits another element about as well as the key: 23 with two valid answers, 18 where the key covers only part of one control (for example a checkbox square but not its label), and 13 loosely worded. Any of them could reasonably stay as they are. Three examples:
 
 - **`matlab_macos_70`** `matlab_mac/screenshot_2024-12-01_19-38-31.png`, "create a filled area plot for selected variables". The open plot gallery shows the same "area" command twice, under FAVORITES and under MATLAB LINE PLOTS. The key `[478, 213, 547, 274]` is only the second one.
 - **`matlab_macos_13`** `matlab_mac/screenshot_2024-11-30_20-47-44.png`, "add a new script". The key `[111, 54, 149, 123]` is the "New" dropdown. The "New Script" button next to it does this in one click.
@@ -91,4 +84,4 @@ Happy to share the full list with screenshots if it's useful.
 
 ## Scope
 
-I only checked the labels of the cases one model missed (905 of 1,581), so this isn't a full audit of the dataset. The duplicate, contradiction and box-range scans covered all 1,581 cases. Since every published score uses the current key, a small errata file next to the dataset might be easier than changing the key in place. People could then report both numbers, and an errata keyed by `id` would also reach the mirrors (lmms-lab, Voxel51 and others), which copy the key as it is. Where `instruction_cn` is right and only the English is off (`inventor_windows_60`, `inventor_windows_68`, `inventor_windows_54`, `powerpoint_windows_1`), the errata could fix just the English.
+I only checked the labels of the cases one model missed, so this isn't a full audit of the dataset. The duplicate, contradiction and box-range scans covered all 1,581 cases. Since every published score uses the current key, a small errata file next to the dataset might be easier than changing the key in place. People could then report both numbers, and an errata keyed by `id` would also reach the mirrors (lmms-lab, Voxel51 and others), which copy the key as it is. Where `instruction_cn` is right and only the English is off (`inventor_windows_60`, `inventor_windows_68`, `inventor_windows_54`, `powerpoint_windows_1`), the errata could fix just the English.
