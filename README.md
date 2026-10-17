@@ -2,6 +2,8 @@
 
 How well does Jev 1.14's `box` tool click? I ran it on both standard click benchmarks, ScreenSpot-v2 and ScreenSpot-Pro, with the official scoring code: 2,853 clicks, every request and response logged. On ordinary screens it hits 84%. On pro apps at 4K it hits 19%. A zoomed second look takes Pro to 43% and a third to 60%, with the same model and nothing trained.
 
+Write-up: [Teaching Jev's box to click 3x better, benchmarked: my 5 rules](https://arthurkatcher.com/blog/teaching-jevs-box-to-click-3x-better), also [on X](https://x.com/arthurkatcher/status/2111499108733038723).
+
 ![Cover: Jev can click(?). 84% on ScreenSpot-v2, 60% on ScreenSpot-Pro with harness updates, over a grid of pro-app screenshots with the answer key in green and Jev's box in orange.](docs/img/cover.jpg)
 
 | Benchmark | Setup | Calls per click | Score | Cost per 1,000 clicks |
