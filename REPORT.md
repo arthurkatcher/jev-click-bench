@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2: run report
 
-Status as of Sat Oct 17 2026, 08:57 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 09:36 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -124,7 +124,26 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 - Smoke (pass 0, 3 cases raw + zoom, plumbing only, not part of any score): all 6 calls ok, 3,931 input tokens per call, $0.00099 total, zoom crops mapped back correctly (checked on the annotated image of #1).
 - Wider smoke (Oct 17 ~09:05, own files `results/pro/smoke_sizes_a/b.jsonl`, not a score): one case per screen size (14 sizes), raw + zoom, 28 calls all ok, $0.0046, no B box past its crop. Ultra-wide #80 (3840x1080) checked on its annotated image.
 - Review, 2 rounds (Oct 17, workflow of 4 reviewers + 4 adversarial verifiers each, offline, no API spend). Round 1 on 01ec94a: scoring, zoom geometry and data all clean (mocked run of all 1,581 cases gives 0 differences vs the official scorer; every file's sha256 matches the pinned revision; zoom code byte-identical to v2). 2 minor findings confirmed and fixed in e2118e7: an unknown `--bench` value fell back to v2 paths (could rewrite a v2 progress file), and `code_rev` had no dirty flag and was missing on raw records. Round 2 on e2118e7: 0 confirmed findings, 3 rejected as out of scope; one of them (use("v2") after use("pro") did not reset paths) hardened anyway with a test.
-- Cost: about 6.0M input tokens = $0.25 per stage, raw + zoom = $0.51 (confirmed by v2 billing at the same sent sizes). The key has $0.058: top-up first. Command: `python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60`.
+- Cost: about 6.0M input tokens = $0.25 per stage, raw + zoom = $0.51 (confirmed by v2 billing at the same sent sizes).
+
+### ScreenSpot-Pro Run A: raw, no zoom (Oct 17 09:24-09:33, `results/pro/pass1.jsonl`, log `pass1.log`)
+- **Raw Jev 1.14 box on ScreenSpot-Pro: 19.17% (303/1581, Wilson 95% CI 17.3-21.2).** Text 26.10% (n=977), icon 7.95% (n=604), macro over the 12 cells 17.66%.
+- Clean run: 1581/1581 scored, 0 wrong_format, 0 infra_error, 0 retries, all records code_rev 4099bfa on a clean tree, one model version (jev-1.14-20261014). Independent re-score from the raw responses with a verbatim copy of the official `eval_sample_positive_gt`: 303/1581, 0 disagreements.
+- Cost and speed: 6.01M input tokens (mean 3,800 per case), $0.2523 logged, $0.2500 billed by the key balance. Median 0.83 s per answer, p90 1.36 s, 8 min 54 s wall time on 4 workers.
+
+| Group | Text | Icon |
+|---|---|---|
+| CAD | 12.69 (n=197) | 15.62 (n=64) |
+| Dev | 27.92 (n=154) | 7.59 (n=145) |
+| Creative | 20.20 (n=198) | 5.59 (n=143) |
+| Scientific | 38.89 (n=144) | 7.27 (n=110) |
+| Office | 41.81 (n=177) | 15.09 (n=53) |
+| OS | 15.89 (n=107) | 3.37 (n=89) |
+
+- Where it sits (official leaderboard data): between OS-Atlas-7B 18.9 and Aguvis-7B 22.9, above GPT5-minimal (resized) 18.5 and Claude (Computer Use) 17.1.
+- Why it is so much lower than v2 (83.33): the median Pro target covers 0.035% of the screen vs 0.72% on v2, about 20x smaller. Jev answers on a 0.01 grid, and 562 of 1,581 Pro targets (36%) are smaller than one grid step on at least one side (v2: 1 of 1,272). Every screenshot is also sent downscaled (0.41x for 4K, down to 0.26x). Icons suffer most (7.95%).
+- Confidence still carries signal: AUROC 0.76; answers at 0.8 or more are right 46-50% of the time, under 0.5 only 6.7%.
+- Next: Run B, the frozen 2x zoom on this pass's answers (stage B only, A is resumed from this file, about $0.25). The key has $0.058: top-up first. Command: `python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60`.
 
 ## 2. What has been done (Oct 16-17 2026, CEST)
 
@@ -141,6 +160,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 | 22:05-23:15 | Deep audit of all three runs (rescore, image rebuild, logs, billing) and label audit of the 271 missed cases |
 | Oct 17 07:55-08:40 | Headroom analysis, both leaderboards collected (2 research agents), upstream issue drafted, checked for prior reports and posted (#65), ScreenSpot-Pro data downloaded |
 | Oct 17 08:45-08:57 | Pro prep: 2x zoom alone frozen, loader + preflight + offline tests, download completed, 3-case smoke ($0.001) |
+| Oct 17 09:00-09:33 | Two review rounds (fixes e2118e7, 4099bfa), wider and fresh smokes, Pro Run A raw: 19.17%, 0 errors, $0.25 |
 
 Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
 
