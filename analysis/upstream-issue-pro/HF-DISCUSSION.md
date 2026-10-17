@@ -1,5 +1,5 @@
-<!-- DRAFT, not posted. Target: https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/discussions/new
-     The GitHub issue is up (#32) and its link is filled in below. Needs Arthur's go before posting. -->
+<!-- POSTED Oct 17 2026 12:32 CEST on Arthur's go: https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/discussions/5
+     From the HF account arthurkatcher (made the same day). Title and body below are the posted text, checked against the API. -->
 
 **Title:** 3 wrong labels, 1 contradictory pair and 2 near-duplicate cases
 

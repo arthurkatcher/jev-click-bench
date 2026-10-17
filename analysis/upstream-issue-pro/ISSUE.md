@@ -1,4 +1,4 @@
-<!-- POSTED Oct 17 2026 12:10 CEST: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32 (figures hosted in gist 8fc2cc74272e1a78ec678b48d198a300, raw links pinned to a8c6438). HF version not posted yet.
+<!-- POSTED Oct 17 2026 12:10 CEST: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32 (figures hosted in gist 8fc2cc74272e1a78ec678b48d198a300, raw links pinned to a8c6438). HF version posted 12:32: https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/discussions/5.
      This file is the posted text, with local figure paths. Edits to the draft before posting (Arthur's choices): no miss count in Scope,
      and only the meaning-changing wording cases (the 5 word-for-word ones now count as loosely worded in section 6, 49 -> 54).
      Checks behind every line: VERIFY.md. Prior reports: PRIOR-REPORTS.md. -->

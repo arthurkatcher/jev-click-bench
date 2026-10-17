@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2 and ScreenSpot-Pro: run report
 
-Status as of Sat Oct 17 2026, 12:11 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 12:33 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -17,7 +17,7 @@ Status as of Sat Oct 17 2026, 12:11 CEST. Living document: updated after each ru
   - Every Pro number checks out. Zoom works by size alone: after zoom, a target is hit about as often as a raw target of the same apparent size.
   - At the same size, Pro is still 20-35 pp harder than v2.
   - The misses are the model, not the key: 65 of the 905 zoom misses have a label issue, worth at most 2.28 pp. The rest are the wrong element (463) or the right element with the click off (377).
-  - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 1 pair with the same request and two different keys, and 2 near-duplicates. Reported upstream as ScreenSpot-Pro issue #32.
+  - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 1 pair with the same request and two different keys, and 2 near-duplicates. Reported upstream (ScreenSpot-Pro issue #32, HF discussion #5).
 - **Pro 4x zoom (1g, Oct 17, post-hoc):** a second zoom step on the 2x answers, designed after seeing Pro run 2 and predicted first (63.2%, range 59.7-66.2), scored **60.15%**. That is +17.39 pp over 2x (340 fixed, 65 broken), inside the range. It is a labelled extra: 42.76 stays the clean Pro number. Three calls per click, $0.48 per 1,000 clicks.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
@@ -223,7 +223,7 @@ The structure is the same as the v2 audit (1c, 1d).
   - 30 screenshot files are byte copies of others.
   - On the Chinese-UI apps, many English instructions read as literal translations of the Chinese ones ("Benchmark Identifier" for 基准标识, datum identifier).
 - **UI language:** 295 cases ask in English about a Chinese interface (AutoCAD, Inventor, Origin, SolidWorks, Stata). They score 30.2% after zoom vs 45.6% on English UIs, with the same zoom gain. Each of those apps is all Chinese, and six English apps score as low, so language and app cannot be separated.
-- **Upstream:** posted Oct 17 12:10 CEST: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32 ("ScreenSpot-Pro: 3 wrong labels, 1 contradictory pair and 2 near-duplicate cases"). Draft, checks, prior-report search, figures and script in `analysis/upstream-issue-pro/`; figures hosted in a gist. Jev is not named in it. The HF discussion draft (`HF-DISCUSSION.md`) is not posted.
+- **Upstream:** posted Oct 17 12:10 CEST: https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32 ("ScreenSpot-Pro: 3 wrong labels, 1 contradictory pair and 2 near-duplicate cases"). Draft, checks, prior-report search, figures and script in `analysis/upstream-issue-pro/`; figures hosted in a gist. Jev is not named in it. The short HF version (`HF-DISCUSSION.md`) is posted too (12:32): https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/discussions/5.
 
 **What it leads to** (`AUDIT-pro-run2.md` section 11):
 - 42.76% is the clean Pro number.
@@ -316,8 +316,9 @@ The structure is the same as the v2 audit (1c, 1d).
 | Oct 17 09:58-11:15 | Pro deep audit, label audit of B's 905 misses, upstream draft |
 | Oct 17 11:20-11:47 | 4x step: tests, prediction, smoke, full run: 60.15%, $0.25 |
 | Oct 17 11:50-12:10 | Pro label audit corrected (2 twin pairs dropped), upstream report finished and posted (#32) |
+| Oct 17 12:15-12:33 | Hugging Face account made in BrowserOS (Arthur solved the captcha), short HF version posted (discussion #5) |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2), c0f8b30 (Pro deep audit and label audit), c691595 and 5649be5 (4x step and its registered prediction), 74b9f27 (4x results), 02f4309 (twin-pair correction, Pro upstream draft), then Pro issue #32 posted.
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2), c0f8b30 (Pro deep audit and label audit), c691595 and 5649be5 (4x step and its registered prediction), 74b9f27 (4x results), 02f4309 (twin-pair correction, Pro upstream draft), then Pro issue #32 and HF discussion #5 posted.
 
 ## 3. Setup
 
@@ -579,7 +580,7 @@ OS-Atlas-7B appears as 84.1, 85.1 or 87.1 depending on the paper (4B vs 7B rows)
 - **Wording ablation, off-benchmark only.** Whether a different wrapper sentence moves Jev toward buttons can only be tested on screenshots outside ScreenSpot-v2.
 - **ScreenSpot-Pro with the same frozen zoom rule: DONE** (1e, 1f). 42.76%, the clean confirmation of the crop choice.
 - **4x second zoom step on Pro: DONE** (1g, post-hoc). 60.15%, inside its registered range. A labelled extra: 42.76 stays the clean Pro number.
-- **Pro upstream label report: POSTED** Oct 17 (issue #32). Its HF discussion version (`analysis/upstream-issue-pro/HF-DISCUSSION.md`) is not posted.
+- **Pro upstream label report: POSTED** Oct 17 (GitHub issue #32, HF discussion #5).
 - **HF discussion** version of the v2 label report (`analysis/upstream-issue/HF-DISCUSSION.md`), not posted.
 - **Leaderboard charts** for the article, one per benchmark, no-tools and with-tools split, Jev highlighted.
 - **Row-preserving crop for tall mobile screens.** The main cost of zoom is context loss on mobile settings rows (1c). Test it only on a separate set, never tuned on ScreenSpot-v2.
