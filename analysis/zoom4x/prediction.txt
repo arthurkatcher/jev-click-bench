@@ -1,0 +1,34 @@
+# Stage C (4x) prediction, registered before any stage-C call
+
+Code rev when written: c691595. Stage-C result files present: none.
+Stage C is the frozen 2x rule applied once more, inside B's window around B's answer. It was designed after seeing Pro run 2, so it is a labelled extra next to 42.76, never in its place.
+
+## What C's crops look like (exact, from B's answers)
+- C's window: half of B's side 1534, B's whole window (big box) 24, between (box needs more) 23.
+- Median target size in the image Jev sees: A 20.9 px, B 41.6 px, C 83.3 px.
+- Blown-up crops (window smaller than the image sent): B 774, C 1545 of 1581. Blow-up factor: B up to 1.63x, C median 1.81x, up to 3.27x, over 2x in 770 cases. On the 2x step, blown-up crops gained as much as the others (`AUDIT-pro-run2.md` section 4); nothing has tested factors over 1.6x yet.
+- Ceiling: the target centre is inside C's window in 675 of B's 676 hits and 702 of its 905 misses, so C can reach about 87.1%.
+
+## What the 2x step did, by target size in B's image (target centre in B's window)
+| Size in B's image | A2 hit: B kept | A2 miss: B fixed |
+|---|---|---|
+| 0-10 px | - | 0% (n=19) |
+| 10-20 px | 40% (n=5) | 7% (n=134) |
+| 20-30 px | 29% (n=7) | 20% (n=259) |
+| 30-45 px | 52% (n=33) | 35% (n=285) |
+| 45-60 px | 82% (n=51) | 56% (n=204) |
+| 60-80 px | 87% (n=107) | 65% (n=150) |
+| 80+ px | 91% (n=92) | 75% (n=84) |
+
+A target A2 missed was later hit about as often as a fresh raw target of the same size (the raw curve in `AUDIT-pro-run2.md` section 4: 17.8% at 20-30 px, 39.4% at 30-45, 47.7% at 45-60, 66.7% at 60-80). So a miss at half the size says little once the target doubles. A hit carries over more strongly.
+
+## Prediction
+- **C = 63.2%** (95% predictive range 59.7-66.2%), from the 2x step's rates replayed on B's answers at C's sizes.
+- That is about 397 of B's 905 misses fixed and 74 of its 676 hits broken.
+- Cross-check, size alone (B's hit rate by size, target in view, ignoring the earlier answer): 61.8%.
+- How good is size alone? Tested on the 2x step, A1's raw size curve applied to B's sizes gave 36.7% against the real 42.76%. It under-predicted the 2x step by 6.0 pp, so size is most of the zoom effect, not all of it.
+
+## How to read the result
+- Inside the range: the second doubling works like the first.
+- Below it: 4x costs something 2x did not. Candidates: blown-up crops, a crop of 1/16 of the screen that loses context, or B's misses being harder than their size says.
+- Above it: unexpected. Check the run before believing it.

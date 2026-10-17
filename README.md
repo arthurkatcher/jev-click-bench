@@ -69,7 +69,7 @@ A separate method, never the headline. Two `box` calls per case:
 - Designed after seeing Pro run 2 (the audit's 4x ceiling), on Arthur's go. A labelled extra, reported next to the Pro zoom result 42.76 and never in its place.
 - Rule: the frozen zoom rule applied once more, inside B's window around B's box (`zoom_again_window`): half of each side of B's window, grown for a big box, slid to stay inside it. So a small target is 4x its size in A's image. The crop is resized to A's sent size (the same tokens as B), the box is mapped back to the full screenshot and scored with the official rule.
 - One call per case, into `results/pro/zoom4x.jsonl` (`stage: "C"`, pass `c2`, `window`, `parent_window` = B's window). A wrong_format B would give a copied miss with no call (run 2 has none). Resumable, `--max-cost` covers the file, 401/402/403 stops the run.
-- Prediction registered before any stage-C call, smoke included: `analysis/zoom4x/prediction.txt`.
+- Prediction registered before any stage-C call, smoke included (`analysis/zoom4x/prediction.txt`): C = 63.2%, 95% range 59.7-66.2%, about 397 of B's 905 misses fixed and 74 of its 676 hits broken. The model replays what the 2x step did (B's keep and fix rates by target size in B's image) on B's answers at C's sizes. Ceiling: the target centre stays in C's window in 1,377 cases (87.1%).
 - Smoke: 3 cases into `results/pro/zoom4x_smoke.jsonl`, never part of the score.
 
 ## Budget
