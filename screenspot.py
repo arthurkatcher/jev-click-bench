@@ -60,6 +60,9 @@ def use(bench):
     if bench == "pro":
         DATA, IMAGES, OUT, CELL_KEY = ROOT / "data" / "screenspot-pro", "images", ROOT / "results" / "pro", "group"
         CELLS = [(g, t) for g in PRO_GROUPS for t in ("text", "icon")]
+    else:  # back to the module defaults, so use("v2") after use("pro") is safe in one process
+        DATA, IMAGES, OUT, CELL_KEY = ROOT / "data" / "screenspot-v2", "screenspotv2_image", ROOT / "results", "platform"
+        CELLS = [(p, t) for p in ("mobile", "desktop", "web") for t in ("text", "icon")]
     DEV_LOG = OUT / "runs.jsonl"
 
 

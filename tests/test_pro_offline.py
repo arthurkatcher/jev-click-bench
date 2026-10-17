@@ -85,4 +85,8 @@ for typo in ("Pro", "pro2", ""):  # a typo exits before any path switches, never
         pass
 assert ss.BENCH == "pro" and ss.OUT == ss.ROOT / "results" / "pro"
 assert "code_rev" in r and "code_rev" in z  # every record names the code that ran
+ss.use("v2")  # switching back restores every v2 default
+assert (ss.DATA, ss.IMAGES, ss.OUT, ss.CELL_KEY) == (ss.ROOT / "data" / "screenspot-v2", "screenspotv2_image",
+                                                    ss.ROOT / "results", "platform") and len(ss.load()) == 1272
+assert ss.CELLS == [(p, t) for p in ("mobile", "desktop", "web") for t in ("text", "icon")]
 print("ALL PRO OFFLINE TESTS PASSED")
