@@ -25,6 +25,13 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction 
     python3 screenspot.py compare results/pass2.jsonl results/zoom2.jsonl   # A vs A+B (auto: method comparison)
     python3 screenspot.py zoomstats results/pass2.jsonl results/zoom2.jsonl --rerun results/pass1.jsonl
 
+ScreenSpot-Pro: the same commands with `--bench pro` first; data in `data/screenspot-pro/`, results in `results/pro/`.
+
+    python3 tests/test_pro_offline.py                   # Pro offline tests, no API calls
+    python3 screenspot.py --bench pro check             # offline preflight: images, sizes, boxes
+    python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60   # raw + 2x zoom, ~$0.51
+    python3 screenspot.py --bench pro zoomstats results/pro/pass1.jsonl results/pro/zoom1.jsonl
+
 ## Protocol (frozen before the full run)
 - Prompt v2: box instruction `In the screenshot, the UI element to use for this task: <instruction>`, instruction whitespace-normalised and passed unquoted (21 contain their own quotes, 40 start with "click", 17 with "tap"). No wording iteration on ScreenSpot-v2 rows; any wording ablation runs off-benchmark and is reported separately.
 - Headline = pass 1, micro average (hits / 1,272), the convention published v2 tables use (OS-Atlas-7B's 84.12 recomputes as micro; its macro would be 82.20). Macro (mean of six cells) printed next to it, labelled. Baselines are compared under the convention their paper uses, checked against the paper's own table.

@@ -17,8 +17,11 @@ import jev
 
 ROOT = pathlib.Path(__file__).parent
 DATA = ROOT / "data" / "screenspot-v2"
+IMAGES = "screenspotv2_image"
 OUT = ROOT / "results"
 DEV_LOG = OUT / "runs.jsonl"
+BENCH = "v2"
+CELL_KEY = "platform"  # the report's cells = CELL_KEY x text/icon
 
 # Frozen before the full run. The instruction is passed through unquoted (some contain their own
 # quotes, some start with "click"/"tap"). OpenRouter guide: describe the target and name the image.
@@ -32,6 +35,8 @@ _lock = threading.Lock()
 
 
 def load():
+    if BENCH == "pro":
+        return load_pro()
     cases = []
     for platform in ("mobile", "desktop", "web"):
         for c in json.loads((DATA / f"screenspot_{platform}_v2.json").read_text()):
@@ -40,6 +45,37 @@ def load():
     for i, c in enumerate(cases):
         c["i"] = i
     return cases  # 1,272 cases over 730 screenshots, bbox = [x, y, w, h] in original pixels
+
+
+PRO_GROUPS = ("CAD", "Dev", "Creative", "Scientific", "Office", "OS")  # official leaderboard order
+
+
+def use(bench):
+    """Pick the benchmark before anything runs. Prompt, zoom rule and scoring are the same for both;
+    only the data, the image folder, the results folder and the report cells change."""
+    global BENCH, DATA, IMAGES, OUT, DEV_LOG, CELL_KEY, CELLS
+    BENCH = bench
+    if bench == "pro":
+        DATA, IMAGES, OUT, CELL_KEY = ROOT / "data" / "screenspot-pro", "images", ROOT / "results" / "pro", "group"
+        CELLS = [(g, t) for g in PRO_GROUPS for t in ("text", "icon")]
+    DEV_LOG = OUT / "runs.jsonl"
+
+
+def load_pro():
+    """ScreenSpot-Pro in the official leaderboard setting (run_ss_pro.sh: --language en --gt_type positive
+    --inst_style instruction): 1,581 cases, English instruction. Pro's bbox is [x1, y1, x2, y2]; it is
+    stored as [x, y, w, h] like v2, so run_one's conversion gives back exactly x1/W, y1/H, x2/W, y2/H."""
+    cases = []
+    for f in sorted((DATA / "annotations").glob("*.json")):  # fixed order: file name, then file order
+        for c in json.loads(f.read_text()):
+            x1, y1, x2, y2 = c["bbox"]
+            cases.append({"img_filename": c["img_filename"], "bbox": [x1, y1, x2 - x1, y2 - y1],
+                          "instruction": c["instruction"], "platform": c["platform"], "group": c["group"],
+                          "data_source": c["application"], "data_type": c["ui_type"], "id": c["id"],
+                          "img_size": c["img_size"]})
+    for i, c in enumerate(cases):
+        c["i"] = i
+    return cases
 
 
 def clean(instruction):
@@ -108,13 +144,16 @@ def zoom_window(a, W, H):
     return x0, y0, cw, ch
 
 
-def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode="misses", window=None, size=None):
+def run_one(i, dry=False, cases=None, out=None, pass_id="dev", annotate_mode="misses", window=None, size=None):
     """window=(x0, y0, cw, ch) in original px + size=(w, h): stage B of the zoom method. The crop is
     resized to `size` (stage A's sent size, so the same tokens) and the box is mapped back to the
     full screenshot before scoring. Everything else (prompt, question, scoring) is identical."""
+    out = out or DEV_LOG
     case = (cases or load())[i]
-    orig = Image.open(DATA / "screenspotv2_image" / case["img_filename"])
+    orig = Image.open(DATA / IMAGES / case["img_filename"])
     W, H = orig.size
+    if "img_size" in case and list(case["img_size"]) != [W, H]:  # Pro's official rule normalises by img_size
+        raise ValueError(f"#{i}: image is {W}x{H}, annotation says {case['img_size']}")
     if window:
         x0, y0, cw, ch = window
         img = orig.crop((x0, y0, x0 + cw, y0 + ch)).resize(tuple(size), resample=3)  # 3 = BICUBIC, as fit()
@@ -128,6 +167,8 @@ def run_one(i, dry=False, cases=None, out=DEV_LOG, pass_id="dev", annotate_mode=
            "source": case["data_source"], "type": case["data_type"], "instruction": case["instruction"],
            "instructions_sent": text, "prompt_version": PROMPT_VERSION, "template_hash": TEMPLATE_HASH,
            "requested_model": jev.MODEL, "orig_size": [W, H], "sent_size": list(img.size), "gt": gt}
+    if BENCH != "v2":
+        rec.update(bench=BENCH, group=case["group"], case_id=case["id"])
     if window:
         rec.update(stage="B", window=list(window), window_frac=round(cw / W, 4), zoom_f=ZOOM_F,
                    zoom_margin=ZOOM_MARGIN, code_rev=CODE_REV)
@@ -206,7 +247,7 @@ _checked = set()
 
 
 def write(out, rec):
-    out.parent.mkdir(exist_ok=True)
+    out.parent.mkdir(parents=True, exist_ok=True)
     with _lock:
         if out not in _checked:  # a hard kill can leave a half line: end it so the next record stays readable
             _checked.add(out)
@@ -281,6 +322,7 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     state = {"spent": spent, "n": 0, "hits": 0, "ok": 0, "wrong_format": 0, "infra_error": 0, "secs": [],
              "tokens": 0, "t0": time.time(), "zoom_hits": 0, "zoom_scored": 0, "zoom_wrong_format": 0,
              "zoom_infra_error": 0, "zoom_secs": [], "zoom_tokens": 0, "a_resumed": 0}
+    OUT.mkdir(parents=True, exist_ok=True)
     prog = OUT / f"pass{pass_id}.progress.json"
 
     def progress(final=False):
@@ -443,11 +485,11 @@ def report(path):
     flag = "" if complete else f"  ** INCOMPLETE ({', '.join(problems)}): not a headline number **"
     lines = [f"# {pathlib.Path(path).name}" + flag, f"prompt versions: {dict(versions)}",
              f"models (requested, resolved, provider): {dict(models)}"]
-    lines.append("| Platform | Type | n | scored | hits | acc | 95% CI |")
+    lines.append(f"| {CELL_KEY.title()} | Type | n | scored | hits | acc | 95% CI |")
     lines.append("|---|---|---|---|---|---|---|")
     cell_acc = []
     for p, t in CELLS:
-        idx = [c["i"] for c in cases if c["platform"] == p and c["data_type"] == t]
+        idx = [c["i"] for c in cases if c[CELL_KEY] == p and c["data_type"] == t]
         hits = sum(1 for i in idx if scored.get(i, {}).get("hit"))
         acc = hits / len(idx)
         cell_acc.append(acc)
@@ -457,12 +499,15 @@ def report(path):
     hits = sum(1 for r in scored.values() if r["hit"])
     lines.append("")
     lo, hi = wilson(hits, n_total)
-    lines.append(f"Avg (micro, hits / {n_total}, official strict rule, as published v2 tables): "
+    lines.append(f"Avg (micro, hits / {n_total}, official strict rule, as published {BENCH} tables): "
                  f"{100 * hits / n_total:.2f}  (95% Wilson CI {lo:.1f}-{hi:.1f})" + flag)
+    for t in ("text", "icon"):  # the official text_acc / icon_acc
+        idx = [c["i"] for c in cases if c["data_type"] == t]
+        lines.append(f"  {t}: {100 * sum(1 for i in idx if scored.get(i, {}).get('hit')) / len(idx):.2f} (n={len(idx)})")
     tol = sum(1 for r in scored.values() if r.get("hit_tolerant"))
     lines.append(f"Avg (micro, 1e-9 edge tolerance): {100 * tol / n_total:.2f}  "
                  f"({sum(1 for r in scored.values() if bool(r.get('hit_tolerant')) != bool(r['hit']))} cases differ)" + flag)
-    lines.append(f"Avg (macro, mean of 6 cells): {100 * statistics.mean(cell_acc):.2f}" + flag)
+    lines.append(f"Avg (macro, mean of {len(CELLS)} cells): {100 * statistics.mean(cell_acc):.2f}" + flag)
     ok = [r for r in scored.values() if r["status"] == "ok"]
     lines.append(f"scored {len(scored)}/{n_total}, wrong_format {len(scored) - len(ok)}, infra_error {len(infra)}, "
                  f"not run {missing}, degenerate boxes {sum(1 for r in ok if r['degenerate'])}, "
@@ -576,7 +621,7 @@ def zoomstats(pass_file, zoom_file, rerun=None):
     row("all", ids)
     cases = load()
     for p, t in CELLS:
-        row(f"{p} {t}", [i for i in ids if cases[i]["platform"] == p and cases[i]["data_type"] == t])
+        row(f"{p} {t}", [i for i in ids if cases[i][CELL_KEY] == p and cases[i]["data_type"] == t])
     wf = lambda i: z[i].get("window_frac")
     row("window half (zoom 2x)", [i for i in ids if wf(i) is not None and wf(i) <= ZOOM_F + 0.01])
     row("window widened", [i for i in ids if wf(i) is not None and ZOOM_F + 0.01 < wf(i) < 0.9999])
@@ -616,7 +661,47 @@ def zoomstats(pass_file, zoom_file, rerun=None):
     return len(ids)
 
 
+def check():
+    """Offline preflight, no API: every image present and readable, its size equal to the annotation's
+    img_size (Pro), every truth box with a positive area (boxes past the image edge are printed as notes).
+    Prints the sent sizes."""
+    cases, bad, notes, sent, files = load(), [], [], collections.Counter(), set()
+    for c in cases:
+        p = DATA / IMAGES / c["img_filename"]
+        files.add(c["img_filename"])
+        try:
+            with Image.open(p) as im:
+                W, H = im.size
+        except Exception as e:
+            bad.append(f"#{c['i']} {c['img_filename']}: {type(e).__name__}")
+            continue
+        if "img_size" in c and list(c["img_size"]) != [W, H]:
+            bad.append(f"#{c['i']}: image {W}x{H}, annotation {c['img_size']}")
+        x, y, w, h = c["bbox"]
+        if not (w > 0 and h > 0):
+            bad.append(f"#{c['i']}: bbox {c['bbox']} has no area")
+        elif not (x >= 0 and y >= 0 and x + w <= W and y + h <= H):  # the official rule scores it as given
+            notes.append(f"#{c['i']}: bbox {c['bbox']} runs past the {W}x{H} image edge")
+        s = min(1.0, jev.MAX_SIDE / max(W, H))
+        sent[(W, H, round(W * s), round(H * s))] += 1
+    print(f"{BENCH}: {len(cases)} cases, {len(files)} screenshots, {len(bad)} problems")
+    for b in bad[:30]:
+        print("  ", b)
+    for b in notes:
+        print("   note (label quirk, scored as given):", b)
+    print("original -> sent size (cases):")
+    for (W, H, w, h), n in sent.most_common():
+        print(f"  {W}x{H} -> {w}x{h}  ({n})")
+    return not bad
+
+
 if __name__ == "__main__":
+    if "--bench" in sys.argv:  # python3 screenspot.py --bench pro run --pass 1 --zoom
+        k = sys.argv.index("--bench")
+        use(sys.argv[k + 1])
+        del sys.argv[k:k + 2]
+    if len(sys.argv) > 1 and sys.argv[1] == "check":
+        sys.exit(0 if check() else 1)
     if len(sys.argv) > 1 and sys.argv[1].isdigit():
         i = int(sys.argv[1])
         rec = run_one(i, dry="--dry" in sys.argv, annotate_mode="all")

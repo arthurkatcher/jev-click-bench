@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2: run report
 
-Status as of Sat Oct 17 2026, 08:40 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 08:57 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -115,10 +115,14 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 - No earlier report anywhere (`PRIOR-REPORTS.md`): all OS-Atlas and SeeClick issues and PRs, the HF discussions, v2 mirrors, web search.
 - **New finding:** web [200] (#1035, "log in by x account") and web [202] (#1037, "check the weather news") were right in ScreenSpot v1 and broke in v2. Only 9 boxes changed between v1 and v2 for the same image and instruction. #455, #458, #487 and #449 are new in v2, and so is the duplicate.
 
-### ScreenSpot-Pro run (planned, not frozen yet)
-- Data: likaixin/ScreenSpot-Pro at revision 210e78d (Mar 18 2026), in `data/screenspot-pro/`. 1,581 cases, 26 apps, 6 groups, text 977 / icon 604, bbox = [x1, y1, x2, y2] (v2 is [x, y, w, h]). Scoring = the official `eval_sample_positive_gt`, overall = micro accuracy over all cases.
-- Method: the v2 harness unchanged (Arthur, Oct 17: keep it simple). Zoom: 2x recommended as the main arm, Arthur deciding between 2x alone and 2x plus a 3x arm. Either way it is fixed before any Pro call. Nothing on Pro is looked at to pick settings.
-- Cost from image sizes alone: about 6.0M input tokens = $0.25 per stage, so raw + zoom = $0.50 plus a smoke test. The key has $0.058: top-up first.
+### ScreenSpot-Pro run (frozen Oct 17 08:50, ready, waits for a top-up)
+- Data: likaixin/ScreenSpot-Pro at revision 210e78d (Mar 18 2026), in `data/screenspot-pro/`. 1,581 cases, 26 apps, 6 groups, text 977 / icon 604, bbox = [x1, y1, x2, y2] (v2 is [x, y, w, h]). Scoring = the official `eval_sample_positive_gt`, overall = micro accuracy over all cases. Setting = the official leaderboard one: English instruction, positive cases only.
+- Method: the v2 harness unchanged (Arthur, Oct 17: keep it simple). **Zoom: 2x alone (Arthur, Oct 17), the same frozen rule as v2.** No 3x arm. Nothing on Pro is looked at to pick settings.
+- Download complete: all 1,618 files (the 62 with spaces in the name re-fetched URL-encoded). Preflight (`screenspot.py --bench pro check`, offline): every image present, every size equal to the annotation's img_size, every box with a positive area. One label quirk: #491's box starts at y = -1 (scored as given, like v2's #449, which runs 1 px past the edge).
+- Every Pro screenshot is downscaled to fit Jev's 1568 px limit: 4K goes to 0.41x, 5K to 0.31x, the 6016 px ones to 0.26x. So zoom recovers more pixels here than on v2 (a 4K half-window is sent at 0.82x).
+- Harness change = loading only (`use("pro")`, `load_pro()`): Pro's [x1, y1, x2, y2] is stored as [x, y, w, h], so the scoring path is the v2 one. `tests/test_pro_offline.py` checks our truth box equals the official conversion on all 1,581 cases and runs mocked raw + zoom calls through the official rule. Results go to `results/pro/`.
+- Smoke (pass 0, 3 cases raw + zoom, plumbing only, not part of any score): all 6 calls ok, 3,931 input tokens per call, $0.00099 total, zoom crops mapped back correctly (checked on the annotated image of #1).
+- Cost: about 6.0M input tokens = $0.25 per stage, raw + zoom = $0.51 (confirmed by v2 billing at the same sent sizes). The key has $0.058: top-up first. Command: `python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60`.
 
 ## 2. What has been done (Oct 16-17 2026, CEST)
 
@@ -134,6 +138,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 | 21:49-22:01 | Pass 2 + zoom run: A2 84.36%, A+B 87.89%, 0 errors, $0.38 |
 | 22:05-23:15 | Deep audit of all three runs (rescore, image rebuild, logs, billing) and label audit of the 271 missed cases |
 | Oct 17 07:55-08:40 | Headroom analysis, both leaderboards collected (2 research agents), upstream issue drafted, checked for prior reports and posted (#65), ScreenSpot-Pro data downloaded |
+| Oct 17 08:45-08:57 | Pro prep: 2x zoom alone frozen, loader + preflight + offline tests, download completed, 3-case smoke ($0.001) |
 
 Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
 
