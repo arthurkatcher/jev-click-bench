@@ -54,6 +54,8 @@ def use(bench):
     """Pick the benchmark before anything runs. Prompt, zoom rule and scoring are the same for both;
     only the data, the image folder, the results folder and the report cells change."""
     global BENCH, DATA, IMAGES, OUT, DEV_LOG, CELL_KEY, CELLS
+    if bench not in ("v2", "pro"):  # a typo must never fall back to the v2 files
+        sys.exit(f"unknown bench {bench!r}: use v2 or pro")
     BENCH = bench
     if bench == "pro":
         DATA, IMAGES, OUT, CELL_KEY = ROOT / "data" / "screenspot-pro", "images", ROOT / "results" / "pro", "group"
@@ -126,6 +128,9 @@ try:
     import subprocess
     CODE_REV = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"], capture_output=True,
                               text=True, timeout=5).stdout.strip() or None
+    if CODE_REV and subprocess.run(["git", "-C", str(ROOT), "status", "--porcelain", "--untracked-files=no"],
+                                   capture_output=True, text=True, timeout=5).stdout.strip():
+        CODE_REV += "-dirty"  # uncommitted edits: the hash alone would not reproduce this code
 except Exception:
     CODE_REV = None
 
@@ -166,7 +171,8 @@ def run_one(i, dry=False, cases=None, out=None, pass_id="dev", annotate_mode="mi
     rec = {"pass": pass_id, "i": i, "file": case["img_filename"], "platform": case["platform"],
            "source": case["data_source"], "type": case["data_type"], "instruction": case["instruction"],
            "instructions_sent": text, "prompt_version": PROMPT_VERSION, "template_hash": TEMPLATE_HASH,
-           "requested_model": jev.MODEL, "orig_size": [W, H], "sent_size": list(img.size), "gt": gt}
+           "requested_model": jev.MODEL, "orig_size": [W, H], "sent_size": list(img.size), "gt": gt,
+           "code_rev": CODE_REV}
     if BENCH != "v2":
         rec.update(bench=BENCH, group=case["group"], case_id=case["id"])
     if window:
@@ -314,6 +320,9 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
     done = {i for i in a_done if not zoom or i in z_done}
     spent = sum(cost(r) for path in ((out, zout) if zoom else (out,)) if path.exists() for r in read(path))
     todo = [c["i"] for c in cases if c["i"] not in done][:limit]
+    if not CODE_REV or CODE_REV.endswith("-dirty"):
+        print(f"WARNING: code_rev {CODE_REV}: commit before a scored run, or its records will not name the code that ran",
+              file=sys.stderr)
     print(f"pass {pass_id}{' + zoom' if zoom else ''}: {len(done)} done, {len(todo)} to run, "
           f"${spent:.4f} logged so far, cap ${max_cost}")
     before = jev.balance()
@@ -696,10 +705,13 @@ def check():
 
 
 if __name__ == "__main__":
-    if "--bench" in sys.argv:  # python3 screenspot.py --bench pro run --pass 1 --zoom
-        k = sys.argv.index("--bench")
-        use(sys.argv[k + 1])
-        del sys.argv[k:k + 2]
+    for k, a in enumerate(sys.argv):  # python3 screenspot.py --bench pro run --pass 1 --zoom (or --bench=pro)
+        if a == "--bench" or a.startswith("--bench="):
+            if a == "--bench" and k + 1 >= len(sys.argv):
+                sys.exit("--bench needs a value: v2 or pro")
+            use(a.split("=", 1)[1] if "=" in a else sys.argv[k + 1])
+            del sys.argv[k:k + (1 if "=" in a else 2)]
+            break
     if len(sys.argv) > 1 and sys.argv[1] == "check":
         sys.exit(0 if check() else 1)
     if len(sys.argv) > 1 and sys.argv[1].isdigit():

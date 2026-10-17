@@ -77,4 +77,12 @@ assert z["sent_size"] == a["sent_size"]
 # 4. results go to their own folder, never into the v2 results
 ss.use("pro")
 assert ss.OUT == ss.ROOT / "results" / "pro" and ss.DEV_LOG == ss.OUT / "runs.jsonl"
+for typo in ("Pro", "pro2", ""):  # a typo exits before any path switches, never falls back to v2 files
+    try:
+        ss.use(typo)
+        raise AssertionError(typo)
+    except SystemExit:
+        pass
+assert ss.BENCH == "pro" and ss.OUT == ss.ROOT / "results" / "pro"
+assert "code_rev" in r and "code_rev" in z  # every record names the code that ran
 print("ALL PRO OFFLINE TESTS PASSED")
