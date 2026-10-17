@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2: run report
 
-Status as of Fri Oct 16 2026, 23:15 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 08:40 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -11,6 +11,7 @@ Status as of Fri Oct 16 2026, 23:15 CEST. Living document: updated after each ru
 - Accuracy depends strongly on how big the target is in the image Jev sees. That motivated the zoom method, a second call on a 2x crop around the first answer: **87.89%**, +3.54 pp over its own raw answer (p=0.0002). See 1b.
 - Deep audit (1c): every answer rescored from the raw API response, every sent image rebuilt, logs and billing reconciled. No number changed.
 - Label audit (1d): of the 271 cases any run missed, 4 have a wrong answer key and 39 more sit on ambiguous or loose instructions. Side note only: the score stays the official key.
+- Oct 17 (1e): the label errors are reported upstream (OS-Atlas issue #65), both leaderboards are collected, and the headroom analysis says a better v2 number would be tuned on the test set. Next: ScreenSpot-Pro with the frozen 2x zoom.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
 
@@ -80,7 +81,39 @@ Full write-up: `analysis/LABELS-audit.md`. The per-case verdicts are in `analysi
 - Jev reads the label-issue cases the same way every time: all three runs miss 32 of the 43.
 - The dataset scans found one duplicate test case (#1017 = #1021) and one key box 1 px past the image edge (#449, hit by all runs).
 
-## 2. What has been done (Oct 16 2026, CEST)
+## 1e. Oct 17: headroom, leaderboards, upstream report
+
+### Can the harness go higher on v2?
+From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
+
+| Selector on the three v2 runs | Acc % |
+|---|---|
+| always B (the protocol) | 87.89 |
+| majority vote of A1, A2 and B | 84.91 |
+| skip zoom on mobile | 88.05 |
+| oracle A1 or A2 | 85.77 |
+| oracle any of the three | 92.45 |
+
+- **More samples of the same view hurt.** The two raw runs share the same mistakes and outvote B when B is right (where A1 sides with A2 against B, B is right 162 times and A2 124).
+- **Bigger pixels are used up.** After zoom only 28 targets are under 60 px in the image B saw. The rest of B's misses are 69 wrong element, 36 right element with the click off, 35 label issues and 14 crop context losses.
+- **Realistic v3 on v2: about 88.5-89.5%**, from a mobile crop fix plus a tighter click. Every idea comes from v2's test answers, so any such v2 number is tuned and must be labelled as such. The clean next step is ScreenSpot-Pro.
+
+### Leaderboards (`analysis/leaderboard/`)
+- **ScreenSpot-v2** (`screenspot-v2.md`, 39 rows): leader MAI-UI-32B 96.5 (Microsoft, Dec 2025), then OmegaUse-G 96.3 and UI-Venus-1.5-30B 96.2. VISTA (Jun 2026) calls v2 near saturation. Frontier labs stopped reporting it: the newest are Claude Sonnet 4 93.0 (H Company's run) and Gemini 3 Pro 93.7 (cited only). Jev raw 83.33 sits between Phi-Ground 83.8 and OS-Atlas-7B 84.1; Jev zoom 87.89 with OpenAI CUA 87.9, UGround-v1-7B 87.7 and Claude 3.7 Sonnet 87.6.
+- **ScreenSpot-Pro** (`screenspot-pro.md`, 95 rows, plus the official leaderboard data): no-tools leader GPT-6 Astra 92.7 (OpenAI; XPeng re-ran it at 93.17), then Claude Mythos 5 87.3 and Opus 4.8 82.3. With tools (Python or crop): Claude Mythos Preview 93.0, Mythos 5 90.7, Opus 4.8 87.9, GPT-5.2 86.3. Best open models: Qwen-UI-Agent-27B 76.6 single-shot, GroundCascade 85.1 with zoom. Aggregators mix the two setups in one column, so charts must split them.
+- Self-reported scores often disagree with third-party runs (GPT-5.6 Sol 76.9 vs 81.3; Opus 4.6 57.7 vs 49.5; Qwen3-VL-32B on v2 93.0 vs 95.8). Charts mark who measured each number.
+
+### Upstream report
+- Posted Oct 17 08:30 CEST: https://github.com/OS-Copilot/OS-Atlas/issues/65 ("ScreenSpot-v2: 4 wrong answer boxes and 1 duplicate case"). Draft, figures and script in `analysis/upstream-issue/`; figures hosted in a gist. Jev is not named in it. The HF discussion draft (`HF-DISCUSSION.md`) is not posted.
+- No earlier report anywhere (`PRIOR-REPORTS.md`): all OS-Atlas and SeeClick issues and PRs, the HF discussions, v2 mirrors, web search.
+- **New finding:** web [200] (#1035, "log in by x account") and web [202] (#1037, "check the weather news") were right in ScreenSpot v1 and broke in v2. Only 9 boxes changed between v1 and v2 for the same image and instruction. #455, #458, #487 and #449 are new in v2, and so is the duplicate.
+
+### ScreenSpot-Pro run (planned, not frozen yet)
+- Data: likaixin/ScreenSpot-Pro at revision 210e78d (Mar 18 2026), in `data/screenspot-pro/`. 1,581 cases, 26 apps, 6 groups, text 977 / icon 604, bbox = [x1, y1, x2, y2] (v2 is [x, y, w, h]). Scoring = the official `eval_sample_positive_gt`, overall = micro accuracy over all cases.
+- Method: the v2 harness unchanged (Arthur, Oct 17: keep it simple). Zoom: 2x recommended as the main arm, Arthur deciding between 2x alone and 2x plus a 3x arm. Either way it is fixed before any Pro call. Nothing on Pro is looked at to pick settings.
+- Cost from image sizes alone: about 6.0M input tokens = $0.25 per stage, so raw + zoom = $0.50 plus a smoke test. The key has $0.058: top-up first.
+
+## 2. What has been done (Oct 16-17 2026, CEST)
 
 | Time | Step |
 |---|---|
@@ -93,6 +126,7 @@ Full write-up: `analysis/LABELS-audit.md`. The per-case verdicts are in `analysi
 | 21:24-21:48 | Two review rounds of the zoom harness (12 agents, 26 minor findings, all fixed); one live smoke on #1095 |
 | 21:49-22:01 | Pass 2 + zoom run: A2 84.36%, A+B 87.89%, 0 errors, $0.38 |
 | 22:05-23:15 | Deep audit of all three runs (rescore, image rebuild, logs, billing) and label audit of the 271 missed cases |
+| Oct 17 07:55-08:40 | Headroom analysis, both leaderboards collected (2 research agents), upstream issue drafted, checked for prior reports and posted (#65), ScreenSpot-Pro data downloaded |
 
 Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
 
@@ -325,23 +359,30 @@ Any new run needs a top-up first: a raw pass costs $0.19, raw + zoom $0.38. The 
 
 ## 9. Published comparison points (from the research notes, check each paper before public use)
 
+Superseded by the sourced tables in `analysis/leaderboard/` (1e). The old list here missed the four models above 95.9.
+
 | Model | ScreenSpot-v2 |
 |---|---|
+| MAI-UI-32B | 96.5 |
+| OmegaUse-G | 96.3 |
+| UI-Venus-1.5-30B-A3B | 96.2 |
 | Holo2-235B (H Company) | 95.9 |
-| POINTS-GUI-G-8B | 95.7 |
-| Holo1.5-72B | 94.4 |
-| GUI-Cursor | 93.9 |
 | UI-TARS-7B | 91.6 |
-| GUI-Eyes-3B | 88.4 |
+| OpenAI CUA | 87.9 |
+| **Jev 1.14 zoom (this run)** | **87.89** |
+| Claude 3.7 Sonnet | 87.6 |
+| OS-Atlas-7B | 84.1 |
 | **Jev 1.14 raw (this run)** | **83.33** |
 
-OS-Atlas-7B is often cited around 84.1 but is unverified here. Jev is a general decision model, not a grounding specialist, and runs in TypeSafe's long-context mode on OpenRouter for every image request ("slower and less accurate" per TypeSafe).
+OS-Atlas-7B appears as 84.1, 85.1 or 87.1 depending on the paper (4B vs 7B rows). Jev is a general decision model, not a grounding specialist, and runs in TypeSafe's long-context mode on OpenRouter for every image request ("slower and less accurate" per TypeSafe).
 
 ## 10. Pinned
 
 - **Label audit of the misses: DONE** (1d, `analysis/LABELS-audit.md`). 43 of the 271 missed cases have a label issue, 4 of them wrong keys. Reported as a side note; the score stays the official key.
 - **Wording ablation, off-benchmark only.** Whether a different wrapper sentence moves Jev toward buttons can only be tested on screenshots outside ScreenSpot-v2.
-- **ScreenSpot-Pro** with the same frozen zoom rule, as the clean confirmation of the crop choice.
+- **ScreenSpot-Pro** with the same frozen zoom rule, as the clean confirmation of the crop choice. Data downloaded, plan in 1e, waits for the loader and a top-up.
+- **HF discussion** version of the label report (`analysis/upstream-issue/HF-DISCUSSION.md`), not posted.
+- **Leaderboard charts** for the article, one per benchmark, no-tools and with-tools split, Jev highlighted.
 - **Row-preserving crop for tall mobile screens.** The main cost of zoom is context loss on mobile settings rows (1c). Test it only on a separate set, never tuned on ScreenSpot-v2.
 
 ## 11. Caveats
