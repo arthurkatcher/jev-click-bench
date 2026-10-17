@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2 and ScreenSpot-Pro: run report
 
-Status as of Sat Oct 17 2026, 11:10 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 11:52 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -18,6 +18,7 @@ Status as of Sat Oct 17 2026, 11:10 CEST. Living document: updated after each ru
   - At the same size, Pro is still 20-35 pp harder than v2.
   - The misses are the model, not the key: 67 of the 905 zoom misses have a label issue, worth at most 2.28 pp. The rest are the wrong element (462) or the right element with the click off (376).
   - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 3 pairs with the same request and two different keys, and 2 duplicates. An upstream report is drafted, not posted.
+- **Pro 4x zoom (1g, Oct 17, post-hoc):** a second zoom step on the 2x answers, designed after seeing Pro run 2 and predicted first (63.2%, range 59.7-66.2), scored **60.15%**. That is +17.39 pp over 2x (340 fixed, 65 broken), inside the range. It is a labelled extra: 42.76 stays the clean Pro number. Three calls per click, $0.48 per 1,000 clicks.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
 
@@ -227,7 +228,73 @@ The structure is the same as the v2 audit (1c, 1d).
 **What it leads to** (`AUDIT-pro-run2.md` section 11):
 - 42.76% is the clean Pro number.
 - More zoom could still fix the click-off half of the misses, but not the wrong-element half. That half needs a different first look or a model that knows these apps.
-- The open option is a 4x second zoom step. It would be a separate, labelled experiment, "designed after seeing Pro run 2", with a prediction written down first, reported next to 42.76 and never instead of it. Arthur's call; not run.
+- The open option is a 4x second zoom step. It would be a separate, labelled experiment, "designed after seeing Pro run 2", with a prediction written down first, reported next to 42.76 and never instead of it. Run on Arthur's go: 60.15%, see 1g.
+
+## 1g. ScreenSpot-Pro: a second zoom step, 4x (Oct 17 11:38-11:47, post-hoc)
+
+**A labelled extra, designed after seeing Pro run 2.** The clean Pro numbers stay 19.17% raw and 42.76% with the frozen 2x zoom. Every number below comes from `python3 analysis/zoom4x/analyze.py` (`analysis/zoom4x/results.txt`).
+
+- **What it is.** Stage C is the frozen 2x step once more, inside B's window, around B's answer: half of B's side, so a small target is 4x its size in A's image. The crop is resized to A's sent size, and the box is mapped back to the full screenshot and scored with the official rule. A live click is three calls in a row: raw, 2x, 4x. This run reused run 2's raw and 2x answers and paid only for the third call.
+- **Prediction first.** Committed before any stage-C call (5649be5, `analysis/zoom4x/prediction.txt`): 63.2%, 95% range 59.7-66.2%, ceiling 87.1%. The model replayed what the 2x step did, by target size, on B's answers.
+- **Checks before spending.** Offline tests (`tests/test_zoom4x_offline.py`) cover the window rule on all 1,581 B answers, the exact mapping, the official rule, the cost cap, resume, and the failure paths: transient errors, a missing box, a provider error body, malformed edges and a 402. Then came a 3-case live smoke ($0.0005, `zoom4x_smoke.jsonl`), with each crop checked by eye.
+- **Run.** 11:39:58-11:47:24. All 1,581 scored, 0 errors, 0 wrong_format, code rev 5649be5, model `typesafe/jev-1.14-20261014`. It logged $0.252339, the same as B (6,008,070 tokens, B 6,008,079). Log: `results/pro/zoom4x.log`.
+
+| Pro, the same 1,581 tasks | Raw A2 | 2x zoom B | 4x zoom C |
+|---|---|---|---|
+| All | 18.66 | 42.76 | **60.15** |
+| Text (n=977) | 26.20 | 57.01 | 74.62 |
+| Icon (n=604) | 6.46 | 19.70 | 36.75 |
+
+- **C = 60.15%** (951 of 1,581, 95% CI 57.7-62.5). That is +17.39 pp over B on the same tasks (bootstrap CI +15.0 to +19.7): 340 fixed, 65 broken, McNemar p = 4.8e-46.
+- **Inside the registered range**, 3 pp under its centre. There were fewer fixes than predicted (340 vs 397) and fewer breaks (65 vs 74).
+- **Official re-score** from the raw responses agrees on all 1,581. Two clicks land exactly on a key edge (#867, #1411) and are misses under the strict rule. With the 1e-9 tolerance the score is 60.28.
+- **Every group gains:**
+
+| Group | n | 2x B % | 4x C % |
+|---|---|---|---|
+| CAD | 261 | 38.31 | 58.24 |
+| Dev | 299 | 42.47 | 58.19 |
+| Creative | 341 | 36.36 | 56.01 |
+| Scientific | 254 | 47.24 | 57.48 |
+| Office | 230 | 58.70 | 79.57 |
+| OS | 196 | 35.71 | 53.57 |
+
+**What the second step fixed**, by the label audit's by-eye classes of B's 905 misses (1f):
+
+| B's miss, by eye | n | C fixed |
+|---|---|---|
+| Right element, click off | 376 | 227 (60.4%) |
+| Wrong element, the control next to the target | 137 | 63 (46.0%) |
+| Wrong element, not next to the target | 325 | 37 (11.4%) |
+| Label issue | 67 | 13 (19.4%) |
+
+- The audit said more zoom could fix the click-off half but not the wrong-element half, and that held. 60% of click-off misses got fixed.
+- A mix-up with the neighbouring control got fixed about half the time, once both were big enough to tell apart.
+- A wrong element elsewhere on the screen was almost never fixed (11%).
+
+**Where the gain stops:**
+- **Size.** At the same apparent size (target in view), C hits about as often as B from 60 px up: 71.2 vs 74.3 at 60-80 px, 85.6 vs 83.5 at 80+ px. At 45-60 px it is lower, 44.6 vs 61.6. Those are targets of 11-15 px in A's image, the tiniest ones, blown up twice.
+- **Harder leftovers.** B's misses were harder than their size said. At 45-60 px in C's image, C fixed 38% of them, where the 2x step fixed 56%. At 80+ px it fixed 64%, against 75%.
+- **Blown-up crops still gained.** Where C's crop was blown up 2.5x or more, the gain was +12.0 pp (n=117). It was +16.4 at 2-2.5x and +20.5 at 1.5-2x.
+- **No gain where C could not zoom further.** Those are the 47 tasks whose B box was too big for a half window: 14.9% at B, 10.6% at C.
+- **Ceiling.** 1,377 targets were still in view (87.1%). The 204 out of view are lost; C hit 2 of them.
+
+**Why three calls and not two** (offline, post-hoc, not run):
+- A 4x crop placed straight around the first (raw) answer would keep the target in view in 1,328 tasks. Aimed by the 2x answer, it keeps 1,377.
+- 45 of C's 951 hits would fall outside it.
+- So the 2x step earns its call by re-aiming the crop.
+
+**Cost and speed:**
+- C costs what B costs: $0.2523 for the benchmark.
+- The whole 4x method (raw, 2x, 4x) costs $0.757 for 1,581 tasks, $0.48 per 1,000 clicks.
+- Each click is three calls in a row, a median 2.47 s (0.89 + 0.81 + 0.76 s).
+- Confidence: AUROC 0.74. At 0.9 or more it is 90% right (n=80).
+
+**Leaderboard context** (self-reported numbers, `analysis/leaderboard/screenspot-pro.md`):
+- 60.15 sits next to UI-TARS-1.5 (61.6), Seed1.5-VL (60.9, thinking), POINTS-GUI-G-8B (59.9) and Holo2-8B (58.9). Those are mostly single calls.
+- Two zoom methods for comparison: Fara1.5-27B reaches 66.8 with a two-step zoom (58.6 without), and MAI-UI-2B 62.8 with zoom (57.4 without).
+
+**How to quote it:** Jev 1.14 box on ScreenSpot-Pro scores 19.17% raw and 42.76% with a frozen 2x zoom. A second zoom step, designed after seeing those results and predicted first (63.2%, range 59.7-66.2), reached 60.15%.
 
 ## 2. What has been done (Oct 16-17 2026, CEST)
 
@@ -247,8 +314,9 @@ The structure is the same as the v2 audit (1c, 1d).
 | Oct 17 09:00-09:33 | Two review rounds (fixes e2118e7, 4099bfa), wider and fresh smokes, Pro Run A raw: 19.17%, 0 errors, $0.25 |
 | Oct 17 09:36-09:54 | Pro run 2: A2 18.66%, A2+B (2x zoom) 42.76%, 0 errors, $0.50; official re-score and diagnostics |
 | Oct 17 09:58-11:15 | Pro deep audit, label audit of B's 905 misses, upstream draft |
+| Oct 17 11:20-11:47 | 4x step: tests, prediction, smoke, full run: 60.15%, $0.25 |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2), c0f8b30 (Pro deep audit and label audit).
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2), c0f8b30 (Pro deep audit and label audit), c691595 and 5649be5 (4x step and its registered prediction), then the 4x results.
 
 ## 3. Setup
 
@@ -479,8 +547,11 @@ One live A+B call on #1095 at 21:35: A FALSE (search field boxed, conf 0.36), B 
 | Pro Run A (raw) | $0.2523 |
 | Pro run 2 (raw + zoom) | $0.5047 |
 | Credit left (read Oct 17 10:34, matches the logs exactly) | $0.2950 |
+| Pro 4x step: smoke (3 cases) | $0.0005 |
+| Pro 4x step (stage C) | $0.2523 |
+| Credit left (read Oct 17 11:49, matches the logs exactly) | $0.0422 |
 
-One more Pro stage ($0.25) fits on the key; a v2 raw pass costs $0.19, and Pro raw + zoom ($0.50) needs a top-up. On Oct 16 the key also showed $0.0022 of usage that is not from the bench (`analysis/AUDIT-run2.md`, section 1).
+The key now holds $0.042, so any further run needs a top-up (a v2 raw pass costs $0.19, a Pro stage $0.25). On Oct 16 the key also showed $0.0022 of usage that is not from the bench (`analysis/AUDIT-run2.md`, section 1).
 
 ## 9. Published comparison points (from the research notes, check each paper before public use)
 

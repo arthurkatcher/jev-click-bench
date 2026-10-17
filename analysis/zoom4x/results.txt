@@ -1,0 +1,91 @@
+# Stage C (4x) results: zoom4x.jsonl
+
+## 1. Integrity
+- 1581 cases of 1581, 1581 records, status {'ok': 1581}
+- code rev {'5649be5': 1581}, resolved model {'typesafe/jev-1.14-20261014': 1581}
+- every C window = the frozen rule on B's answer, inside B's window, sent at A's size
+
+## 2. Official re-score from the raw responses
+- agrees with the run on 1581 of 1581
+- exact-edge ties: 2 (#867, #1411). The click sits on the key's edge; averaging before mapping back would put it on the edge (a hit), the method's order puts it one float step outside (a miss). They are the cases the 1e-9 tolerance score counts; the headline stays strict.
+
+## 3. B -> C on the same cases
+| | Raw A2 | 2x zoom B | 4x zoom C |
+|---|---|---|---|
+| Accuracy (hits / 1581) | 18.66 | 42.76 | 60.15 |
+| Text (n=977) | 26.20 | 57.01 | 74.62 |
+| Icon (n=604) | 6.46 | 19.70 | 36.75 |
+
+- C = 60.15% (95% Wilson CI 57.7-62.5), B = 42.76%: +17.39 pp (95% bootstrap CI +14.99 to +19.67).
+- Fixed 340, broken 65; exact McNemar p = 4.8e-46.
+- Both hit 611, both missed 565.
+
+## 4. Against the registered prediction (63.2%, range 59.7-66.2%, written before any stage-C call)
+- Result 60.15% vs model 63.2% on these 1581 cases: inside the registered range.
+- Fixes 340 vs 397 expected; breaks 65 vs 74 expected.
+- Ceiling: target centre in C's window in 1377; C hit 2 of the 204 without it.
+
+| Size in C's image | B missed: C fixed | expected | B hit: C kept | expected |
+|---|---|---|---|---|
+| 0-10 px | 0.00% (n=10) | 0% | - | - |
+| 10-20 px | 20.00% (n=10) | 7% | - | - |
+| 20-30 px | 22.22% (n=36) | 20% | - | - |
+| 30-45 px | 30.60% (n=134) | 35% | 44.44% (n=18) | 52% |
+| 45-60 px | 38.36% (n=146) | 56% | 63.83% (n=47) | 82% |
+| 60-80 px | 63.19% (n=144) | 65% | 86.67% (n=75) | 87% |
+| 80+ px | 63.51% (n=222) | 75% | 94.77% (n=535) | 91% |
+
+## 5. Hit rate by target size in the image Jev saw, each stage (target centre in that stage's view)
+| Size | Raw A2 | 2x zoom B | 4x zoom C |
+|---|---|---|---|
+| 0-10 px | 2.75 (n=182) | 0.00 (n=19) | 0.00 (n=10) |
+| 10-20 px | 4.39 (n=569) | 8.63 (n=139) | 20.00 (n=10) |
+| 20-30 px | 17.79 (n=371) | 19.92 (n=266) | 22.22 (n=36) |
+| 30-45 px | 39.35 (n=338) | 36.48 (n=318) | 32.24 (n=152) |
+| 45-60 px | 47.67 (n=86) | 61.57 (n=255) | 44.56 (n=193) |
+| 60-80 px | 66.67 (n=21) | 74.32 (n=257) | 71.23 (n=219) |
+| 80+ px | 78.57 (n=14) | 83.52 (n=176) | 85.60 (n=757) |
+
+## 6. Where
+| Group | n | B % | C % | fixed | broken |
+|---|---|---|---|---|---|
+| CAD | 261 | 38.31 | 58.24 | 66 | 14 |
+| Dev | 299 | 42.47 | 58.19 | 59 | 12 |
+| Creative | 341 | 36.36 | 56.01 | 76 | 9 |
+| Scientific | 254 | 47.24 | 57.48 | 37 | 11 |
+| Office | 230 | 58.70 | 79.57 | 58 | 10 |
+| OS | 196 | 35.71 | 53.57 | 44 | 9 |
+
+| C window | n | B % | C % | fixed | broken |
+|---|---|---|---|---|---|
+| B's whole window | 24 | 4.17 | 0.00 | 0 | 1 |
+| half of B | 1534 | 43.61 | 61.67 | 340 | 63 |
+| widened | 23 | 26.09 | 21.74 | 0 | 1 |
+
+| Blow-up of C's crop | n | B % | C % | fixed | broken |
+|---|---|---|---|---|---|
+| 0-1x | 36 | 5.56 | 5.56 | 1 | 1 |
+| 1-1.5x | 151 | 34.44 | 51.66 | 29 | 3 |
+| 1.5-2x | 624 | 37.18 | 57.69 | 154 | 26 |
+| 2-2.5x | 653 | 51.15 | 67.53 | 137 | 30 |
+| 2.5-9x | 117 | 47.86 | 59.83 | 19 | 5 |
+
+## 7. Cost and latency
+- Stage C: $0.252339 logged (1581 records), 6,008,070 input tokens, median 0.764s per call.
+- Per click: A + B + C = 3 calls in a row, median 2.47s (A 0.89 + B 0.81 + C 0.76).
+- Whole 4x method on Pro: run 2 (A2 + B) $0.5047 + C $0.2523 = $0.7570, so $0.479 per 1,000 clicks.
+
+## 8. B's misses by the label audit's class: how many C fixed
+| Class (by eye, B's answer) | B misses | C fixed | % |
+|---|---|---|---|
+| wrong element | 462 | 100 | 21.65 |
+| click off | 376 | 227 | 60.37 |
+| crop | 0 | 0 | - |
+| label issue | 67 | 13 | 19.40 |
+| . MODEL | 325 | 37 | 11.38 |
+| . NEIGHBOUR | 137 | 63 | 45.99 |
+| . PRECISION | 42 | 18 | 42.86 |
+| . WIDE | 252 | 156 | 61.90 |
+| . EDGE | 82 | 53 | 64.63 |
+- wrong element, target centre in C's window: 282, C fixed 100 (35.46%)
+- click off, target centre in C's window: 375, C fixed 226 (60.27%)
