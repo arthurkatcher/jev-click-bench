@@ -9,6 +9,7 @@ An infrastructure failure ("infra_error") is not scored: it is retried by re-run
   python3 screenspot.py run --pass 1 [--workers 4] [--max-cost 0.30] [--limit N] [--zoom]
   python3 screenspot.py report results/pass1.jsonl
   python3 screenspot.py compare results/pass1.jsonl results/pass2.jsonl
+  python3 screenspot.py --bench pro zoom4x [--workers 4] [--max-cost 0.30] [--limit N] [--out zoom4x_smoke.jsonl]
 """
 import argparse, collections, datetime, hashlib, json, math, os, pathlib, statistics, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
@@ -152,7 +153,17 @@ def zoom_window(a, W, H):
     return x0, y0, cw, ch
 
 
-def run_one(i, dry=False, cases=None, out=None, pass_id="dev", annotate_mode="misses", window=None, size=None):
+def zoom_again_window(b):
+    """Stage C (Pro, Oct 17): the same frozen rule once more, on stage B's answer inside B's own crop:
+    half of each side of B's window around B's box (grown for a big box, slid to stay inside B's
+    window). -> (x0, y0, cw, ch) in original pixels, so a half-window B gives a quarter-side C (4x)."""
+    x0, y0, cw, ch = b["window"]
+    wx, wy, wcw, wch = zoom_window({"box": b["box_crop"]}, cw, ch)
+    return x0 + wx, y0 + wy, wcw, wch
+
+
+def run_one(i, dry=False, cases=None, out=None, pass_id="dev", annotate_mode="misses", window=None, size=None,
+            stage="B", parent_window=None):
     """window=(x0, y0, cw, ch) in original px + size=(w, h): stage B of the zoom method. The crop is
     resized to `size` (stage A's sent size, so the same tokens) and the box is mapped back to the
     full screenshot before scoring. Everything else (prompt, question, scoring) is identical."""
@@ -179,8 +190,10 @@ def run_one(i, dry=False, cases=None, out=None, pass_id="dev", annotate_mode="mi
     if BENCH != "v2":
         rec.update(bench=BENCH, group=case["group"], case_id=case["id"])
     if window:
-        rec.update(stage="B", window=list(window), window_frac=round(cw / W, 4), zoom_f=ZOOM_F,
+        rec.update(stage=stage, window=list(window), window_frac=round(cw / W, 4), zoom_f=ZOOM_F,
                    zoom_margin=ZOOM_MARGIN, code_rev=CODE_REV)
+        if parent_window:  # stage C: the stage-B window this crop was taken inside
+            rec["parent_window"] = list(parent_window)
     if dry:
         print(json.dumps(rec, indent=1), "\nquestions:", json.dumps(questions),
               f"\nimage part: {len(state[1]['image_url']['url']) // 1024} KB base64")
@@ -453,6 +466,97 @@ def run_all(pass_id, workers=4, max_cost=0.30, limit=None, annotate_mode="misses
         report(zout)
         zoomstats(out, zout)
 
+
+def run_zoom4x(src_pass=2, workers=4, max_cost=0.30, limit=None, annotate_mode="misses", out_name="zoom4x.jsonl"):
+    """Stage C (Pro, Oct 17, designed after seeing Pro run 2): the zoom step once more, on run
+    <src_pass>'s stage-B answers (zoom<N>.jsonl) -> out_name. One call per case: the crop
+    (zoom_again_window) is resized to A's sent size like B, and the box is mapped back to the full
+    screenshot before scoring. Resumable (scored cases are skipped, infra errors re-run); the cost
+    cap covers out_name."""
+    cases = load()
+    src, out = OUT / f"zoom{src_pass}.jsonl", OUT / out_name
+    B = latest(read(src))
+    assert sorted(B) == [c["i"] for c in cases] and all(B[i]["status"] in ("ok", "wrong_format") for i in B), \
+        f"stage B in {src} is not complete"
+    done = {i for i, r in latest(read(out)).items() if r["status"] in ("ok", "wrong_format")} if out.exists() else set()
+    spent = sum(cost(r) for r in read(out)) if out.exists() else 0.0
+    todo = [c["i"] for c in cases if c["i"] not in done][:limit]
+    if not CODE_REV or CODE_REV.endswith("-dirty"):
+        print(f"WARNING: code_rev {CODE_REV}: commit before a scored run, or its records will not name the code that ran",
+              file=sys.stderr)
+    print(f"stage C on {src.name} -> {out.name}: {len(done)} done, {len(todo)} to run, ${spent:.4f} logged so far, cap ${max_cost}")
+    if spent >= max_cost:
+        print(f"cap already reached (${spent:.4f} logged >= ${max_cost})")
+        return
+    before = jev.balance()
+    print(f"key balance before: {before}")
+    stop = threading.Event()
+    state = {"spent": spent, "n": 0, "hits": 0, "ok": 0, "wrong_format": 0, "infra_error": 0, "secs": [],
+             "tokens": 0, "t0": time.time()}
+    prog = out.with_suffix(".progress.json")
+
+    def progress(final=False):
+        n, el = state["n"], time.time() - state["t0"]
+        sc = state["ok"] + state["wrong_format"]
+        snap = {"stage": "C", "src": src.name, "out": out.name, "updated": now(), "final": final,
+                "done_this_run": n, "todo_this_run": len(todo), "already_done_before": len(done),
+                "total_cases": len(cases), "scored_total": len(done) + sc, "hits_this_run": state["hits"],
+                "running_acc_this_run": round(100 * state["hits"] / sc, 2) if sc else None,
+                "ok": state["ok"], "wrong_format": state["wrong_format"], "infra_error": state["infra_error"],
+                "spent_logged_total": round(state["spent"], 6), "input_tokens_this_run": state["tokens"],
+                "median_latency_s": round(statistics.median(state["secs"]), 3) if state["secs"] else None,
+                "elapsed_s": round(el, 1), "eta_s": round(el / n * (len(todo) - n), 1) if n else None,
+                "stopped": stop.is_set()}
+        tmp = prog.with_suffix(".tmp")
+        tmp.write_text(json.dumps(snap))
+        os.replace(tmp, prog)
+
+    def job(i):
+        with _lock:
+            if stop.is_set() or state["spent"] >= max_cost:
+                return
+        b = B[i]
+        if b["status"] != "ok":  # a wrong_format B has no box to zoom on: the same miss, copied, no cost
+            rec = {k: v for k, v in b.items() if k not in ("usage", "raw", "seconds", "wall_seconds", "attempts",
+                                                           "payload_bytes", "sent_pixels", "scale")}
+            rec.update({"pass": f"c{src_pass}", "stage": "C", "zoom_skipped": "stage B wrong_format", "ts": now(),
+                        "parent_window": b.get("window"), "code_rev": CODE_REV})
+            write(out, rec)
+        else:
+            rec = run_one(i, cases=cases, out=out, pass_id=f"c{src_pass}", annotate_mode=annotate_mode,
+                          window=zoom_again_window(b), size=b["sent_size"], stage="C", parent_window=b["window"])
+        with _lock:
+            state["n"] += 1
+            state["spent"] += cost(rec)
+            state[rec["status"]] = state.get(rec["status"], 0) + 1
+            state["hits"] += 1 if rec.get("hit") else 0
+            if rec.get("seconds") is not None:
+                state["secs"].append(rec["seconds"])
+            u = rec.get("usage") if isinstance(rec.get("usage"), dict) else {}
+            state["tokens"] += u["input_tokens"] if isinstance(u.get("input_tokens"), int) else 0
+            if rec["status"] == "infra_error" and state["infra_error"] <= 20:
+                print(f"infra_error on #{i}: {rec.get('error')}", file=sys.stderr)
+            progress()
+            if rec.get("fatal"):
+                print(f"FATAL {rec['error']} on #{i}: stopping the run", file=sys.stderr)
+                stop.set()
+            if state["spent"] >= max_cost:
+                print(f"cost cap reached (${state['spent']:.4f}): stopping", file=sys.stderr)
+                stop.set()
+            if state["n"] % 50 == 0:
+                print(f"  {state['n']}/{len(todo)}  ${state['spent']:.4f}  hits {state['hits']}  infra {state['infra_error']}")
+
+    progress()
+    with ThreadPoolExecutor(workers) as ex:
+        list(ex.map(job, todo))
+    progress(final=True)
+    after = jev.balance()
+    if isinstance(before, float) and isinstance(after, float):
+        print(f"key balance after: {after:.6f}  (billed this run: ${before - after:.6f}, logged this run: "
+              f"${state['spent'] - spent:.6f}; the balance lags billing, logged usage.cost is the cost of record)")
+    print(f"logged cost this run: ${state['spent'] - spent:.6f}")
+    report(out)
+
 def wilson(k, n, z=1.96):
     if not n:
         return (0.0, 0.0)
@@ -488,7 +592,7 @@ def report(path):
         problems.append(f"{missing} not run")
     if len(versions) > 1:
         problems.append("mixed prompt versions")
-    zcfg = {(r.get("zoom_f"), r.get("zoom_margin"), r.get("code_rev")) for r in scored.values() if r.get("stage") == "B"}
+    zcfg = {(r.get("zoom_f"), r.get("zoom_margin"), r.get("code_rev")) for r in scored.values() if r.get("stage") in ("B", "C")}
     if len({c[:2] for c in zcfg}) > 1:
         problems.append("mixed zoom configs")
     if len({m[0] for m in models}) > 1 or len({m[1] for m in models}) > 1:
@@ -525,7 +629,7 @@ def report(path):
                  f"not run {missing}, degenerate boxes {sum(1 for r in ok if r['degenerate'])}, "
                  f"centre on a truth edge {sum(1 for r in ok if r.get('on_edge'))}, "
                  f"edges outside [0,1] {sum(1 for r in ok if r.get('out_of_range'))}"
-                 + (f", stage B box past the crop edge {sum(1 for r in ok if r.get('out_of_crop'))}, "
+                 + (f", zoom box past the crop edge {sum(1 for r in ok if r.get('out_of_crop'))}, "
                     f"zoom configs {sorted(zcfg, key=str)}" if zcfg else ""))
     secs = sorted(r["seconds"] for r in by.values() if r.get("seconds") is not None)
     spend = sum(cost(r) for r in read(path))
@@ -745,9 +849,18 @@ if __name__ == "__main__":
     zs.add_argument("pass_file")
     zs.add_argument("zoom_file")
     zs.add_argument("--rerun", help="another raw pass of the same method (noise floor), e.g. results/pass1.jsonl")
+    z4 = sub.add_parser("zoom4x", help="stage C: the zoom step once more on run N's stage-B answers")
+    z4.add_argument("--src-pass", type=int, default=2)
+    z4.add_argument("--workers", type=int, default=4)
+    z4.add_argument("--max-cost", type=float, default=0.30)
+    z4.add_argument("--limit", type=int)
+    z4.add_argument("--annotate", choices=["misses", "all", "none"], default="misses")
+    z4.add_argument("--out", default="zoom4x.jsonl", help="output file name in the results folder (smoke: zoom4x_smoke.jsonl)")
     args = ap.parse_args()
     if args.cmd == "run":
         run_all(args.pass_id, args.workers, args.max_cost, args.limit, args.annotate, args.zoom)
+    elif args.cmd == "zoom4x":
+        run_zoom4x(args.src_pass, args.workers, args.max_cost, args.limit, args.annotate, args.out)
     elif args.cmd == "zoomstats":
         zoomstats(args.pass_file, args.zoom_file, args.rerun)
     elif args.cmd == "compare":
