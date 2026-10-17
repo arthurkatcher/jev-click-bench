@@ -41,8 +41,10 @@ OVERRIDE = {  # case: (code, tag, reason)
     1439: ("NEIGHBOUR", "-", "typo 'found' (find)"), 1526: ("NEIGHBOUR", "-", "typo 'fuction'"), 1556: ("WIDE", "-", "typo 'previoius'"),
     1493: ("ARGUABLE", "SAMETEXT", "typo 'volumn'; B aims at the nav pane's Data (D:), which also opens D"),
     759: ("ARGUABLE", "SAMETEXT", "two scatter (散点图) controls, gallery button and fly-out item; B's box spans both (blend box, as v2's #563)"),
-    639: ("TWIN", "-", "twin #666 keys the data region"), 992: ("TWIN", "-", "twin #1025 keys the File tab"),
-    1025: ("TWIN", "-", "twin #992 keys the Problems title"), 1069: ("TWIN", "-", "twin #1042 keys the Processing menu item"),
+    992: ("TWIN", "-", "twin #1025 keys the File tab"), 1025: ("TWIN", "-", "twin #992 keys the Problems title"),
+    # 639/666 (MATLAB) and 1042/1069 (Quartus) were TWIN until the upstream check (Oct 17, upstream-issue-pro/VERIFY.md):
+    # a menu is open in one shot and closed in the other, and each key is right for its own screen. So 639 and 1069
+    # keep their reviewers' codes (PRECISION; MODEL SAMEGROUP).
     # batch 07 coded the same Origin pattern MODEL (754, 755, 765, 770) or PRECISION (these): a full-height column box
     # whose centre lands mid-screen, ~1000 px from the toolbar key. Not a click slightly off, so MODEL for all of them.
     **{i: ("MODEL", "OTHER", "full-height column box, click mid-screen ~1000 px from the key")
@@ -248,12 +250,14 @@ for (app, text), ids in inst.items():
         d = 0.0 if dig[a] == dig[b] else screen_diff(a, b)
         same = A2[a]["orig_size"] == A2[b]["orig_size"] and d < 2
         kind = ("other screen" if not same else "duplicate case (same key)" if iou(a, b) >= 0.5
-                else "contradictory keys" if iou(a, b) < 0.1 else "same screen, keys partly overlap")
+                else "keys apart on a near-identical screen" if iou(a, b) < 0.1 else "same screen, keys partly overlap")
         kinds[kind].append(f"#{a}/#{b}")
         print(f"   #{a} / #{b} {app} '{text}': screenshots {d:.1f}/255 apart"
               + ("" if A2[a]["orig_size"] == A2[b]["orig_size"] else ", other size")
               + f"; keys IoU {iou(a, b):.2f}; B {'hit' if B[a]['hit'] else 'miss'}/{'hit' if B[b]['hit'] else 'miss'} = {kind}")
 print("   " + "; ".join(f"{k}: {len(v)} ({', '.join(v)})" for k, v in kinds.items()))
+print("   by eye (upstream check, Oct 17): #639/#666 and #1042/#1069 differ by an open menu and each key is right for its "
+      "own screen; #992/#1025 is the one real contradiction")
 boxes = collections.defaultdict(list)
 for i in range(N):
     boxes[tuple(raw[A2[i]["case_id"]]["bbox"])].append(i)

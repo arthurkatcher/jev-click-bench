@@ -2,12 +2,12 @@
 
 The working record of my pass over the 14 reviewer batches. The results are in `analysis/LABELS-audit-pro.md`, and every change below is in `analysis/labels_audit_pro.py` (OVERRIDE, KEY_FIX, ON_OTHER), printed on each run.
 
-## Changes to the reviewers' verdicts (36)
+## Changes to the reviewers' verdicts (34)
 - **Typo rule, as on v2 (24):** a plain typo whose meaning is clear is not a label issue, so the case keeps the model code the reviewer gave or named. Recoded from VAGUE: 322, 335, 480, 568, 591, 633, 656, 676, 726, 778, 796, 860, 975, 984, 1002, 1004, 1005, 1008, 1061, 1375, 1438, 1439, 1526, 1556. The batches had applied the rule unevenly.
 - **Two valid answers (2):**
   - 1493: B aims at the nav pane's Data (D:), which also opens D.
   - 759: a blend box over both scatter controls, like v2's #563.
-- **New group, same request with two different keys (4):** 639, 992, 1025, 1069. The pairs are #639/#666, #992/#1025 and #1042/#1069. The batch 10 reviewer had coded two of them VAGUE, while the others got model codes.
+- **New group, same request with two different keys (2):** 992, 1025, the PyCharm pair #992/#1025. At first 639 and 1069 were in it too (pairs #639/#666 and #1042/#1069); the upstream check (Oct 17, `upstream-issue-pro/VERIFY.md`) found a menu open in one shot and closed in the other, with each key right for its own screen, so both keep their reviewers' codes (PRECISION; MODEL SAMEGROUP). Checked by eye. The batch 10 reviewer had coded the PyCharm pair VAGUE.
 - **Origin full-height columns (6):** 711, 728, 730, 738, 739, 758, recoded PRECISION -> MODEL OTHER. Batch 07 coded the same pattern MODEL in 754, 755, 765 and 770. The box is a full-height column whose centre lands mid-screen, about 1,000 px from the toolbar key. 735 stays WIDE, because its column holds the key.
 
 ## Checked by eye

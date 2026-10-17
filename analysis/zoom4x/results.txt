@@ -78,14 +78,14 @@
 ## 8. B's misses by the label audit's class: how many C fixed
 | Class (by eye, B's answer) | B misses | C fixed | % |
 |---|---|---|---|
-| wrong element | 462 | 100 | 21.65 |
-| click off | 376 | 227 | 60.37 |
+| wrong element | 463 | 100 | 21.60 |
+| click off | 377 | 227 | 60.21 |
 | crop | 0 | 0 | - |
-| label issue | 67 | 13 | 19.40 |
-| . MODEL | 325 | 37 | 11.38 |
+| label issue | 65 | 13 | 20.00 |
+| . MODEL | 326 | 37 | 11.35 |
 | . NEIGHBOUR | 137 | 63 | 45.99 |
-| . PRECISION | 42 | 18 | 42.86 |
+| . PRECISION | 43 | 18 | 41.86 |
 | . WIDE | 252 | 156 | 61.90 |
 | . EDGE | 82 | 53 | 64.63 |
-- wrong element, target centre in C's window: 282, C fixed 100 (35.46%)
-- click off, target centre in C's window: 375, C fixed 226 (60.27%)
+- wrong element, target centre in C's window: 283, C fixed 100 (35.34%)
+- click off, target centre in C's window: 376, C fixed 226 (60.11%)

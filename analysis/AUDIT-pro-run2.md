@@ -221,9 +221,9 @@ Under 0.5: B 445 cases, 13.48% right; A2 772 cases, 6.48% right.
 - **The targets B misses are small.** The median is 30.6 px in B's image, against 60.0 for B's hits. 81 of them are still under one 0.01 grid step.
 - **The first look was elsewhere in 151 cases.** The target centre was outside B's window, because A2's answer was already in the wrong part of the screen. No crop around it can fix these.
 - **By eye** (all 905, `LABELS-audit-pro.md`):
-  - wrong element 462, of which 60% have no visible text naming the target;
-  - right element with the click off, 376, mostly boxes too wide over the target and its neighbours (252);
-  - label issues 67;
+  - wrong element 463, of which 60% have no visible text naming the target;
+  - right element with the click off, 377, mostly boxes too wide over the target and its neighbours (252);
+  - label issues 65;
   - crop cut the naming label: 0.
 - **The ceiling for one more zoom step (post-hoc).**
   - A 4x window (a quarter of each side) centred on B's answer would still hold the target centre in 700 of the 905 misses, and in 675 of the 676 hits.
@@ -252,15 +252,15 @@ Under 0.5: B 445 cases, 13.48% right; A2 772 cases, 6.48% right.
 | B at confidence 0.8 or more, right | 96.4% | 68.1% |
 | Per click, A+B | $0.000300 | $0.000319 |
 | A+B latency, median | 1.665 s | 1.720 s |
-| B misses with a label issue | 35 of 154 (23%) | 67 of 905 (7.4%) |
+| B misses with a label issue | 35 of 154 (23%) | 65 of 905 (7.2%) |
 | Answer-key errors | 4 | 3 |
-| Same request, two different keys | 0 | 3 pairs |
+| Same request, two different keys | 0 | 1 pair |
 | Duplicate cases | 1 | 2 |
 | Crop cut the naming label (B misses) | 14 | 0 |
 
 - **v2: the score was close to its ceiling.** About one zoom miss in four sat on a label issue, and the main cost of zoom was crops cutting row labels on mobile.
 - **Pro: the misses are the model.**
-  - About one miss in fourteen is a label issue, worth at most 2.28 pp. The other 838 split into the wrong element (462) and the right element with the click off (376).
+  - About one miss in fourteen is a label issue, worth at most 2.28 pp. The other 840 split into the wrong element (463) and the right element with the click off (377).
   - Zoom never cut a naming label on Pro's large desktop screens.
 
 ## 10. Corrections to earlier statements
@@ -278,12 +278,12 @@ Under 0.5: B 445 cases, 13.48% right; A2 772 cases, 6.48% right.
 2. **Pro is hard for Jev for two separate reasons.**
    - The targets are tiny: a median of 20.9 px in the image Jev sees, against 92.1 on v2. Zoom fixes this part, and it works by size alone. After zoom, a target is hit about as often as a raw target of the same apparent size (section 4).
    - At the same apparent size, Pro is still 20-35 pp harder than v2: professional apps, dense toolbars, unlabelled icons, Chinese interfaces. Zoom does not touch this part.
-3. **The misses are the model, not the answer key.** 67 of B's 905 misses have a label issue, worth at most 2.28 pp. Unlike v2, the labels do not explain the score.
-4. **The click-off misses (376) are where more zoom can still pay.**
+3. **The misses are the model, not the answer key.** 65 of B's 905 misses have a label issue, worth at most 2.28 pp. Unlike v2, the labels do not explain the score.
+4. **The click-off misses (377) are where more zoom can still pay.**
    - They are mostly boxes too wide over the target and its neighbours, plus near misses. 429 of the 905 are within 15 px.
    - Size fixes them, and the size curve is still climbing at 80-120 px.
    - A 4x step would keep the target in view in 700 of the 905 misses (section 8).
-5. **The wrong-element misses (462) need something other than zoom.**
+5. **The wrong-element misses (463) need something other than zoom.**
    - 60% of them have no visible text naming the target: unlabelled icons that only someone who knows the app can find.
    - In 151 cases, the first answer already looked in the wrong part of the screen, so no crop around it can help.
    - These need a different first look (the screen in parts, or several candidates) or a model that knows these apps.
@@ -292,8 +292,8 @@ Under 0.5: B 445 cases, 13.48% right; A2 772 cases, 6.48% right.
 8. **2x zoom has no hidden cost on desktop.** There were 0 context-loss breaks and 0 crop misses. The 55 breaks are mostly edge noise.
 9. **Pro has its own label errors, like v2:**
    - 3 cases where the key and the English instruction disagree (#133, #491, #657);
-   - 3 pairs with the same request and two different keys;
-   - 2 duplicate cases;
+   - 1 pair with the same request and two different keys (two more look the same but differ by an open menu);
+   - 2 near-duplicate cases;
    - 30 copied screenshot files;
    - 1 box outside its image;
    - English instructions machine-translated from the Chinese ones.

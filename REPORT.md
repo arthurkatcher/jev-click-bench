@@ -16,8 +16,8 @@ Status as of Sat Oct 17 2026, 11:52 CEST. Living document: updated after each ru
 - **Pro deep audit and label audit (1f, Oct 17):**
   - Every Pro number checks out. Zoom works by size alone: after zoom, a target is hit about as often as a raw target of the same apparent size.
   - At the same size, Pro is still 20-35 pp harder than v2.
-  - The misses are the model, not the key: 67 of the 905 zoom misses have a label issue, worth at most 2.28 pp. The rest are the wrong element (462) or the right element with the click off (376).
-  - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 3 pairs with the same request and two different keys, and 2 duplicates. An upstream report is drafted, not posted.
+  - The misses are the model, not the key: 65 of the 905 zoom misses have a label issue, worth at most 2.28 pp. The rest are the wrong element (463) or the right element with the click off (377).
+  - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 1 pair with the same request and two different keys, and 2 near-duplicates. An upstream report is drafted, not posted.
 - **Pro 4x zoom (1g, Oct 17, post-hoc):** a second zoom step on the 2x answers, designed after seeing Pro run 2 and predicted first (63.2%, range 59.7-66.2), scored **60.15%**. That is +17.39 pp over 2x (340 fixed, 65 broken), inside the range. It is a labelled extra: 42.76 stays the clean Pro number. Three calls per click, $0.48 per 1,000 clicks.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
@@ -206,20 +206,20 @@ The structure is the same as the v2 audit (1c, 1d).
 | Two valid answers | 24 |
 | Same control, key covers part of it | 18 |
 | Loose or broken wording, key still the best | 18 |
-| Same request, two different keys | 4 |
-| **Label issues, total** | **67** |
-| Wrong element (model error) | 462 |
-| Right element, click off | 376 |
+| Same request, two different keys | 2 |
+| **Label issues, total** | **65** |
+| Wrong element (model error) | 463 |
+| Right element, click off | 377 |
 | Zoom crop cut the naming label | 0 |
 
-- **The misses are the model.** 67 of 905 (7.4%, v2: 23%) have a label issue. Even scored in Jev's favour, they are worth at most 36 hits, 2.28 pp.
-- **Wrong element (462).** 60% of these have no visible text naming the target. In 151 misses the first answer already looked in the wrong part of the screen, so no crop could help.
-- **Click off (376).** Mostly boxes too wide over the target and its neighbours (252). These are what more zoom can still fix: a 4x window on B's answer would keep the target in 700 of the 905 misses. That figure is post-hoc.
+- **The misses are the model.** 65 of 905 (7.2%, v2: 23%) have a label issue. Even scored in Jev's favour, they are worth at most 36 hits, 2.28 pp.
+- **Wrong element (463).** 60% of these have no visible text naming the target. In 151 misses the first answer already looked in the wrong part of the screen, so no crop could help.
+- **Click off (377).** Mostly boxes too wide over the target and its neighbours (252). These are what more zoom can still fix: a 4x window on B's answer would keep the target in 700 of the 905 misses. That figure is post-hoc.
 - **Broken tasks:**
   - #133 marks Y for an X request, and #657 marks font size for font weight.
   - #491's English says "redo" where the Chinese instruction says undo (撤销). Its box also starts at y = -1.
-  - 3 pairs ask the same thing on the same screen with two different keys (#639/#666, #992/#1025, #1042/#1069).
-  - 2 cases are duplicates (#94/#105, #432/#474).
+  - 1 pair asks the same thing on the same screen with two different keys (#992/#1025, PyCharm). Two more pairs that looked the same (#639/#666, #1042/#1069) differ by an open menu, and each key is right for its own screen: the upstream check caught this, and both cases keep their model codes.
+  - 2 cases are near-duplicates (#94/#105, #432/#474): the same task re-shot a minute or two later, with the same key.
   - 30 screenshot files are byte copies of others.
   - On the Chinese-UI apps, many English instructions read as literal translations of the Chinese ones ("Benchmark Identifier" for 基准标识, datum identifier).
 - **UI language:** 295 cases ask in English about a Chinese interface (AutoCAD, Inventor, Origin, SolidWorks, Stata). They score 30.2% after zoom vs 45.6% on English UIs, with the same zoom gain. Each of those apps is all Chinese, and six English apps score as low, so language and app cannot be separated.
@@ -263,10 +263,10 @@ The structure is the same as the v2 audit (1c, 1d).
 
 | B's miss, by eye | n | C fixed |
 |---|---|---|
-| Right element, click off | 376 | 227 (60.4%) |
+| Right element, click off | 377 | 227 (60.2%) |
 | Wrong element, the control next to the target | 137 | 63 (46.0%) |
-| Wrong element, not next to the target | 325 | 37 (11.4%) |
-| Label issue | 67 | 13 (19.4%) |
+| Wrong element, not next to the target | 326 | 37 (11.3%) |
+| Label issue | 65 | 13 (20.0%) |
 
 - The audit said more zoom could fix the click-off half but not the wrong-element half, and that held. 60% of click-off misses got fixed.
 - A mix-up with the neighbouring control got fixed about half the time, once both were big enough to tell apart.
@@ -588,7 +588,7 @@ OS-Atlas-7B appears as 84.1, 85.1 or 87.1 depending on the paper (4B vs 7B rows)
 - Run-to-run noise is measured: 49 of 1272 cases (3.9%) flip between two identical raw passes, and the 1.0 pp gap is not significant (p=0.085). The headline stays pass 1.
 - The official answer key has 4 wrong boxes, and 39 more missed cases sit on ambiguous instructions (1d). All scores use the key as is, like every published table, so comparisons stay fair.
 - The zoom crop rule was picked from pass 1 misses on this same test set (light selection, section 7). ScreenSpot-Pro is the clean check: the rule was reused there untouched (1e).
-- The Pro answer key has its own errors: 3 cases where the key and the English instruction disagree, 3 pairs with contradictory keys, and 2 duplicates (1f). All Pro scores use the key as is.
+- The Pro answer key has its own errors: 3 cases where the key and the English instruction disagree, 1 pair with contradictory keys, and 2 near-duplicates (1f). All Pro scores use the key as is.
 - 295 Pro cases ask in English about a Chinese interface, as in the official leaderboard setting. They score lower, but language and app cannot be separated (1f).
 - 81% of cases are downscaled to fit 1568 px, which hurts small targets. That is a property of the API limit, reported rather than worked around in the raw number.
 - Long-context mode is forced for images on OpenRouter; the direct TypeSafe API might score differently.

@@ -17,7 +17,7 @@ Reproduce: `python3 analysis/labels_audit_pro.py` prints the counts, checks, sca
 - **UI language for all 1,581 cases,** read from contact sheets (`lang/`). The two independent language looks (verdict line and language sheet) agree on all 905 B misses.
 - **My quality pass,** printed by the script as overrides:
   - **Typos:** 24 verdicts recoded. As on v2, a plain typo whose meaning is clear is not a label issue, so the case keeps the model code the reviewer gave or named. The batches had applied this unevenly.
-  - **New group:** 4 recoded into "same request, two different keys" (below).
+  - **New group:** 2 recoded into "same request, two different keys" (below). Two more were recoded at first and then restored after the upstream check: their pairs differ by an open menu.
   - **Two valid answers:** 2 recoded into it. #1493, and #759 as a blend box over both valid controls, like v2's #563.
   - **Origin columns:** 6 recoded from PRECISION to MODEL. The batch 07 reviewer coded the same Origin pattern MODEL in four cases (754, 755, 765, 770) and PRECISION in these six (711, 728, 730, 738, 739, 758). The pattern is a full-height column box whose centre lands mid-screen, about 1,000 px from the toolbar target. That is not a click slightly off, so all ten are now MODEL.
 - **Spot-check:** 30 random verdicts (seed 20261017) were re-checked by eye.
@@ -27,7 +27,7 @@ Reproduce: `python3 analysis/labels_audit_pro.py` prints the counts, checks, sca
 - **The 55 breaks:** the reviewers' codes match the deep audit's own classes in 48. The other 7 are boundary calls between "right element, click just off" and "neighbour" (26, 333, 746, 857, 1071, 1091, 1279).
 - **Automated scans** run over all 1,581 keys, not only the missed ones.
 
-## Result: 67 of B's 905 misses have a label issue
+## Result: 65 of B's 905 misses have a label issue
 
 | Group | B misses | A2 also missed | A1 also missed | Text | Icon |
 |---|---|---|---|---|---|
@@ -35,30 +35,30 @@ Reproduce: `python3 analysis/labels_audit_pro.py` prints the counts, checks, sca
 | Two valid answers | 24 | 23 | 23 | 17 | 7 |
 | Same control, key covers part of it | 18 | 18 | 17 | 16 | 2 |
 | Loose or broken wording, key still the best | 18 | 18 | 18 | 8 | 10 |
-| Same request, two different keys | 4 | 4 | 4 | 2 | 2 |
+| Same request, two different keys | 2 | 2 | 2 | 2 | 0 |
 | Cannot verify | 0 | 0 | 0 | 0 | 0 |
-| **Label issues** | **67** | **65** | **65** | **44** | **23** |
-| Wrong element (model error) | 462 | 442 | 442 | 176 | 286 |
-| Right element, click off | 376 | 343 | 340 | 200 | 176 |
+| **Label issues** | **65** | **63** | **63** | **44** | **21** |
+| Wrong element (model error) | 463 | 443 | 443 | 176 | 287 |
+| Right element, click off | 377 | 344 | 341 | 200 | 177 |
 | Zoom crop cut the naming label | 0 | 0 | 0 | 0 | 0 |
-| **Label-fine** | **838** | **785** | **782** | **376** | **462** |
+| **Label-fine** | **840** | **787** | **784** | **376** | **464** |
 | All B misses | 905 | 850 | 847 | 420 | 485 |
 
 What it means:
 - **Labels are not why Pro is hard.**
-  - 67 of the 905 misses (7.4%) have a label issue, against 35 of B's 154 on v2 (23%).
+  - 65 of the 905 misses (7.2%) have a label issue, against 35 of B's 154 on v2 (23%).
   - If every one of them went Jev's way, B would gain at most 36 hits (2.28 pp): 45.03% at the very most, against 42.76%. The 36 are:
     - 17 two-answer cases where B's click is on the other valid element;
     - 18 same-control clicks that would work on a real screen;
     - 1 key error where B is on the right control (#657).
 - **Per case, Pro has more label issues than v2:** at least 4.2% of all cases, vs 2.8%. They are swamped by 838 real model errors.
-- **Jev reads these cases the same way every time.** All three runs miss 64 of the 67, as on v2.
+- **Jev reads these cases the same way every time.** All three runs miss 62 of the 65, as on v2.
 - **The model errors split into two kinds of about equal size:**
-  - the wrong element, 462 (51% of B's misses);
-  - the right element with the click off, 376 (42%).
+  - the wrong element, 463 (51% of B's misses);
+  - the right element with the click off, 377 (42%).
 - **No crop misses (v2: 14).** The zoom window never cut the label that names a target.
 
-## The 67 cases
+## The 65 cases
 
 ### 1. Answer key and instruction disagree (3)
 - **#133** Blender, "Move the cone one the X axis by dragging it" (Chinese: 拖动以在X轴上移动锥体, the same).
@@ -139,20 +139,19 @@ On English UIs:
 - #952 Premiere "media browser tag" (tab);
 - #1296 Vivado "open IP properties" (the key is that pane's help button).
 
-### 5. Same request, two different keys (3 pairs, 4 of B's misses)
+### 5. Same request, two different keys (1 pair, 2 of B's misses)
 Each pair has the same app, the same words and a near-identical screenshot (under 2/255 mean grey difference), with two keys that do not overlap. Both keys are defensible, so a model that answers the same way twice can score only one of each pair.
-- **#639 / #666** MATLAB, "brush data points": one key is the brush icon in the axes toolbar, the other a region of the plotted data. B misses #639 and hits #666.
 - **#992 / #1025** PyCharm, "show problem details": one key is the Problems tool-window title, the other its "File 18" tab. B misses both.
-- **#1042 / #1069** Quartus, "Compilation Report": one key is the item in the open Processing menu, the other the toolbar button. B hits #1042 and misses #1069.
+- **Checked and dropped (upstream check, Oct 17):** #639 / #666 (MATLAB, "brush data points") and #1042 / #1069 (Quartus, "Compilation Report") pass the same near-identical-screen test, but a menu is open in one shot and closed in the other. Each key is the right control on its own screen (#666 Tools > Brush, #639 the axes toolbar's brush icon; #1042 the Processing menu item, #1069 the toolbar button), so #639 and #1069 keep their reviewers' codes (PRECISION; MODEL SAMEGROUP).
 
 ## Recurring error patterns (for the write-up)
 
-What B confused the target with, on its 325 MODEL misses:
+What B confused the target with, on its 326 MODEL misses:
 
 | Tag | MODEL misses | Example |
 |---|---|---|
 | No visible relation | 110 | #406 empty canvas beside the toolbar |
-| Same toolbar or panel, another item | 69 | #1046 another Quartus toolbar icon |
+| Same toolbar or panel, another item | 70 | #1046 another Quartus toolbar icon |
 | Related: label, parent, field, opposite | 63 | #971 the plugin logo, not Install |
 | Same words in the wrong place | 39 | #1371 markdown source, not the link |
 | Look-alike icon or control | 34 | #911 Source monitor, not Program |
@@ -197,8 +196,8 @@ What B confused the target with, on its 325 MODEL misses:
 
 ## Dataset scans (all 1,581 keys)
 
-- **Duplicate cases, 2 pairs:** #94 / #105 (AutoCAD "Threaded blind hole tool") and #432 / #474 (Inventor "Paste"). Each pair has the same words, near-identical screenshots and overlapping keys (IoU 0.78 and 0.85). B hit one and missed the other in both pairs.
-- **Same request, two different keys, 3 pairs:** the pairs in section 5. 15 more same-app, same-words pairs sit on clearly different screens, which is fine.
+- **Near-duplicate cases, 2 pairs:** #94 / #105 (AutoCAD "Threaded blind hole tool") and #432 / #474 (Inventor "Paste"). Each pair has the same words, near-identical screenshots and overlapping keys (IoU 0.78 and 0.85). B hit one and missed the other in both pairs.
+- **Same request, two different keys, 1 pair:** the PyCharm pair in section 5. Two more pairs differ by an open menu (section 5), and 15 more same-app, same-words pairs sit on clearly different screens, which is fine.
 - **Byte-identical screenshots, 23 groups.** The 1,581 files hold only 1,551 distinct images: 30 files are exact copies of another case's screenshot under a different name. Harmless for scoring, but "one screenshot per case" is not quite true.
 - **One key box outside its image:** #491, `[135, -1, 151, 19]` on 3840x1080 (also case 1 above).
 - **Other checks:** no key box is reused on a different screenshot (v2 had one copied box), and no key box is under 8 px on a side.
@@ -208,17 +207,17 @@ What B confused the target with, on its 325 MODEL misses:
 | | v2 | Pro |
 |---|---|---|
 | Audited | 271 (any run missed) | 905 (B missed) |
-| Label issues among B's misses | 35 of 154 (23%) | 67 of 905 (7.4%) |
+| Label issues among B's misses | 35 of 154 (23%) | 65 of 905 (7.2%) |
 | Answer-key errors | 4 | 3 |
 | Two valid answers | 18 | 24 |
-| Same request, two keys | 0 | 3 pairs |
+| Same request, two keys | 0 | 1 pair |
 | Duplicate cases | 1 | 2 |
 | Crop misses | 14 | 0 |
 | Most label issues by platform/group | web | CAD, Creative, Scientific |
 
 ## Limits
 
-- Only B's misses were audited. Ambiguous instructions that B happened to hit are not counted, so 67 is not a dataset-wide error rate.
+- Only B's misses were audited. Ambiguous instructions that B happened to hit are not counted, so 65 is not a dataset-wide error rate.
 - 14 reviewer agents plus one quality pass, by eye. The codes are judgment calls, mostly at the borders: two valid answers vs model error, and neighbour vs click off. Every case has its reason written down, so anyone can disagree case by case.
 - The key is the same for every model, so published comparisons stay fair: every model loses the same 3 key-error cases.
 
