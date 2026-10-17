@@ -1,0 +1,69 @@
+# ScreenSpot-Pro label audit, batch 02: apps blender, davinci. B-missed cases to review: 66. All cases of these apps (for the UI-language labels): 114-184, 185-228 = 115 cases, on language sheets lang_007.jpg, lang_008.jpg, lang_009.jpg, lang_010.jpg, lang_011.jpg, lang_012.jpg, lang_013.jpg, lang_014.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+116	Creative	blender	text	2560x1440	1631,426,1796,444	2317,410	2317,410	1709,378	miss	miss	miss	Transform the size of x axis.
+119	Creative	blender	text	2560x1440	892,1119,911,1140	755,1080	806,1080	851,1123	miss	miss	miss	connect Math node to the Density Factor node.
+120	Creative	blender	text	2560x1440	1905,634,2550,651	1946,648	1933,648	1888,652	hit	hit	miss	Add a new material for the select object
+121	Creative	blender	text	2560x1440	1628,442,1799,462	2330,403	2330,403	1747,371	miss	miss	miss	Transform the size of y axis
+122	Creative	blender	text	2560x1440	9,320,47,352	90,101	90,94	90,65	miss	miss	miss	Enter Sculpt mode to use Inflate brush to enlarge some specific areas.
+123	Creative	blender	text	2560x1440	410,1005,648,1022	461,1022	461,1030	531,994	miss	miss	miss	Generate a Named Attribute Node.
+124	Creative	blender	icon	2560x1440	2010,52,2029,69	2266,122	2266,346	2054,76	miss	miss	miss	mesh view
+126	Creative	blender	text	2560x1440	953,1187,1199,1204	1037,1181	1024,1181	1075,1166	miss	miss	miss	Add one more image texture for providing normal map.
+128	Creative	blender	icon	2560x1440	1146,1114,1166,1143	2432,713	2406,698	2445,694	miss	miss	miss	Increase Z axis by a step
+133	Creative	blender	icon	2560x1440	841,399,902,419	1306,389	1306,374	903,410	miss	miss	miss	Move the cone one the X axis by dragging it
+134	Creative	blender	text	2560x1440	382,28,451,48	576,122	576,130	371,47	miss	miss	miss	Open the Sculpting tab
+138	Creative	blender	text	2560x1440	1969,853,2219,873	1075,878	1114,857	1120,850	miss	miss	miss	Add a Set Position Node
+139	Creative	blender	text	2560x1440	7,632,42,669	64,684	64,670	45,652	miss	miss	miss	Grab brush to adjust the geometry of any part of the object
+145	Creative	blender	icon	2560x1440	1569,161,1589,179	1638,151	1638,151	1600,144	miss	miss	miss	Make the x axis facing the screen.
+146	Creative	blender	text	2560x1440	1600,254,1628,280	1651,238	1651,230	1657,256	miss	miss	miss	Move the camera view for adjusting camera position
+149	Creative	blender	text	2560x1440	977,1031,1051,1060	832,958	832,943	832,972	miss	miss	miss	Conect the Group Input Offset to the Set Position Node Offset.
+152	Creative	blender	icon	2560x1440	9,185,45,218	1613,194	1613,194	1645,76	miss	miss	miss	Use the moving tool
+153	Creative	blender	icon	2560x1440	2511,158,2527,173	2445,166	2432,173	2515,155	miss	miss	miss	Hide the icing layer.
+156	Creative	blender	text	2560x1440	896,1017,1138,1037	1139,1066	1203,1066	1017,1080	miss	miss	miss	Add a new image texture node for selecting material for roughtness.
+157	Creative	blender	text	2560x1440	2192,569,2279,589	2317,590	2317,590	2342,583	miss	miss	miss	Edit the name of the Vertex Group
+158	Creative	blender	text	2560x1440	1602,193,1626,218	1677,238	1677,209	1619,220	miss	miss	miss	view zooming tool
+159	Creative	blender	text	2560x1440	1427,1153,1615,1180	1510,1123	1536,1130	1517,1148	miss	miss	miss	Generate a spherical mesh
+160	Creative	blender	text	2560x1440	1230,757,1401,777	1318,778	1306,778	1344,778	miss	miss	miss	Insert a new plane object.
+161	Creative	blender	text	2560x1440	1305,905,1319,921	1395,907	1331,907	1235,911	miss	miss	miss	Select the output handle of "Join Geometry"
+163	Creative	blender	icon	2560x1440	1869,480,1898,501	2163,569	2202,562	1901,490	miss	miss	miss	change the type of the bottom-right panel
+164	Creative	blender	text	2560x1440	185,1028,244,1048	218,1066	218,1051	205,1051	miss	miss	miss	create a new texture file
+165	Creative	blender	text	2560x1440	2162,159,2171,173	2278,166	2291,166	2163,148	miss	miss	miss	expand the icing layer
+167	Creative	blender	icon	2560x1440	7,221,47,253	858,230	1638,223	1708,245	miss	miss	miss	Rotate the 3D object
+169	Creative	blender	icon	2560x1440	598,143,635,176	627,173	627,216	634,245	hit	miss	miss	select the blur tool
+172	Creative	blender	text	2560x1440	754,29,820,49	2125,562	2138,562	2125,537	miss	miss	miss	Open Render panel
+175	Creative	blender	icon	2560x1440	803,54,882,71	1715,94	1715,101	1728,86	miss	miss	miss	Change the coordinate mode of the object
+176	Creative	blender	text	2560x1440	1124,669,1141,686	1075,691	1075,691	1107,680	miss	miss	miss	Delete the geometry node
+179	Creative	blender	text	2560x1440	758,1195,937,1217	742,1130	755,1152	845,1156	miss	miss	miss	Add a math node
+180	Creative	blender	text	2560x1440	1101,667,1124,686	1075,691	1075,691	1037,680	miss	miss	miss	Duplicate Geometry Nodes. 002
+181	Creative	blender	icon	2560x1440	283,54,328,71	218,108	243,122	294,72	miss	miss	miss	open the Object menu
+182	Creative	blender	icon	2560x1440	1600,253,1628,279	1728,115	1728,108	1658,259	miss	miss	miss	enter camera preview
+184	Creative	blender	text	2560x1440	1810,52,1828,71	1792,86	1766,86	1804,65	miss	miss	miss	Toggle viewpoint shading
+185	Creative	davinci	icon	3456x2234	2042,1153,2067,1182	1970,1162	1970,1162	1987,1173	miss	miss	miss	linked selection
+188	Creative	davinci	text	3456x2234	672,1767,911,1792	588,1955	588,1955	726,1765	miss	miss	miss	Flip 3D
+189	Creative	davinci	text	3456x2234	2439,1806,2463,1828	1192,1977	1140,1977	1589,1972	miss	miss	miss	edit luminance
+191	Creative	davinci	icon	3456x2234	2961,1107,3001,1140	2350,1139	2333,1139	1694,1140	miss	miss	miss	mark in
+193	Creative	davinci	icon	3456x2234	3246,1155,3285,1185	795,1743	795,1743	847,1748	miss	miss	miss	mute
+195	Creative	davinci	text	3456x2234	460,1344,709,1375	449,1363	467,1363	449,1362	miss	hit	miss	Blur Dissolve
+196	Creative	davinci	text	3456x2234	2467,1806,2490,1828	2506,1910	2506,1932	2471,1860	miss	miss	miss	edit red
+197	Creative	davinci	icon	3456x2234	1637,1110,1673,1141	1745,1162	1624,1162	1762,1134	miss	miss	miss	dissolve
+199	Creative	davinci	text	3456x2234	2202,109,2264,130	2454,1139	2454,1162	2385,1167	miss	miss	miss	zoom
+200	Creative	davinci	text	3456x2234	470,1883,702,1907	432,1921	432,1921	423,1904	miss	miss	miss	add heart to image
+202	Creative	davinci	icon	3456x2234	1876,1103,1915,1140	2506,1151	2523,1128	2514,1123	miss	miss	miss	fast review
+204	Creative	davinci	icon	3456x2234	1166,1773,1197,1794	242,1999	207,2011	147,1787	miss	miss	miss	color wheels
+205	Creative	davinci	icon	3456x2234	1434,1803,1460,1835	1382,1821	1469,1798	1391,1798	miss	miss	miss	feather add
+206	Creative	davinci	icon	3456x2234	1811,110,1844,140	968,1709	950,1709	1650,1674	miss	miss	miss	Timeline
+208	Creative	davinci	icon	3456x2234	2623,879,2659,912	2575,905	2575,905	2601,893	miss	miss	miss	Loop
+211	Creative	davinci	text	3456x2234	1826,1110,1869,1143	1987,1162	1728,1162	1814,1128	miss	miss	miss	add POI
+212	Creative	davinci	icon	3456x2234	3338,1721,3391,1759	1884,1977	1884,1977	2359,1770	miss	miss	miss	scopes
+213	Creative	davinci	icon	3456x2234	243,1724,294,1758	173,1966	173,1899	665,1804	miss	miss	miss	RGB mixer
+214	Creative	davinci	icon	3456x2234	82,682,107,706	259,748	259,737	112,693	miss	miss	miss	lock audio
+215	Creative	davinci	icon	3456x2234	289,1849,326,1878	225,1999	225,1999	173,1865	miss	miss	miss	reset dark
+216	Creative	davinci	text	3456x2234	466,1217,698,1246	415,1240	415,1240	432,1245	miss	miss	miss	Cross Fade -3 db
+217	Creative	davinci	text	3456x2234	421,1571,660,1597	1918,1218	1953,1195	1875,1168	miss	miss	miss	Flip over
+219	Creative	davinci	icon	3456x2234	1314,1803,1344,1837	1590,1765	1572,1765	1296,1804	miss	miss	miss	color picker
+220	Creative	davinci	icon	3456x2234	1476,2150,1495,2175	1469,2066	1486,2044	1426,2161	miss	miss	miss	color warper link
+221	Creative	davinci	icon	3456x2234	1785,1108,1821,1141	2471,134	1572,134	1494,117	miss	miss	miss	POI
+224	Creative	davinci	icon	3456x2234	3290,1724,3325,1755	2350,1787	2609,1787	2523,1759	miss	miss	miss	keyframes
+225	Creative	davinci	icon	3456x2234	271,1806,300,1831	259,1988	259,1988	207,1821	miss	miss	miss	red output reset
+226	Creative	davinci	icon	3456x2234	1678,1109,1718,1140	1538,1173	1572,1173	1719,1133	miss	miss	miss	smooth cut
+227	Creative	davinci	icon	3456x2234	1740,1107,1777,1141	207,123	207,648	124,1152	miss	miss	miss	tools

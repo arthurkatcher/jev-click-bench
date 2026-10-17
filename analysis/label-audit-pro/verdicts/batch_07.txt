@@ -1,0 +1,52 @@
+# ScreenSpot-Pro label audit, batch 07 (apps origin): every case the zoom answer B missed, viewed by eye. Format: case | code | tag | named | lang | note.
+709 | MODEL | OTHER | N | ZH | candlestick chart: key = candlestick icon in the bottom 2D Graphs toolbar; B boxes top worksheet-toolbar icons (Set Column Values); key outside B's window
+710 | MODEL | SAMEGROUP | N | ZH | refresh: key = Refresh button (window + pen, by app knowledge); B's 2-row box covers Project Explorer 3 icons right, click on the Fill Color bucket below
+711 | PRECISION | - | N | ZH | image plot: key = Image Plot icon, bottom 3D/Contour toolbar; B = full-height column (y 86-2138) over the plot icons, ending 26 px left of it
+712 | MODEL | OTHER | N | ZH | fit 3D frame to layer: key = Fit Frame to Layer icon, bottom 3D Rotation toolbar (by app knowledge); B boxes the top-left font toolbar + grey strip
+713 | MODEL | OTHER | Y | ZH | 3D scatter: key = 3D scatter icon, bottom toolbar (tooltip 3D 散点图 open); B boxes a wide strip of the top worksheet toolbars; key outside B's window
+714 | MODEL | OTHER | N | ZH | query builder: key = Query Builder icon (DB cylinder + magnifier, by app knowledge); B boxes a 595 px strip of the top-left Standard/Format toolbars
+715 | NEIGHBOUR | - | Y | ZH | check x-data format: key = X数据格式 checkbox; B clicks the X 标题 (X Title) label in the row right below; A1/A2 boxes too wide
+716 | MODEL | RELATED | N | ZH | command window: key = Command Window toolbar toggle; B clicks the ▼ menu on the open Command Window's title bar (not its X); key outside B's window
+717 | MODEL | OTHER | Y | ZH | tool menu: key = 工具(T) menu; B boxes Standard/Format toolbar icons below 窗口/帮助, centre between the two rows
+718 | WIDE | - | N | ZH | area chart: key = Area icon, bottom 2D Graphs toolbar; B's box spans Area through the 3D icons + status bar, centre below them; A1/A2 full-height columns
+719 | MODEL | OTHER | Y | ZH | name of x axis: key = Long Name (长名称) cell of column A(X); B boxes empty grey workspace right of Book1, under the toolbars
+720 | EDGE | - | N | ZH | maximize graph1: key = Graph1's maximize button; B's thin tall box covers it and the window body below, click ~5 px under the button
+721 | EDGE | - | N | ZH | text tool: key = T button in the left Tools toolbar; B's thin box covers T's right half and the icon above, click 4 px off T's top-right corner
+722 | MODEL | LOOKALIKE | N | ZH | minimize graph4: key = Graph4's minimize button; B clicks the minimize button of a matrix window lower right (A1/A2 on Graph3); key outside B's window
+724 | MODEL | RELATED | Y | ZH | new worksheet: key = 工作表(W) in the open File > 新建 submenu; B clicks the sheet-tab scroll arrow beside a Sheet1 tab; key outside B's window
+725 | WIDE | - | Y | ZH | hide Graph1: key = 隐藏(H) button in the hide-or-delete dialog; B's box spans 删除(D) + half of 隐藏, centre in the gap after 删除
+726 | VAGUE | - | N | ZH | 'colse the grah1' misspelt: key = Graph1's close X (still right); B is on the X, but its tall box puts the click ~5 px under it (EDGE otherwise)
+728 | PRECISION | - | N | ZH | line + symbol: key = Line+Symbol icon, bottom 2D Graphs toolbar; B = full-height column (y 65-2117) over the plot icons, from 1 icon (Bar) right of it
+729 | PRECISION | - | Y | ZH | matrix cell (1,1): key = row 1 / col 1 cell of MBook1; B boxes column header 1 and the white strip above it, click ~34 px above the cell
+730 | PRECISION | - | N | ZH | bar chart: key = Column/Bar icon, bottom 2D Graphs toolbar; B = full-height column (y 86-2117) over the plot icons, from 2 icons right of it
+731 | NEIGHBOUR | - | N | ZH | column statistics: key = Statistics on Columns icon; B's box covers Statistics on Rows next to it + the 0.5 field below, click between them
+735 | WIDE | - | Y | ZH | x-axis unit: key = Units (单位) cell of column A(X); B = full-height column (y 108-2095) holding it, centre ~900 px below at mid-screen
+736 | NEIGHBOUR | - | Y | ZH | edit menu: key = 编辑(E) menu; B clicks the New Workbook icon in the toolbar row right below it; A1/A2 on the worksheet header
+737 | MODEL | OTHER | Y | ZH | x-axis name: key = Long Name cell 'length' of column A(X); B boxes the lower left Tools toolbar + grey space; key outside B's window
+738 | PRECISION | - | N | ZH | line chart: key = Line icon, first in the bottom 2D Graphs toolbar; B = full-height column (y 65-2117) over the plot icons, from 2 icons right of it
+739 | PRECISION | - | N | ZH | box plot: key = Box Chart icon, bottom 2D Graphs toolbar; B = full-height column (y 86-2138) over the plot icons, left edge on the key's right edge
+740 | EDGE | - | Y | ZH | OK button: key = 确定 (OK) button; B's box covers it plus the grey panel above, click 6 px above the button
+741 | MODEL | OTHER | N | ZH | rotate 3D clockwise: key = Rotate Clockwise icon, bottom 3D Rotation toolbar; B boxes a wide strip of the top worksheet toolbars; key outside B's window
+745 | MODEL | OTHER | N | ZH | reset: key = cube-in-frame button before the angle field, bottom 3D Rotation toolbar (770's Reset Rotation is next to it); B boxes Format icons top left
+746 | NEIGHBOUR | - | N | ZH | close Graph1: key = Graph1's close X; B's box straddles maximize + the X's left part, click on maximize 6 px left of the X; A1/A2 hit
+747 | MODEL | OTHER | N | ZH | contour profile: key = Contour Profile icon, bottom 3D/Contour toolbar; B's zero-width box lands on the Fill palette icon up top; key outside B's window
+748 | MODEL | OTHER | N | ZH | polar chart: key = Polar icon, bottom 2D Graphs toolbar; B boxes the top-left worksheet header area (Book1 title strip); A2 a full-height column
+749 | MODEL | OTHER | N | ZH | rotate right: key = Rotate Right icon, bottom 3D Rotation toolbar; B boxes the top-left worksheet header area (Book1 title strip); A1/A2 full-height columns
+750 | MODEL | OTHER | N | ZH | tilt up: key = Tilt Up icon, bottom 3D Rotation toolbar; B's thin box spans a top worksheet icon and the field gap below; key outside B's window
+751 | VAGUE | - | N | ZH | 'import into excel' reverses the action: key = Import Excel icon (X + grid, by app knowledge), still the best answer; B boxes New Graph/Matrix icons
+752 | WIDE | - | N | ZH | close the 'Plotting: plotvm' dialog: key = its title-bar X; B's box spans the ? help button + the X, centre between them, 11 px left of the key
+753 | MODEL | OTHER | N | ZH | mask range: key = Mask Points in Range icon, bottom Mask toolbar (by app knowledge); B's zero-width box sits on top worksheet icons; key outside B's window
+754 | MODEL | SAMEGROUP | N | ZH | 3D colour-map surface: key = 3D Colormap Surface icon, bottom 3D toolbar; B = full-height column over the contour icons 2 to its right
+755 | MODEL | OTHER | N | ZH | disable masking: key = Disable/Enable Masking icon, end of the bottom Mask toolbar (by app knowledge); B = full-height column ~540 px left of it
+756 | MODEL | OTHER | N | ZH | rotate 3D counterclockwise: key = first icon of the bottom 3D Rotation toolbar; B boxes the same top worksheet-toolbar strip as 741; key outside B's window
+757 | MODEL | OTHER | N | ZH | command window: key = Command Window toggle (window + pen, shown pressed); B boxes the Paste/New Workbook icons at the far top left
+758 | PRECISION | - | N | ZH | video generator: key = Video Builder (film strip) icon, top Standard toolbar; B = full-height column under it, its top edge 6 px below the key centre
+759 | VAGUE | - | Y | ZH | 'scattor' misspelt: key = 散点图 item in the open scatter fly-out (still right); B's box spans it + the 散点图 group icon above, click on the header (WIDE)
+760 | WIDE | - | Y | ZH | file menu: key = 文件(F) menu; B's box spans it and the toolbar icons below, centre on the Open icon's top edge 11 px under the menu
+763 | MODEL | OTHER | N | ZH | send to PowerPoint: key = Send Graphs to PowerPoint icon (magenta slide, by app knowledge); B clicks by the Import Excel (X) icon far right; A1 14 px off
+764 | MODEL | OTHER | N | ZH | 2D filled contour: key = Contour Color Fill icon, bottom 3D/Contour toolbar; B's zero-width box falls between the palette and pen icons up top
+765 | MODEL | OTHER | N | ZH | dual y-axis: key = Double-Y icon, bottom 2D Graphs toolbar; B = narrow full-height column over the Contour Color Fill icon ~9 icons right
+766 | MODEL | OTHER | N | ZH | rotate left: key = Rotate Left icon, bottom 3D Rotation toolbar; B's thin box spans the Z designation and Mask icons in the top worksheet toolbars
+768 | NEIGHBOUR | - | N | ZH | close graph3: key = Graph3's close X; B's box covers minimize/maximize, click on the maximize button next to the X; A1/A2 in the window below
+769 | MODEL | OTHER | N | ZH | unmask range: key = Unmask Range icon, bottom Mask toolbar (by app knowledge); B boxes the top-left worksheet header area; A2 a full-height column
+770 | MODEL | OTHER | N | ZH | reset rotation: key = Reset Rotation icon (axes + cube), bottom 3D Rotation toolbar; B = full-height column over the 3D plot icons ~260 px left

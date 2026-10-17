@@ -1,0 +1,74 @@
+# ScreenSpot-Pro label audit, batch 09: apps premiere, quartus. B-missed cases to review: 71. All cases of these apps (for the UI-language labels): 904-955, 1034-1078 = 97 cases, on language sheets lang_056.jpg, lang_057.jpg, lang_058.jpg, lang_059.jpg, lang_064.jpg, lang_065.jpg, lang_066.jpg, lang_067.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+904	Creative	premiere	icon	2560x1440	1790,389,1811,414	1805,410	1818,410	1824,406	hit	miss	miss	close the popup
+906	Creative	premiere	icon	2560x1440	2201,449,2220,471	2253,490	2253,367	2234,443	miss	miss	miss	mark HYDaSongJ as favourite
+908	Creative	premiere	icon	2560x1440	1337,619,1347,639	1318,641	1318,641	1312,630	miss	miss	miss	unlink speed and duration
+909	Creative	premiere	text	2560x1440	1300,723,1374,739	1293,734	1293,734	1306,741	miss	miss	miss	select video zoom level
+910	Creative	premiere	text	2560x1440	1570,941,1666,968	1536,958	1523,965	1568,958	miss	miss	miss	locate missing media
+911	Creative	premiere	icon	2560x1440	1769,801,1797,821	704,828	768,828	768,839	miss	miss	miss	extract the selected content
+912	Creative	premiere	icon	2560x1440	1029,887,1050,908	998,828	973,835	986,864	miss	miss	miss	timeline settings
+914	Creative	premiere	text	2560x1440	184,46,227,75	128,86	128,79	122,61	miss	miss	miss	change to export workspace
+916	Creative	premiere	icon	2560x1440	252,523,277,542	166,554	166,569	237,537	miss	miss	miss	reset the color distortion value
+917	Creative	premiere	text	2560x1440	2294,540,2314,556	2355,482	2368,482	2464,532	miss	miss	miss	adjust bottom crop for the selected track
+918	Creative	premiere	text	2560x1440	1091,1191,2366,1224	947,1224	947,1224	953,1210	miss	miss	miss	drop the dragged audio into A1
+919	Creative	premiere	text	2560x1440	1581,939,1742,963	1306,886	1306,878	1632,910	miss	miss	miss	remove the selected gap
+920	Creative	premiere	icon	2560x1440	2332,687,2349,705	2381,706	2381,706	2362,706	miss	miss	miss	enable text shadow
+921	Creative	premiere	icon	2560x1440	67,523,82,540	179,590	179,576	147,551	miss	miss	miss	add a keyframe on color distortion
+922	Creative	premiere	icon	2560x1440	362,147,388,170	218,166	218,158	326,158	miss	miss	miss	create captions based on the transcription
+924	Creative	premiere	icon	2560x1440	1012,841,1026,853	1062,864	1062,864	1036,857	miss	miss	miss	close sequence 16
+925	Creative	premiere	text	2560x1440	364,399,549,420	333,418	320,864	896,886	miss	miss	miss	remove the selected keyframes
+926	Creative	premiere	text	2560x1440	1024,1194,1039,1214	986,1238	973,1238	999,1206	miss	miss	miss	solo A1
+927	Creative	premiere	icon	2560x1440	253,120,274,138	1075,814	691,806	1094,676	miss	miss	miss	hide timeline view in effect controls
+928	Creative	premiere	text	2560x1440	2332,301,2532,322	2406,353	2406,346	2406,353	miss	miss	miss	change the font
+929	Creative	premiere	text	2560x1440	1406,629,1707,651	1510,763	1536,778	1510,656	miss	miss	miss	adjust length of the segment
+931	Creative	premiere	text	2560x1440	64,86,307,106	179,137	179,137	179,122	miss	miss	miss	close the panel
+932	Creative	premiere	text	2560x1440	723,933,741,954	525,943	538,943	582,943	miss	miss	miss	key in target bitrate
+933	Creative	premiere	text	2560x1440	1147,663,1274,683	1254,684	1254,684	1280,677	miss	miss	miss	i want to delete all blank audio tracks
+934	Creative	premiere	text	2560x1440	1099,1208,1110,1222	1011,1238	1024,1238	998,1246	miss	miss	miss	drag to edit transition on A1
+935	Creative	premiere	icon	2560x1440	1565,800,1587,820	602,821	614,814	550,818	miss	miss	miss	go back to in
+936	Creative	premiere	icon	2560x1440	2517,47,2543,73	1997,734	2086,734	2131,734	miss	miss	miss	play the video preview in full screen
+937	Creative	premiere	icon	2560x1440	901,1084,924,1103	998,1123	986,1130	954,1098	miss	miss	miss	focus on V6 for editing
+939	Creative	premiere	icon	2560x1440	839,884,861,907	934,878	922,907	845,914	miss	miss	miss	razor tool
+941	Creative	premiere	icon	2560x1440	1514,801,1532,825	806,835	806,850	972,832	miss	miss	miss	mark out
+942	Creative	premiere	text	2560x1440	17,231,30,248	115,230	128,238	45,234	miss	miss	miss	expand the VR Digital Glitch effect
+943	Creative	premiere	text	2560x1440	33,229,55,248	166,382	166,389	128,403	miss	miss	miss	turn off the VR effect
+944	Creative	premiere	text	2560x1440	1206,1135,1508,1157	1190,1152	806,1217	1312,1134	miss	miss	miss	find the selected media in file manager
+948	Creative	premiere	text	2560x1440	249,338,278,360	166,338	179,353	269,335	miss	miss	miss	publish to tiktok at the same time
+949	Creative	premiere	icon	2560x1440	1449,955,1464,971	1203,965	1203,965	1267,965	miss	miss	miss	open effects editor of the first adjustment layer
+952	Creative	premiere	text	2560x1440	185,836,268,854	179,1109	205,1138	115,1354	miss	miss	miss	open media browser tag in the bottom left area
+953	Creative	premiere	icon	2560x1440	2365,1176,2378,1191	2381,1202	2381,1195	2374,1202	miss	miss	miss	bottom handle of the video track zoom bar
+954	Creative	premiere	icon	2560x1440	217,523,233,540	179,540	179,540	205,540	miss	miss	miss	add a keyframe on color distortion on this frame
+955	Creative	premiere	icon	2560x1440	1489,800,1504,821	704,835	678,850	467,821	miss	miss	miss	mark in
+1035	Dev	quartus	icon	2560x1440	889,52,917,75	141,86	678,86	883,61	miss	miss	miss	Feedback
+1036	Dev	quartus	icon	1920x1080	1289,329,1311,354	1344,335	1344,335	1286,343	miss	miss	miss	use selection tool in toolbar of Quartus
+1038	Dev	quartus	icon	2560x1440	151,52,178,75	179,79	166,79	134,68	miss	miss	miss	Paste
+1039	Dev	quartus	icon	1920x1080	1282,329,1308,352	1296,329	1296,346	1325,343	hit	hit	miss	Add output port to the project in Quartus
+1040	Dev	quartus	icon	1920x1080	1004,348,1028,372	989,383	979,383	1085,370	miss	miss	miss	Start TimeQuest Timing Analyzer in toolbar of Quartus
+1041	Dev	quartus	icon	1920x1080	1114,449,1143,474	1056,410	1066,410	1124,418	miss	miss	miss	Find something from the project in Quartus
+1044	Dev	quartus	icon	2560x1440	182,54,205,75	166,79	166,79	179,58	miss	miss	miss	Undo
+1045	Dev	quartus	icon	1920x1080	194,75,210,92	211,86	230,86	182,89	miss	miss	miss	Save all files using toolbar in Quartus
+1046	Dev	quartus	icon	1920x1080	1239,173,1261,194	1248,194	1258,194	1464,192	miss	miss	miss	open Chip Planner  in toolbar of Quartus
+1047	Dev	quartus	icon	1920x1080	1028,346,1053,372	979,410	970,389	1071,392	miss	miss	miss	Open TimeQuest Timing Analyzer in toolbar of Quartus
+1049	Dev	quartus	icon	1920x1080	737,263,765,290	970,302	960,297	1013,292	miss	miss	miss	open Pin Planner  in toolbar of Quartus
+1050	Dev	quartus	icon	1920x1080	660,330,681,352	710,329	710,329	710,334	miss	miss	miss	Create a new file using toolbar in Quartus
+1051	Dev	quartus	icon	1920x1080	1256,331,1282,356	1306,335	1306,329	1335,342	miss	miss	miss	Add new input port to the project in Quartus
+1052	Dev	quartus	icon	2560x1440	113,1256,134,1276	102,1274	141,1282	96,1267	miss	miss	miss	Show Warning Messages
+1053	Dev	quartus	icon	2560x1440	859,50,888,76	346,79	346,58	422,50	miss	miss	miss	Help icon
+1054	Dev	quartus	icon	2560x1440	206,52,229,74	653,86	666,86	192,65	miss	miss	miss	Redo
+1057	Dev	quartus	icon	2560x1440	9,51,32,74	77,58	90,58	45,58	miss	miss	miss	New
+1058	Dev	quartus	icon	2560x1440	515,52,540,74	602,101	614,101	346,86	miss	miss	miss	Assignment Editor
+1059	Dev	quartus	icon	1920x1080	1101,264,1128,292	778,281	778,281	1056,281	miss	miss	miss	open Assignment Editor in toolbar of Quartus
+1061	Dev	quartus	icon	1920x1080	1138,203,1162,225	1142,221	1142,232	753,219	hit	miss	miss	open Progranmer via toolbar in Quartus
+1062	Dev	quartus	icon	2560x1440	128,50,155,76	230,94	218,101	122,68	miss	miss	miss	Copy
+1066	Dev	quartus	icon	2560x1440	79,51,105,74	166,79	115,72	64,58	miss	miss	miss	Save all
+1067	Dev	quartus	icon	2560x1440	105,51,132,74	742,86	742,86	134,54	miss	miss	miss	Cut
+1068	Dev	quartus	text	2560x1440	103,200,455,223	218,209	205,209	282,198	hit	hit	miss	Restore Archived Project
+1069	Dev	quartus	icon	2560x1440	775,51,799,75	512,101	256,108	710,79	miss	miss	miss	Compilation Report
+1070	Dev	quartus	icon	1920x1080	1334,331,1358,355	1411,340	1411,335	1325,346	miss	miss	miss	use hand tool in toolbar of Quartus
+1071	Dev	quartus	text	2560x1440	0,321,268,348	141,338	128,338	141,353	hit	hit	miss	Create/Update
+1072	Dev	quartus	icon	1920x1080	1112,204,1132,225	1056,227	1056,227	1157,235	miss	miss	miss	open Compilation Report via toolbar in Quartus
+1074	Dev	quartus	text	1920x1080	1105,223,1123,245	1219,216	1200,211	1080,235	miss	miss	miss	text tool
+1075	Dev	quartus	icon	2560x1440	562,52,585,75	704,86	704,86	467,68	miss	miss	miss	Chip planner
+1077	Dev	quartus	text	1920x1080	652,301,679,320	701,324	701,324	682,319	miss	miss	miss	Open the file menu in Quartus
+1078	Dev	quartus	icon	2560x1440	55,50,78,74	154,58	154,79	51,58	miss	miss	miss	Save

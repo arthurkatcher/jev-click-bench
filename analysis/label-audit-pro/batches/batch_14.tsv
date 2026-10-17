@@ -1,0 +1,61 @@
+# ScreenSpot-Pro label audit, batch 14: apps windows_common. B-missed cases to review: 58. All cases of these apps (for the UI-language labels): 1416-1496 = 81 cases, on language sheets lang_088.jpg, lang_089.jpg, lang_090.jpg, lang_091.jpg, lang_092.jpg, lang_093.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+1416	OS	windows_common	text	5120x1440	2626,138,2880,163	230,310	230,302	269,112	miss	miss	miss	empty recycle bin
+1417	OS	windows_common	icon	3840x2160	528,980,564,1013	461,972	346,940	509,999	miss	miss	miss	delete file or folder
+1418	OS	windows_common	icon	3840x2160	3542,1790,3588,1841	3629,1998	3629,1987	3600,1814	miss	miss	miss	open wlan detail
+1419	OS	windows_common	icon	3840x2160	3594,2115,3623,2156	1498,2009	1536,2009	1114,2090	miss	miss	miss	show touch keyboard
+1420	OS	windows_common	icon	3840x2160	2252,2002,2274,2024	461,173	461,151	720,1010	miss	miss	miss	display items by using large thumbnails
+1421	OS	windows_common	icon	3840x2160	2114,2049,2141,2086	1901,1642	1901,1631	1987,1598	miss	miss	miss	enter settings
+1422	OS	windows_common	icon	3840x2160	485,980,514,1012	1152,151	1939,140	1958,140	miss	miss	miss	share file
+1423	OS	windows_common	text	5120x1440	3890,709,4024,734	3763,734	3763,742	3865,749	miss	miss	miss	compress as zip
+1424	OS	windows_common	icon	3840x2160	2739,364,2769,396	2765,389	2765,400	1930,383	hit	miss	miss	maximize window or change split view for settings
+1427	OS	windows_common	text	5120x1440	2954,1112,3304,1138	3174,1210	205,1210	128,1415	miss	miss	miss	pin chrome to taskbar
+1428	OS	windows_common	icon	3840x2160	3495,2121,3530,2157	3533,2106	3552,2117	3542,2106	miss	miss	miss	show hidden icons in taskbar
+1430	OS	windows_common	text	3840x2160	3707,1882,3809,1941	3667,1933	3667,1933	3696,1912	miss	miss	miss	change nearby sharing status
+1431	OS	windows_common	icon	3840x2160	2782,363,2819,398	2784,389	2784,378	1949,211	hit	hit	miss	close settings window
+1432	OS	windows_common	text	5120x1440	4434,689,4508,775	2483,302	2458,295	2650,508	miss	miss	miss	open chrome dev on desktop
+1433	OS	windows_common	icon	3840x2160	3483,1994,3525,2032	3610,1922	3610,1922	3648,2020	miss	miss	miss	mute
+1434	OS	windows_common	icon	5120x1440	3230,471,3258,491	3123,490	3149,475	3136,471	miss	miss	miss	unpin the first mail entry
+1436	OS	windows_common	icon	5120x1440	5024,3,5068,27	3891,94	3891,101	5012,46	miss	miss	miss	cancel maximization of the window on the right
+1437	OS	windows_common	icon	3840x2160	3740,2057,3779,2091	3667,1976	3648,1966	3715,2063	miss	miss	miss	edit quick settings
+1438	OS	windows_common	text	5120x1440	3118,476,3194,500	2790,792	2739,806	3113,508	miss	miss	miss	go back to volumn D
+1439	OS	windows_common	text	3840x2160	3491,1888,3589,1938	3629,1912	3629,1901	3619,1901	miss	miss	miss	found more displays
+1440	OS	windows_common	icon	3840x2160	2072,2048,2102,2084	1786,1706	1786,1696	1824,1701	miss	miss	miss	open new file explorer
+1441	OS	windows_common	icon	3840x2160	1815,2117,1851,2156	173,173	154,184	182,540	miss	miss	miss	enter desktop management page
+1442	OS	windows_common	icon	3840x2160	1767,2115,1809,2159	1728,1091	1747,1080	1728,1091	miss	miss	miss	show search pop-up box
+1443	OS	windows_common	icon	5120x1440	4440,295,4458,313	3917,626	3763,626	3907,350	miss	miss	miss	cancel the file search
+1445	OS	windows_common	icon	3840x2160	2692,366,2725,394	2746,378	2746,378	2736,383	miss	miss	miss	minimize settings window
+1448	OS	windows_common	icon	3840x2160	3676,1886,3696,1908	3610,1922	3610,1922	3619,1825	miss	miss	miss	unpin item from quick settings
+1449	OS	windows_common	icon	5120x1440	2970,336,3004,361	3021,403	3021,439	2970,374	miss	miss	miss	open accounts selection tab in outlook
+1453	OS	windows_common	text	5120x1440	1386,1225,1436,1246	1741,410	1894,410	1331,673	miss	miss	miss	play the online media
+1454	OS	windows_common	icon	5120x1440	5072,0,5118,24	3507,619	4096,634	4941,591	miss	miss	miss	close the largest file explorer
+1455	OS	windows_common	text	3840x2160	3728,2116,3825,2159	3629,2106	3610,2106	3734,2106	miss	miss	miss	open notifications center and calendar
+1456	OS	windows_common	text	5120x1440	2592,931,2864,955	2739,965	2739,958	2713,958	miss	miss	miss	show more options for the selected file
+1459	OS	windows_common	text	3840x2160	3491,1791,3539,1841	3629,1998	3629,1987	3581,1814	miss	miss	miss	change wlan status
+1460	OS	windows_common	icon	3840x2160	385,982,421,1017	442,1858	442,1836	1008,1987	miss	miss	miss	paste file or folder
+1462	OS	windows_common	text	5120x1440	4361,747,4495,783	4019,763	4045,763	3981,767	miss	miss	miss	add an optional feature
+1463	OS	windows_common	icon	3840x2160	574,976,665,1018	787,1134	730,1145	614,1048	miss	miss	miss	change sorting rules
+1464	OS	windows_common	text	3840x2160	1872,488,2041,548	365,702	384,691	413,702	miss	miss	miss	enter the network connection details page
+1465	OS	windows_common	text	3840x2160	3710,1791,3804,1840	3629,1976	3629,1987	3677,1820	miss	miss	miss	change airplane mode status
+1466	OS	windows_common	icon	3840x2160	2711,410,2811,474	2688,475	2208,454	2765,491	miss	miss	miss	change split view to put iCloud on top-right and VSCode on bottom-right
+1467	OS	windows_common	icon	3840x2160	2022,2044,2069,2087	250,1231	250,1231	259,1209	miss	miss	miss	enter downloads folder
+1468	OS	windows_common	icon	3840x2160	3707,1790,3805,1838	3610,1933	3648,1944	3610,1874	miss	miss	miss	show display mode settings
+1469	OS	windows_common	icon	5120x1440	2906,11,2924,24	3098,43	3072,43	2995,25	miss	miss	miss	close the new tab in edge
+1470	OS	windows_common	icon	3840x2160	294,371,323,404	384,464	384,454	326,405	miss	miss	miss	go back in settings
+1471	OS	windows_common	icon	3840x2160	337,981,374,1015	384,961	384,983	384,999	miss	miss	miss	copy file or folder
+1473	OS	windows_common	icon	5120x1440	3776,546,3802,569	3558,626	3533,626	3763,558	miss	miss	miss	check OpenSSH Server
+1475	OS	windows_common	icon	3840x2160	3785,2059,3817,2091	3590,1933	3629,1944	3725,2068	miss	miss	miss	enter settings page
+1476	OS	windows_common	text	5120x1440	1630,282,2154,333	1869,295	1894,281	2342,310	hit	miss	miss	search in Microsoft support center
+1477	OS	windows_common	icon	3840x2160	366,961,400,993	442,1048	442,1048	394,994	miss	miss	miss	refresh explorer page
+1478	OS	windows_common	icon	3840x2160	226,963,255,989	326,972	307,983	259,988	miss	miss	miss	back to the last page
+1480	OS	windows_common	icon	3840x2160	398,896,429,924	2362,940	2381,940	2199,945	miss	miss	miss	close tab in explorer
+1481	OS	windows_common	text	3840x2160	662,979,756,1020	2131,173	2112,1102	2131,1102	miss	miss	miss	change page view
+1482	OS	windows_common	icon	5120x1440	2832,975,2864,999	2790,950	2790,950	2816,982	miss	miss	miss	rename the selected file
+1484	OS	windows_common	icon	3840x2160	446,897,471,923	1555,1890	1536,1890	1747,2052	miss	miss	miss	add new tab
+1485	OS	windows_common	icon	3840x2160	3776,1989,3812,2031	3610,1933	3610,1944	3686,2020	miss	miss	miss	select sound output
+1486	OS	windows_common	icon	3840x2160	2228,2002,2254,2026	2189,1480	2189,1480	2218,1017	miss	miss	miss	displays information about each item in the window
+1488	OS	windows_common	icon	3840x2160	3650,1787,3699,1847	3610,1955	3610,1955	3629,1820	miss	miss	miss	open bluetooth detail
+1491	OS	windows_common	text	5120x1440	2772,277,2787,295	2714,468	2662,468	2675,256	miss	miss	miss	pin desktop in explorer
+1493	OS	windows_common	text	5120x1440	2272,674,2344,701	2099,1303	2125,1318	2061,1354	miss	miss	miss	go back to volumn D
+1494	OS	windows_common	text	5120x1440	3892,580,3980,613	3942,418	3942,454	3994,274	miss	miss	miss	set edge as default

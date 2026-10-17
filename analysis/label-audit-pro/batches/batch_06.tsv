@@ -1,0 +1,77 @@
+# ScreenSpot-Pro label audit, batch 06: apps macos_common, matlab. B-missed cases to review: 74. All cases of these apps (for the UI-language labels): 551-615, 616-708 = 158 cases, on language sheets lang_034.jpg, lang_035.jpg, lang_036.jpg, lang_037.jpg, lang_038.jpg, lang_039.jpg, lang_040.jpg, lang_041.jpg, lang_042.jpg, lang_043.jpg, lang_044.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+551	OS	macos_common	text	3456x2234	1825,818,1903,840	1814,838	1797,827	1814,826	miss	miss	miss	cancel extraction
+553	OS	macos_common	icon	6016x3384	4473,174,4502,210	1745,1167	1745,1167	1715,846	miss	miss	miss	I am watching the video. Pause the music.
+557	OS	macos_common	text	3456x2234	894,1154,970,1173	916,1173	899,1139	916,1184	hit	miss	miss	show all cityscape wallpapers
+559	OS	macos_common	icon	3456x2234	1033,1258,1052,1281	484,581	1089,614	1149,626	miss	miss	miss	close the blocked finder
+561	OS	macos_common	icon	2560x1600	1186,782,1203,800	1114,784	1139,784	1152,788	miss	miss	miss	eject wechat installer
+563	OS	macos_common	icon	6016x3384	5070,2609,5091,2627	3038,2640	3038,2640	2918,1794	miss	miss	miss	preview the image I'm editing
+564	OS	macos_common	icon	3456x2234	3195,20,3219,45	3145,123	3180,89	3136,39	miss	miss	miss	wifi settings
+565	OS	macos_common	icon	6016x3384	3200,983,3221,1008	3128,981	3158,964	3128,981	miss	miss	miss	cancel downloading
+566	OS	macos_common	text	3456x2234	1519,1232,1674,1266	1572,1229	1590,1229	1590,1268	miss	miss	miss	take a lap
+567	OS	macos_common	icon	2992x1870	1479,876,1504,896	1496,898	1511,898	1481,902	miss	miss	miss	zoom in pdf
+568	OS	macos_common	icon	6016x3384	3426,1395,3448,1416	3128,1489	3158,1489	3369,1413	miss	miss	miss	add a recepient
+569	OS	macos_common	icon	3456x2234	3359,966,3378,985	3249,949	3300,949	3352,1050	miss	miss	miss	cancel downloading file on desktop
+570	OS	macos_common	icon	3456x2234	2330,544,2346,559	2091,480	2091,871	2324,553	miss	miss	miss	add the doc to favourite
+572	OS	macos_common	text	3456x2234	1850,1575,1916,1596	1642,1575	1642,1586	1832,1592	miss	miss	miss	show more information of the pdf
+573	OS	macos_common	text	3456x2234	923,116,992,142	1538,2156	1521,2167	1435,2178	miss	miss	miss	switch to chatgpt
+576	OS	macos_common	text	3456x2234	1214,1753,1344,1772	1261,1743	1244,1731	1261,1748	miss	miss	miss	snap desktop items to grid
+578	OS	macos_common	text	3456x2234	2169,2028,2280,2049	2108,2033	2108,2044	2194,2050	miss	miss	miss	keep zoom in dock
+580	OS	macos_common	icon	2992x1870	1532,975,1559,1000	1526,972	1511,972	1518,982	miss	miss	miss	rotate the pdf
+581	OS	macos_common	icon	3456x2234	3379,336,3407,354	3093,380	3041,413	3154,335	miss	miss	miss	turn off screen recording permission for Terminal
+582	OS	macos_common	text	3456x2234	1101,16,1221,44	1106,101	1106,67	1097,45	miss	miss	miss	take a scrollshot
+584	OS	macos_common	text	6016x3384	2621,1731,2653,1774	3940,2640	3910,2623	3745,1768	miss	miss	miss	play the slides
+585	OS	macos_common	icon	2992x1870	49,37,66,53	2768,112	2738,112	2251,117	miss	miss	miss	exit fullscreen
+586	OS	macos_common	icon	3456x2234	2205,110,2220,144	2264,413	2246,402	2246,145	miss	miss	miss	drop the dragged chrome tab to the end of the other chrome
+588	OS	macos_common	text	3456x2234	1638,2103,1939,2124	1918,2078	1918,2066	1797,2050	miss	miss	miss	close all pdf
+590	OS	macos_common	icon	2992x1870	336,895,370,928	1361,926	1616,907	1160,911	miss	miss	miss	turn on pdf page preview
+591	OS	macos_common	icon	3456x2234	1088,804,1099,821	1884,771	1849,838	1313,826	miss	miss	miss	expand the disk volumn
+594	OS	macos_common	icon	6016x3384	3153,1397,3203,1447	3158,1404	3128,1421	3143,1421	hit	miss	miss	add the Rhombus shape
+596	OS	macos_common	text	3456x2234	3147,1223,3277,1316	3318,1664	3318,1687	3214,1391	miss	miss	miss	the redundant downloaded lightshot13k.rar file
+597	OS	macos_common	icon	3456x2234	2040,1244,2069,1264	1832,1218	1832,1218	2022,1251	miss	miss	miss	turn off dock animation
+599	OS	macos_common	text	6016x3384	280,260,517,282	2045,3266	2497,3299	2046,3325	miss	miss	miss	bring all finder windows to the front
+600	OS	macos_common	icon	3456x2234	751,185,779,212	2212,257	2143,257	2212,218	miss	miss	miss	share the image
+601	OS	macos_common	text	3456x2234	2159,493,2231,559	2125,558	2125,547	2125,531	miss	miss	miss	auto switch light and dark mode
+602	OS	macos_common	text	6016x3384	837,124,863,142	722,778	602,778	917,152	miss	miss	miss	enable 3D map
+607	OS	macos_common	icon	3456x2234	887,207,904,225	1192,369	1452,357	899,207	miss	miss	miss	minimize the terminal
+610	OS	macos_common	icon	3456x2234	2044,604,2068,627	2091,637	2125,637	2047,631	miss	miss	miss	change to list view
+612	OS	macos_common	text	3456x2234	1330,1476,1410,1498	1365,1340	1469,1329	1313,1475	miss	miss	miss	update "Stats"
+615	OS	macos_common	text	6016x3384	3380,221,3412,242	3068,389	3068,372	3459,321	miss	miss	miss	view the wiki page in chinese
+616	Scientific	matlab	icon	2560x1440	1204,356,1227,376	1229,374	1229,374	1235,367	miss	miss	miss	single-ended arrow
+618	Scientific	matlab	text	2560x1440	1771,645,1923,664	1818,677	1805,677	1843,677	miss	miss	miss	edit XTicks in plot
+627	Scientific	matlab	text	2560x1440	1775,594,1909,612	1818,619	1830,612	1875,616	miss	hit	miss	change Xdata in figure
+629	Scientific	matlab	text	2560x1440	111,54,149,123	64,86	64,86	38,83	miss	miss	miss	add a new script
+632	Scientific	matlab	text	2560x1440	1098,681,1320,703	1165,670	1165,684	1191,706	miss	hit	miss	open figure properties inspector
+633	Scientific	matlab	text	2560x1440	1882,769,1923,788	1843,770	1843,770	1862,774	miss	miss	miss	set y-axis color from the dropdows
+636	Scientific	matlab	text	2560x1440	1770,677,1794,691	1702,648	1715,648	1753,680	miss	miss	miss	edit y-axis label
+637	Scientific	matlab	text	2560x1440	1634,835,1646,849	1766,828	1754,835	1773,849	miss	miss	miss	expand position tab
+639	Scientific	matlab	icon	2560x1440	1450,485,1467,505	1293,497	1293,490	1421,490	miss	miss	miss	brush data points
+642	Scientific	matlab	text	2560x1440	1773,713,1921,732	1830,684	1830,684	1843,702	miss	miss	miss	set x-scale to log-scale
+643	Scientific	matlab	text	2560x1440	940,631,965,715	1216,576	1216,626	1299,496	miss	miss	miss	edit y-axis label
+646	Scientific	matlab	text	2560x1440	1775,669,1923,690	1779,684	1792,698	1843,691	hit	miss	miss	edit XTickLabels in plot
+650	Scientific	matlab	icon	2560x1440	1326,382,1347,413	1280,410	1293,403	1325,399	miss	miss	miss	rotate 3D plot
+655	Scientific	matlab	text	2560x1440	1003,525,1121,550	819,554	1062,554	1056,550	miss	miss	miss	set the initial point of x for optimization
+656	Scientific	matlab	text	2560x1440	1309,749,1554,768	1421,720	1421,727	1421,749	miss	miss	miss	delect data tips
+657	Scientific	matlab	text	2560x1440	1773,547,1921,566	1792,569	1792,554	1792,576	miss	hit	miss	edit font weight in plot
+658	Scientific	matlab	text	2560x1440	1768,697,1794,713	1664,648	1638,713	1734,713	miss	miss	miss	edit figure title
+661	Scientific	matlab	text	2560x1440	1153,872,1266,889	1126,569	1126,648	1184,871	miss	miss	miss	edit x-axis label
+663	Scientific	matlab	icon	2560x1440	1106,441,1126,468	1114,475	1114,475	1082,468	miss	miss	miss	edit plot using the mouse tool
+671	Scientific	matlab	icon	2560x1440	1326,521,1347,548	1280,562	1267,562	1305,544	miss	miss	miss	zoom out plot
+673	Scientific	matlab	icon	2560x1440	1012,487,1035,511	1024,518	1024,518	1005,500	miss	miss	miss	insert legend to plot
+675	Scientific	matlab	icon	2560x1440	1274,355,1293,375	1229,374	1229,374	1274,363	miss	miss	miss	insert text box
+676	Scientific	matlab	text	2560x1440	1228,681,1406,700	1280,691	1280,691	1306,677	hit	hit	miss	delect items
+678	Scientific	matlab	text	2560x1440	1929,462,1954,485	1856,468	1856,468	1926,468	miss	miss	miss	sort properties
+679	Scientific	matlab	text	2560x1440	478,420,543,482	550,439	563,439	621,134	miss	miss	miss	create a histogram of selected variables
+680	Scientific	matlab	text	2560x1440	1771,537,1928,557	1280,504	1190,677	1747,533	miss	miss	miss	change line style in plot
+682	Scientific	matlab	text	2560x1440	102,680,180,747	845,684	896,684	960,637	miss	miss	miss	insert an optimization solver
+683	Scientific	matlab	icon	2560x1440	1320,677,1335,692	1318,482	1318,468	1395,500	miss	miss	miss	add data tip
+686	Scientific	matlab	text	2560x1440	478,213,547,274	320,130	307,130	282,137	miss	miss	miss	create a filled area plot for selected variables
+689	Scientific	matlab	text	2560x1440	872,91,948,115	883,94	883,86	902,90	hit	miss	miss	step out
+691	Scientific	matlab	icon	2560x1440	739,613,762,638	806,619	819,619	768,626	miss	miss	miss	new figure in the dialog
+692	Scientific	matlab	icon	2560x1440	1251,382,1271,414	1152,403	1152,403	1242,399	miss	miss	miss	pan the plot
+693	Scientific	matlab	text	2560x1440	1237,495,1341,517	1318,511	1293,518	1293,518	hit	miss	miss	plot the residuals
+696	Scientific	matlab	text	2560x1440	1950,247,1986,268	1971,252	1997,259	2112,252	hit	miss	miss	set var y1 in workspcae
+701	Scientific	matlab	text	2560x1440	1773,521,1923,542	1779,533	1805,547	1824,554	hit	miss	miss	edit font in plot
+704	Scientific	matlab	icon	2560x1440	1320,350,1339,379	1306,367	1280,374	1312,367	miss	miss	miss	insert ellipse
+708	Scientific	matlab	icon	2560x1440	991,488,1012,511	1024,511	1024,518	986,500	miss	miss	miss	insert colorbar

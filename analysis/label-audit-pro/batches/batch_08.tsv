@@ -1,0 +1,66 @@
+# ScreenSpot-Pro label audit, batch 08: apps photoshop, powerpoint. B-missed cases to review: 63. All cases of these apps (for the UI-language labels): 771-821, 822-903 = 133 cases, on language sheets lang_048.jpg, lang_049.jpg, lang_050.jpg, lang_051.jpg, lang_052.jpg, lang_053.jpg, lang_054.jpg, lang_055.jpg, lang_056.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+772	Creative	photoshop	icon	2560x1440	4,403,37,428	102,518	102,526	45,490	miss	miss	miss	select gradient tool
+773	Creative	photoshop	text	2560x1440	138,2,173,21	166,331	154,576	32,738	miss	miss	miss	select the layer menu
+774	Creative	photoshop	icon	2560x1440	6,89,32,113	77,230	90,223	38,104	miss	miss	miss	select the moving tool
+776	Creative	photoshop	text	2560x1440	1360,583,1393,606	1395,619	1382,612	1369,608	miss	miss	miss	adjust the R value
+777	Creative	photoshop	text	2560x1440	321,31,374,52	499,130	358,130	358,54	miss	miss	miss	enter the size of pen
+778	Creative	photoshop	icon	2560x1440	2195,632,2212,648	2419,655	2381,655	2227,637	miss	miss	miss	hade the background layer
+779	Creative	photoshop	icon	2560x1440	4,245,35,270	64,346	77,353	38,259	miss	miss	miss	select the color picker
+780	Creative	photoshop	text	2560x1440	32,5,56,20	102,50	141,65	77,29	miss	miss	miss	open the file menu
+781	Creative	photoshop	text	2560x1440	373,264,480,286	358,288	333,288	416,292	miss	miss	miss	create solid color layer
+782	Creative	photoshop	text	2560x1440	1274,628,1421,653	2483,713	2458,1037	2414,636	miss	miss	miss	save changes
+784	Creative	photoshop	icon	2560x1440	3,453,35,479	77,626	64,619	38,547	miss	miss	miss	select dodge tool
+786	Creative	photoshop	icon	2560x1440	3,375,37,400	77,569	77,554	38,388	miss	miss	miss	select eraser tool
+792	Creative	photoshop	icon	2560x1440	2488,1375,2513,1397	2419,576	2406,583	2278,522	miss	miss	miss	add new layer
+794	Creative	photoshop	icon	2560x1440	7,220,37,244	77,346	77,360	45,299	miss	miss	miss	select frame tool
+796	Creative	photoshop	text	2560x1440	2397,167,2460,211	2304,907	2317,878	2349,694	miss	miss	miss	select the last backgroud in the list for text fill
+797	Creative	photoshop	icon	2560x1440	5,195,36,218	64,281	64,288	38,198	miss	miss	miss	select cropping tool
+799	Creative	photoshop	icon	2560x1440	4,270,36,295	64,317	64,317	38,270	miss	miss	miss	select healing brush tool
+801	Creative	photoshop	text	2560x1440	1126,541,1268,558	1190,569	1203,562	1190,562	miss	miss	miss	set the layer to red
+802	Creative	photoshop	icon	2560x1440	1358,510,1374,527	1344,526	1331,562	1337,515	miss	miss	miss	open the list of opacity for the new layer
+804	Creative	photoshop	text	2560x1440	483,32,561,52	538,86	550,101	506,58	miss	miss	miss	change font size
+805	Creative	photoshop	icon	2560x1440	2194,602,2215,622	2253,648	2253,641	2227,612	miss	miss	miss	hide the current layer
+806	Creative	photoshop	icon	2560x1440	5,505,34,529	77,634	90,662	45,518	miss	miss	miss	add horizontal type
+807	Creative	photoshop	icon	2560x1440	4,533,34,556	115,634	115,626	38,633	miss	miss	miss	select direct selection tool
+811	Creative	photoshop	icon	2560x1440	5,141,38,166	64,245	64,238	58,216	miss	miss	miss	lasso
+813	Creative	photoshop	text	2560x1440	94,3,132,22	141,58	179,58	96,32	miss	miss	miss	click the image menu
+814	Creative	photoshop	icon	2560x1440	4,428,36,452	77,504	77,619	45,536	miss	miss	miss	blur tool
+815	Creative	photoshop	icon	2560x1440	3,582,35,608	64,403	64,137	45,590	miss	miss	miss	select hand tool
+816	Creative	photoshop	text	2560x1440	257,1,295,20	218,115	218,108	275,40	miss	miss	miss	How can I view supported filters in Photoshop?
+817	Creative	photoshop	text	2560x1440	182,34,307,54	218,130	230,130	397,58	miss	miss	miss	change sample range
+818	Creative	photoshop	icon	2560x1440	5,349,34,374	64,418	64,418	51,443	miss	miss	miss	history brush tool
+820	Creative	photoshop	icon	2560x1440	0,60,18,72	77,94	77,101	19,666	miss	miss	miss	expand toolbar on the left
+821	Creative	photoshop	icon	2560x1440	3,243,36,271	64,331	51,324	38,259	miss	miss	miss	select the eyedropper tool
+822	Office	powerpoint	icon	2880x1800	2341,1238,2353,1250	2318,1134	2290,1125	2354,1130	miss	miss	miss	Change the font color to yellow
+823	Office	powerpoint	icon	2880x1800	45,5,80,30	605,108	619,99	482,112	miss	miss	miss	Und
+826	Office	powerpoint	icon	2880x1800	821,229,838,249	878,243	878,261	806,238	miss	miss	miss	Increase font size
+828	Office	powerpoint	icon	2880x1800	2274,1198,2301,1227	2275,1179	2275,1179	2340,1202	miss	miss	miss	paste to text
+830	Office	powerpoint	text	2880x1800	1367,900,1444,922	1440,918	1411,900	1425,896	hit	hit	miss	confirm inserting a table
+834	Office	powerpoint	text	2880x1800	1962,1291,1974,1301	1987,1215	1987,1197	1987,1282	miss	miss	miss	Fill red color
+835	Office	powerpoint	icon	2880x1800	2392,930,2420,959	2290,963	2261,909	2390,968	miss	miss	miss	rotate selection
+838	Office	powerpoint	text	2880x1800	523,383,671,403	893,144	893,135	879,99	miss	miss	miss	Add new comment to the slide
+842	Office	powerpoint	icon	2880x1800	12,0,42,30	130,63	130,72	86,54	miss	miss	miss	Save
+843	Office	powerpoint	icon	2880x1800	1621,569,1678,593	1670,594	1699,612	1627,603	miss	miss	miss	switch to design tab
+844	Office	powerpoint	icon	2880x1800	474,1607,2534,1726	2506,1710	2347,1710	2297,1737	hit	hit	miss	Add notes
+846	Office	powerpoint	icon	2880x1800	830,234,847,254	922,261	907,261	806,248	miss	miss	miss	Decrease font size
+847	Office	powerpoint	text	2880x1800	8,68,57,123	101,90	101,90	58,90	miss	miss	miss	Check the spelling
+848	Office	powerpoint	text	2880x1800	1585,1321,1659,1341	1613,1323	1627,1332	1627,1318	hit	hit	miss	confirm to insert pie chart
+850	Office	powerpoint	icon	2880x1800	943,244,962,266	994,162	979,162	900,252	miss	miss	miss	Format painter
+853	Office	powerpoint	icon	2880x1800	142,5,166,30	115,63	101,72	94,54	miss	miss	miss	Create a document
+855	Office	powerpoint	text	2880x1800	403,67,450,122	331,99	346,99	252,90	miss	miss	miss	Draw lines and align objects
+856	Office	powerpoint	icon	2880x1800	1645,470,1695,518	1512,504	1512,504	1382,504	miss	miss	miss	select the 3D type of line plot
+857	Office	powerpoint	text	2880x1800	571,68,621,136	590,108	605,108	576,162	hit	hit	miss	Zoom your presentation so that the slide fills the window
+860	Office	powerpoint	icon	2880x1800	543,258,562,277	1210,126	1181,135	648,238	miss	miss	miss	Underlying
+869	Office	powerpoint	text	2880x1800	396,1007,621,1026	864,117	864,135	900,103	miss	miss	miss	Add new comment on the slide
+871	Office	powerpoint	text	2880x1800	0,64,68,159	130,90	130,90	72,104	miss	miss	miss	Slide show from beginning
+876	Office	powerpoint	text	2880x1800	333,69,391,124	187,108	187,108	122,99	miss	miss	miss	Choose the language for proofing tools
+877	Office	powerpoint	icon	2880x1800	512,138,528,155	648,693	648,711	662,693	miss	miss	miss	more font settings
+878	Office	powerpoint	icon	2880x1800	86,1,108,29	101,81	101,81	72,54	miss	miss	miss	Redo
+888	Office	powerpoint	icon	2880x1800	1662,983,1695,1017	1656,990	1656,999	1656,999	miss	miss	miss	add a table in the content area
+890	Office	powerpoint	text	2880x1800	2636,205,2696,231	907,126	907,135	907,103	miss	miss	miss	Add comment to the slide
+896	Office	powerpoint	text	2880x1800	1139,437,1196,450	1397,468	1310,468	1195,459	miss	miss	miss	view all charts
+898	Office	powerpoint	text	2880x1800	838,402,887,423	907,279	922,288	872,396	miss	miss	miss	Change font size to 18
+900	Office	powerpoint	text	2880x1800	1094,398,1136,456	1166,441	1152,432	1152,436	miss	miss	miss	Change picture style
+901	Office	powerpoint	icon	2880x1800	1669,388,1705,413	1656,441	1656,432	1670,418	miss	miss	miss	get help for inserting charts

@@ -1,0 +1,73 @@
+# ScreenSpot-Pro label audit, batch 01: apps android_studio, autocad. B-missed cases to review: 70. All cases of these apps (for the UI-language labels): 0-79, 80-113 = 114 cases, on language sheets lang_000.jpg, lang_001.jpg, lang_002.jpg, lang_003.jpg, lang_004.jpg, lang_005.jpg, lang_006.jpg, lang_007.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+1	Dev	android_studio	text	3840x2160	2054,1675,2141,1739	2074,1717	2093,1717	2035,1706	hit	hit	miss	open contacts of the android machine
+2	Dev	android_studio	text	3840x2160	2073,151,2092,176	2170,184	2189,194	2170,194	miss	miss	miss	attach debugger to android process in android studio
+3	Dev	android_studio	icon	3840x2160	406,1427,430,1452	845,713	864,713	912,735	miss	miss	miss	collapse all TODO list in android studio
+5	Dev	android_studio	icon	3840x2160	1790,1008,1829,1047	2208,1015	2208,1015	2371,1015	miss	miss	miss	stop the bilibili download in android virtual machine in android studio
+8	Dev	android_studio	text	3840x2160	1576,647,1690,669	1094,810	1114,788	1056,696	miss	miss	miss	switch the android virtual machine to pixel xl api 34 in android studio
+13	Dev	android_studio	icon	3840x2160	2051,1318,2103,1342	2016,1285	1997,1318	2007,1318	miss	miss	miss	like the QwQ-32b-preview on huggingface within the virtual android machine in android studio
+14	Dev	android_studio	icon	3840x2160	548,1269,569,1294	653,1328	672,1307	557,1296	miss	miss	miss	add new terminal in android studio
+15	Dev	android_studio	icon	3840x2160	2063,723,2084,746	2093,1750	2074,1782	2237,1685	miss	miss	miss	open Recent Apps in virtual Android machine in Android studio
+17	Dev	android_studio	text	3840x2160	954,302,980,332	1018,356	1018,356	1018,329	miss	miss	miss	open the device in the device explorer in android studio
+18	Dev	android_studio	icon	3840x2160	2229,1511,2262,1551	2323,1523	2323,1523	2285,1534	miss	miss	miss	share the photo in virtual android machine in android studio
+20	Dev	android_studio	icon	3840x2160	2131,153,2151,178	2131,205	2150,227	2236,275	miss	miss	miss	open device manager in android studio
+22	Dev	android_studio	icon	3840x2160	919,718,944,745	883,713	902,713	874,724	miss	miss	miss	collapse all bookmarks in android studio
+26	Dev	android_studio	icon	3840x2160	2919,1232,2981,1269	2918,1253	2938,1242	2909,1247	miss	hit	miss	open settings of the keyboard within the virtual android machine in android studio
+27	Dev	android_studio	icon	3840x2160	2506,1446,2543,1482	2458,1490	2458,1490	2487,1463	miss	miss	miss	open settings within the virtual android machine in android studio
+28	Dev	android_studio	text	3840x2160	2283,1379,2373,1446	2342,1426	2323,1426	2275,1421	hit	hit	miss	Modify the filters of a photo to warm within the virtual Android machine in Android Studio.
+29	Dev	android_studio	text	3840x2160	2016,1595,2065,1620	1939,1555	1920,1566	1997,1604	miss	miss	miss	crop the photo witnin the virtual android machine in android studio
+31	Dev	android_studio	icon	3840x2160	2275,729,2296,754	2400,1393	2419,1620	2563,1469	miss	miss	miss	decrease the volume of the android virtual machine in android studio
+33	Dev	android_studio	icon	3840x2160	2193,735,2219,760	2150,886	2150,886	2188,740	miss	miss	miss	take a screenshot of the virtual android machine in android studio
+35	Dev	android_studio	icon	3840x2160	2188,1487,2252,1547	2150,1609	2150,1609	2083,1695	miss	miss	miss	open the picture taked in virtual android machine in android studio 
+36	Dev	android_studio	text	3840x2160	2461,1450,2521,1479	2458,1458	2458,1458	2420,1474	miss	miss	miss	clear all notification of the android virtual machine in android studio
+37	Dev	android_studio	icon	3840x2160	2130,1271,2155,1297	845,1285	845,1307	566,1291	miss	miss	miss	open options of terminal in android studio
+39	Dev	android_studio	icon	3840x2160	530,231,562,255	538,248	538,259	566,238	hit	miss	miss	refresh virtual device of device manager in android studio 
+40	Dev	android_studio	icon	3840x2160	408,1402,430,1427	653,1328	672,1328	422,1323	miss	miss	miss	expand TODO items in android studio
+41	Dev	android_studio	icon	3840x2160	2970,1875,2994,1892	1478,1112	1498,1112	1594,756	miss	miss	miss	make current file read-only in android studio
+42	Dev	android_studio	icon	3840x2160	2193,1585,2231,1625	2170,1566	2170,1566	2199,1577	miss	miss	miss	undo the action of the picture within the virtual android machine in android studio
+43	Dev	android_studio	icon	3840x2160	1927,1587,1960,1614	1901,1577	1901,1588	1891,1599	miss	miss	miss	change the pen color to green with in the virtual android machine in android studio
+44	Dev	android_studio	icon	3840x2160	1729,1029,1750,1054	2016,648	2035,648	1785,1037	miss	miss	miss	shutdown the virtual android phone in android studio
+48	Dev	android_studio	icon	3840x2160	1989,1650,2085,1720	2112,1652	2131,1663	2093,1690	miss	miss	miss	take a picture of virtual android machine in android studio
+49	Dev	android_studio	icon	3840x2160	2033,897,2054,918	2054,1242	2054,1242	2064,918	miss	miss	miss	go to previous page in virtual Android machine in Android studio
+51	Dev	android_studio	icon	3840x2160	2134,1271,2152,1292	2170,1577	2170,1577	2170,1280	miss	miss	miss	open setting of app inspection in android studio
+52	Dev	android_studio	icon	3840x2160	2124,1155,2168,1199	2112,907	2093,983	2074,1188	miss	miss	miss	click the third crying emoji with in the virtual android machine in android machine
+55	Dev	android_studio	icon	3840x2160	2251,732,2270,755	2419,1469	2419,1458	2525,1458	miss	miss	miss	Increase the volume of the Android virtual machine in android studio
+56	Dev	android_studio	text	3840x2160	2492,1494,2540,1519	2419,1501	2400,1523	2410,1507	miss	miss	miss	turn off notification dot of google in android virtual machine in android studio
+58	Dev	android_studio	text	3840x2160	2062,1496,2121,1564	1939,1555	1939,1544	2016,1528	miss	miss	miss	modify the shadows of the picture witn in virtual android machine in android studio
+61	Dev	android_studio	text	3840x2160	3105,648,3121,758	2957,1847	2918,1685	3034,1647	miss	miss	miss	open notifications panel on the right in android studio
+62	Dev	android_studio	icon	3840x2160	977,719,1000,742	883,734	883,756	970,751	miss	miss	miss	close bookmark panel
+63	Dev	android_studio	icon	3840x2160	484,262,498,274	806,281	806,292	528,254	miss	miss	miss	reverse the sorting by device name in AVD in android studio
+67	Dev	android_studio	icon	3840x2160	1914,152,1934,177	2016,194	2016,184	1949,173	miss	miss	miss	run the project in android studio
+69	Dev	android_studio	icon	3840x2160	2216,156,2236,174	672,205	653,205	403,97	miss	miss	miss	sign in to android studio
+70	Dev	android_studio	icon	3840x2160	555,1298,581,1327	614,1361	576,1339	547,1323	miss	miss	miss	add new service in android studio using the icon
+72	Dev	android_studio	icon	3840x2160	1961,1028,1987,1049	1958,659	1958,648	1900,1037	miss	miss	miss	record virtual android phone screen in android studio
+73	Dev	android_studio	icon	3840x2160	2307,821,2329,843	2362,1415	2381,1760	2458,1301	miss	miss	miss	back to home in virtual android machine in android studio
+74	Dev	android_studio	icon	3840x2160	2640,1383,2697,1443	2554,702	2554,713	2352,691	miss	miss	miss	open more items of virtual android machine in android studio 
+75	Dev	android_studio	text	3840x2160	2498,1220,2548,1259	2477,1188	2458,1188	2448,1226	miss	miss	miss	turn off the notification permission of google in android virtual machine
+76	Dev	android_studio	text	3840x2160	2267,1449,2313,1474	2227,1480	2208,1480	2256,1458	miss	miss	miss	turn on dark theme of the virtual android macine
+77	Dev	android_studio	text	3840x2160	1983,1116,2026,1135	1997,1177	2035,1199	2131,1118	miss	miss	miss	log in to marscode AI in android studio
+78	Dev	android_studio	icon	3840x2160	858,212,876,235	826,270	845,270	835,227	miss	miss	miss	filter resources in android studio
+81	CAD	autocad	text	3840x1080	4,64,40,132	806,81	806,108	67,81	miss	miss	miss	Insert Block
+82	CAD	autocad	text	3840x1080	0,115,62,144	269,92	230,113	77,132	miss	miss	miss	Stretch
+83	CAD	autocad	icon	3840x1080	277,74,314,92	1075,108	1075,475	1305,472	miss	miss	miss	Specify geometric tolerances.
+84	CAD	autocad	icon	3840x1080	192,69,211,92	845,70	864,70	154,86	miss	miss	miss	cut
+88	CAD	autocad	text	3840x1080	4,94,59,119	941,92	941,108	67,97	miss	miss	miss	Copy
+89	CAD	autocad	text	3840x1080	74,68,114,124	2150,92	1958,65	1948,46	miss	miss	miss	Insert Image to attach
+91	CAD	autocad	text	3840x1080	222,73,282,139	250,130	269,130	221,122	hit	hit	miss	Welding Markup
+92	CAD	autocad	text	3840x1080	117,741,135,762	134,734	134,751	115,751	miss	hit	miss	lock the foundation layer
+94	CAD	autocad	text	3840x1080	123,122,199,141	269,119	269,119	125,116	miss	miss	miss	Threaded blind hole tool
+95	CAD	autocad	text	3840x1080	6,73,55,91	326,92	307,86	77,81	miss	miss	miss	Move
+96	CAD	autocad	text	3840x1080	144,49,183,67	3053,81	3053,551	3053,92	miss	miss	miss	clipboard
+97	CAD	autocad	icon	3840x1080	206,122,247,141	269,173	288,173	134,157	miss	miss	miss	Fill
+98	CAD	autocad	text	3840x1080	128,73,162,126	154,108	154,103	115,105	hit	hit	miss	Draw a circle.
+99	CAD	autocad	icon	3840x1080	41,169,59,192	307,130	307,140	134,162	miss	miss	miss	Fill with gradient color.
+100	CAD	autocad	text	3840x1080	50,52,80,68	2995,130	2918,130	3677,46	miss	miss	miss	comment text
+101	CAD	autocad	icon	3840x1080	319,69,341,92	307,119	326,130	221,92	miss	miss	miss	Benchmark Identifier
+102	CAD	autocad	text	3840x1080	6,67,57,143	1498,794	1459,799	1622,1026	miss	miss	miss	augmented size annotation
+104	CAD	autocad	text	3840x1080	36,48,70,69	307,70	307,70	86,43	miss	miss	miss	Drawing
+108	CAD	autocad	text	3840x1080	183,71,247,94	1267,97	1267,86	451,467	miss	miss	miss	Threaded Plug Tool
+109	CAD	autocad	text	3840x1080	238,95,323,118	288,119	326,119	221,122	miss	miss	miss	Edit Block
+110	CAD	autocad	text	3840x1080	87,73,149,135	307,135	307,135	230,116	miss	miss	miss	Extract Annotation
+111	CAD	autocad	icon	3840x1080	151,69,174,95	269,86	269,86	173,135	miss	miss	miss	Axle end tool
+112	CAD	autocad	text	3840x1080	91,197,174,233	269,162	269,173	96,297	miss	miss	miss	Rectangle Cloud Line

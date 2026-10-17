@@ -1,6 +1,6 @@
 # Jev 1.14 box on ScreenSpot-v2 and ScreenSpot-Pro: run report
 
-Status as of Sat Oct 17 2026, 09:58 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 11:10 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -13,6 +13,11 @@ Status as of Sat Oct 17 2026, 09:58 CEST. Living document: updated after each ru
 - Label audit (1d): of the 271 cases any run missed, 4 have a wrong answer key and 39 more sit on ambiguous or loose instructions. Side note only: the score stays the official key.
 - Oct 17 (1e): the label errors are reported upstream (OS-Atlas issue #65), both leaderboards are collected, and the headroom analysis says a better v2 number would be tuned on the test set.
 - **ScreenSpot-Pro (1e, Oct 17):** raw Jev scores **19.17%** (pass 1; pass 2 18.66%, same within noise). The same frozen 2x zoom, fixed before any Pro call, lifts it to **42.76%**: +24.10 pp over its own raw answer (436 fixed, 55 broken, p = 1.2e-74), about 7x the v2 gain. Pro targets are about 20x smaller than v2's, so zoom matters far more. Cost $0.00032 per task with zoom.
+- **Pro deep audit and label audit (1f, Oct 17):**
+  - Every Pro number checks out. Zoom works by size alone: after zoom, a target is hit about as often as a raw target of the same apparent size.
+  - At the same size, Pro is still 20-35 pp harder than v2.
+  - The misses are the model, not the key: 67 of the 905 zoom misses have a label issue, worth at most 2.28 pp. The rest are the wrong element (462) or the right element with the click off (376).
+  - Pro has its own broken tasks: 3 where the key and the English instruction disagree, 3 pairs with the same request and two different keys, and 2 duplicates. An upstream report is drafted, not posted.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
 
@@ -130,7 +135,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 ### ScreenSpot-Pro Run A: raw, no zoom (Oct 17 09:24-09:33, `results/pro/pass1.jsonl`, log `pass1.log`)
 - **Raw Jev 1.14 box on ScreenSpot-Pro: 19.17% (303/1581, Wilson 95% CI 17.3-21.2).** Text 26.10% (n=977), icon 7.95% (n=604), macro over the 12 cells 17.66%.
 - Clean run: 1581/1581 scored, 0 wrong_format, 0 infra_error, 0 retries, all records code_rev 4099bfa on a clean tree, one model version (jev-1.14-20261014). Independent re-score from the raw responses with a verbatim copy of the official `eval_sample_positive_gt`: 303/1581, 0 disagreements.
-- Cost and speed: 6.01M input tokens (mean 3,800 per case), $0.2523 logged, $0.2500 billed by the key balance. Median 0.83 s per answer, p90 1.36 s, 8 min 54 s wall time on 4 workers.
+- Cost and speed: 6.01M input tokens (mean 3,800 per case), $0.2523 logged (the "$0.2500 billed" first written here was a reading taken while billing still lagged; the settled key matches the logs exactly, 1f). Median 0.83 s per answer, p90 1.36 s, 8 min 54 s wall time on 4 workers.
 
 | Group | Text | Icon |
 |---|---|---|
@@ -142,7 +147,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 | OS | 15.89 (n=107) | 3.37 (n=89) |
 
 - Where it sits (official leaderboard data): between OS-Atlas-7B 18.9 and Aguvis-7B 22.9, above GPT5-minimal (resized) 18.5 and Claude (Computer Use) 17.1.
-- Why it is so much lower than v2 (83.33): the median Pro target covers 0.035% of the screen vs 0.72% on v2, about 20x smaller. Jev answers on a 0.01 grid, and 562 of 1,581 Pro targets (36%) are smaller than one grid step on at least one side (v2: 1 of 1,272). Every screenshot is also sent downscaled (0.41x for 4K, down to 0.26x). Icons suffer most (7.95%).
+- Why it is so much lower than v2 (83.33): the median Pro target covers 0.035% of the screen vs 0.72% on v2, about 20x smaller. Jev answers on a 0.01 grid, and 562 of 1,581 Pro targets (36%) are smaller than one grid step on at least one side (v2: 1 of 1,272). Every screenshot is also sent downscaled (0.41x for 4K, down to 0.26x). Icons suffer most (7.95%). Correction from the deep audit (1f): size is only part of it. At the same apparent target size, raw Pro is still 20-35 pp below raw v2.
 - Confidence still carries signal: AUROC 0.76; answers at 0.8 or more are right 46-50% of the time, under 0.5 only 6.7%.
 ### ScreenSpot-Pro run 2: raw A2 + frozen 2x zoom B (Oct 17 09:36-09:54, `results/pro/pass2.jsonl` + `zoom2.jsonl`, log `pass2.log`)
 Same protocol as v2's run 2: a fresh raw pass (A2) and the zoom stage (B) on A2's own answers, in one run. Command: `python3 screenspot.py --bench pro run --pass 2 --zoom --workers 4 --max-cost 0.60`.
@@ -151,7 +156,7 @@ Same protocol as v2's run 2: a fresh raw pass (A2) and the zoom stage (B) on A2'
 - On v2 the same frozen rule gave +3.54 pp. On Pro it gives about 7x that, as expected from the target sizes (below): Pro is the benchmark where zoom matters.
 - **Q1. Is A1 different from A2? No, within noise.** A1 19.17%, A2 18.66%, mean 18.91 +- 0.25, exact McNemar p = 0.55. 1445 of 1581 cases agree (91.4%), 64 miss->hit, 72 hit->miss; identical box in 302 of 1581. Rerun noise: 8.6% of cases flip vs 31.1% flipped by zoom.
 - Clean run: 3,162 calls, all ok (0 wrong_format, 0 infra_error, 0 retries), one model version, code_rev 3cc1088 on a clean tree. Every B window recomputes exactly from A2's box with the frozen rule (0 mismatches), every B image was sent at A2's size. Independent official re-score from the raw responses (B mapped back through its window): A2 295, B 676, 0 disagreements with the recorded hits.
-- Cost and speed: 6.01M + 6.01M input tokens (B = exactly A's tokens), $0.5047 logged, $0.4961 billed by the balance. Median per case: A 0.89 s, A+B 1.72 s (p90 2.60 s). 17 min 31 s wall time on 4 workers. About $0.00032 per task with zoom.
+- Cost and speed: 6.01M + 6.01M input tokens (B = exactly A's tokens), $0.5047 logged (the "$0.4961 billed" first written here was a lagging balance reading; the settled key matches the logs exactly, 1f). Median per case: A 0.89 s, A+B 1.72 s (p90 2.60 s). 17 min 31 s wall time on 4 workers. About $0.00032 per task with zoom.
 
 | Group | Text: A2 -> B | Icon: A2 -> B |
 |---|---|---|
@@ -166,10 +171,63 @@ Same protocol as v2's run 2: a fresh raw pass (A2) and the zoom stage (B) on A2'
 - Window types: 1534 half (true 2x), 23 widened for a big A box, 24 full screen (A's box was so big the rule re-asks the same image: 0 flips there).
 - **Declared diagnostics of the frozen 2x zoom** (reported only; nothing here changes a setting or a score):
   - Ceiling: when A2 missed (1286), the target was inside B's window 88.3% of the time (1135). B fixed 436 of those (38.4%). The other 151 misses had the target outside the window, which B cannot fix by construction (0 fixed). B kept 240 of A2's 295 hits.
-  - Grid: targets smaller than one 0.01 answer step on a side drop from 562 in A's view to 83 in B's view. Those 562 go from 5.0% (A2) to 16.9% (B); the rest go from 26.2% to 57.0%. So the zoom helps both through the finer grid and through more pixels per target.
+  - Grid: targets smaller than one 0.01 answer step on a side drop from 562 in A's view to 83 in B's view. Those 562 go from 5.0% (A2) to 16.9% (B); the rest go from 26.2% to 57.0%. So the zoom helps both through the finer grid and through more pixels per target. The simpler statement, from the deep audit (1f): zoom makes the target bigger in the image Jev sees, and on Pro grid and pixels cannot be separated, since every screenshot is downscaled.
 - Confidence after zoom: AUROC 0.756; answers at 0.8 or more right 68% of the time (n=407), under 0.5 13.5% (n=445).
 - Where it sits (official leaderboard data and `analysis/leaderboard/screenspot-pro.md`): next to Phi-Ground 43.2 and GUI-Actor-2.5VL-3B 42.2 (both single-shot), below Claude Opus 4.5 45.7 (method not stated), above UI-TARS-72B 38.1 and Claude Sonnet 4.5 36.2. Caveat for any chart: Jev zoom is 2 calls per task, those entries 1. Parallel from the ScreenSpot-Pro paper: its search wrapper took OS-Atlas-7B from 18.9 to 48.1.
 - Cost context (`analysis/leaderboard/cost-latency.md`, collected Oct 17 by a research agent; estimates, not measurements): no leaderboard entry publishes cost or tokens per task. On image tokens alone, before any thinking, a 4K Pro screenshot costs about $0.0011 (Gemini 3 Flash) to $0.03-0.10 (GPT-6 Astra) per call vs Jev's $0.00016. The agent also flagged newer v2 rows above MAI-UI-32B (GPT-6 Astra 97.88 in a third-party re-run, Qwen-UI-Agent-27B 97.5): not yet verified by hand, so section 9 is unchanged for now.
+
+## 1f. ScreenSpot-Pro: deep audit and label audit (Oct 17)
+
+Full write-ups:
+- `analysis/AUDIT-pro-run2.md`: every number comes from `python3 analysis/audit_pro_run2.py`.
+- `analysis/LABELS-audit-pro.md`: counts from `python3 analysis/labels_audit_pro.py`, per-case verdicts in `analysis/label-audit-pro/`.
+
+The structure is the same as the v2 audit (1c, 1d).
+
+**Deep audit:**
+- **Integrity: all checks passed.**
+  - Every answer was re-parsed and rescored with a verbatim copy of the official scorer: A1 303, A2 295, B 676, as logged.
+  - Every zoom window and mapping was rebuilt from A2, and all 3,162 sent images were rebuilt with exact payload lengths.
+  - The stage-A and zoom code is identical in both Pro runs and in v2's run 2.
+  - The key balance now matches the logged cost exactly, $0.757008 plus a $0.000495 smoke. The earlier "billed" figures were lagging readings.
+- **Rerun noise is higher than on v2:** 8.6% of cases flip between two identical raw passes (v2: 3.9%). They are mostly edge cases on tiny targets.
+- **Why zoom helps: size alone.**
+  - After zoom, a target is hit about as often as a raw target of the same apparent size. The crop neither costs context nor adds anything beyond the size it buys, and the curve is still climbing at 80-120 px.
+  - At the same apparent size, Pro is 20-35 pp harder than v2: professional apps, dense toolbars, unlabelled icons, Chinese interfaces.
+- **What zoom costs:** the 55 breaks are 34 precision slips (median 2.4 px off), 14 neighbour picks, 5 far wrong elements, 1 ambiguous label and 1 answer-key error. Context loss: 0 (v2: 14).
+- **Confidence does not gate on Pro.** AUROC is flat (0.765 -> 0.756), and B at 0.8 or more is right only 68% (v2: 96.4%). Picking between the answers we already have is worth about 5 pp even with perfect hindsight.
+
+**Label audit (side note: the score stays the official key).** All 905 of B's misses were viewed by eye, 14 reviewer agents plus a quality pass and a 30-case spot-check.
+
+| Group | B misses |
+|---|---|
+| Answer key and instruction disagree | 3 |
+| Two valid answers | 24 |
+| Same control, key covers part of it | 18 |
+| Loose or broken wording, key still the best | 18 |
+| Same request, two different keys | 4 |
+| **Label issues, total** | **67** |
+| Wrong element (model error) | 462 |
+| Right element, click off | 376 |
+| Zoom crop cut the naming label | 0 |
+
+- **The misses are the model.** 67 of 905 (7.4%, v2: 23%) have a label issue. Even scored in Jev's favour, they are worth at most 36 hits, 2.28 pp.
+- **Wrong element (462).** 60% of these have no visible text naming the target. In 151 misses the first answer already looked in the wrong part of the screen, so no crop could help.
+- **Click off (376).** Mostly boxes too wide over the target and its neighbours (252). These are what more zoom can still fix: a 4x window on B's answer would keep the target in 700 of the 905 misses. That figure is post-hoc.
+- **Broken tasks:**
+  - #133 marks Y for an X request, and #657 marks font size for font weight.
+  - #491's English says "redo" where the Chinese instruction says undo (撤销). Its box also starts at y = -1.
+  - 3 pairs ask the same thing on the same screen with two different keys (#639/#666, #992/#1025, #1042/#1069).
+  - 2 cases are duplicates (#94/#105, #432/#474).
+  - 30 screenshot files are byte copies of others.
+  - On the Chinese-UI apps, many English instructions read as literal translations of the Chinese ones ("Benchmark Identifier" for 基准标识, datum identifier).
+- **UI language:** 295 cases ask in English about a Chinese interface (AutoCAD, Inventor, Origin, SolidWorks, Stata). They score 30.2% after zoom vs 45.6% on English UIs, with the same zoom gain. Each of those apps is all Chinese, and six English apps score as low, so language and app cannot be separated.
+- **Upstream:** a draft report for the ScreenSpot-Pro authors, with a check for earlier reports, is in `analysis/upstream-issue-pro/`. Not posted.
+
+**What it leads to** (`AUDIT-pro-run2.md` section 11):
+- 42.76% is the clean Pro number.
+- More zoom could still fix the click-off half of the misses, but not the wrong-element half. That half needs a different first look or a model that knows these apps.
+- The open option is a 4x second zoom step. It would be a separate, labelled experiment, "designed after seeing Pro run 2", with a prediction written down first, reported next to 42.76 and never instead of it. Arthur's call; not run.
 
 ## 2. What has been done (Oct 16-17 2026, CEST)
 
@@ -188,8 +246,9 @@ Same protocol as v2's run 2: a fresh raw pass (A2) and the zoom stage (B) on A2'
 | Oct 17 08:45-08:57 | Pro prep: 2x zoom alone frozen, loader + preflight + offline tests, download completed, 3-case smoke ($0.001) |
 | Oct 17 09:00-09:33 | Two review rounds (fixes e2118e7, 4099bfa), wider and fresh smokes, Pro Run A raw: 19.17%, 0 errors, $0.25 |
 | Oct 17 09:36-09:54 | Pro run 2: A2 18.66%, A2+B (2x zoom) 42.76%, 0 errors, $0.50; official re-score and diagnostics |
+| Oct 17 09:58-11:15 | Pro deep audit, label audit of B's 905 misses, upstream draft |
 
-Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
+Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e and 5ea83f6 (deep audit and label audit), 74af257 and d206ea6 (headroom, leaderboards, upstream issue #65, Pro plan), 01ec94a, e2118e7 and 4099bfa (Pro loader, tests and review fixes), 3cc1088 (Pro Run A), b87db0d (Pro run 2).
 
 ## 3. Setup
 
@@ -414,9 +473,14 @@ One live A+B call on #1095 at 21:35: A FALSE (search field boxed, conf 0.36), B 
 | Pass 1 | $0.1909 |
 | Live zoom smoke on #1095 (dev log) | $0.0003 |
 | Pass 2 + zoom | $0.3817 |
-| Credit left (read 22:57, matches the logs) | $0.0581 |
+| Credit left (read Oct 16 22:57, matches the logs) | $0.0581 |
+| Key limit raised by Arthur (Oct 17) | |
+| Pro smokes (3 plumbing cases, 14 screen sizes, 3 fresh) | $0.0061 |
+| Pro Run A (raw) | $0.2523 |
+| Pro run 2 (raw + zoom) | $0.5047 |
+| Credit left (read Oct 17 10:34, matches the logs exactly) | $0.2950 |
 
-Any new run needs a top-up first: a raw pass costs $0.19, raw + zoom $0.38. The key also shows $0.0022 of usage today that is not from the bench (`analysis/AUDIT-run2.md`, section 1).
+One more Pro stage ($0.25) fits on the key; a v2 raw pass costs $0.19, and Pro raw + zoom ($0.50) needs a top-up. On Oct 16 the key also showed $0.0022 of usage that is not from the bench (`analysis/AUDIT-run2.md`, section 1).
 
 ## 9. Published comparison points (from the research notes, check each paper before public use)
 
@@ -441,8 +505,10 @@ OS-Atlas-7B appears as 84.1, 85.1 or 87.1 depending on the paper (4B vs 7B rows)
 
 - **Label audit of the misses: DONE** (1d, `analysis/LABELS-audit.md`). 43 of the 271 missed cases have a label issue, 4 of them wrong keys. Reported as a side note; the score stays the official key.
 - **Wording ablation, off-benchmark only.** Whether a different wrapper sentence moves Jev toward buttons can only be tested on screenshots outside ScreenSpot-v2.
-- **ScreenSpot-Pro** with the same frozen zoom rule, as the clean confirmation of the crop choice. Data downloaded, plan in 1e, waits for the loader and a top-up.
-- **HF discussion** version of the label report (`analysis/upstream-issue/HF-DISCUSSION.md`), not posted.
+- **ScreenSpot-Pro with the same frozen zoom rule: DONE** (1e, 1f). 42.76%, the clean confirmation of the crop choice.
+- **4x second zoom step on Pro:** an option, not decided (1f). It was designed after seeing Pro run 2, so it can only be a separate, labelled experiment with a prediction written down first.
+- **Pro upstream label report** (`analysis/upstream-issue-pro/`): drafted, not posted. Needs Arthur's go.
+- **HF discussion** version of the v2 label report (`analysis/upstream-issue/HF-DISCUSSION.md`), not posted.
 - **Leaderboard charts** for the article, one per benchmark, no-tools and with-tools split, Jev highlighted.
 - **Row-preserving crop for tall mobile screens.** The main cost of zoom is context loss on mobile settings rows (1c). Test it only on a separate set, never tuned on ScreenSpot-v2.
 
@@ -450,7 +516,9 @@ OS-Atlas-7B appears as 84.1, 85.1 or 87.1 depending on the paper (4B vs 7B rows)
 
 - Run-to-run noise is measured: 49 of 1272 cases (3.9%) flip between two identical raw passes, and the 1.0 pp gap is not significant (p=0.085). The headline stays pass 1.
 - The official answer key has 4 wrong boxes, and 39 more missed cases sit on ambiguous instructions (1d). All scores use the key as is, like every published table, so comparisons stay fair.
-- The zoom crop rule was picked from pass 1 misses on this same test set (light selection, section 7). ScreenSpot-Pro is the clean check.
+- The zoom crop rule was picked from pass 1 misses on this same test set (light selection, section 7). ScreenSpot-Pro is the clean check: the rule was reused there untouched (1e).
+- The Pro answer key has its own errors: 3 cases where the key and the English instruction disagree, 3 pairs with contradictory keys, and 2 duplicates (1f). All Pro scores use the key as is.
+- 295 Pro cases ask in English about a Chinese interface, as in the official leaderboard setting. They score lower, but language and app cannot be separated (1f).
 - 81% of cases are downscaled to fit 1568 px, which hurts small targets. That is a property of the API limit, reported rather than worked around in the raw number.
 - Long-context mode is forced for images on OpenRouter; the direct TypeSafe API might score differently.
 - `jev-latest` changes around Oct 21. This run is pinned to `jev-1.14`, and the resolved dated id is logged per case.

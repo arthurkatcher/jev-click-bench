@@ -1,0 +1,61 @@
+# ScreenSpot-Pro label audit, batch 04: apps fruitloops, illustrator. B-missed cases to review: 58. All cases of these apps (for the UI-language labels): 343-399, 400-430 = 88 cases, on language sheets lang_021.jpg, lang_022.jpg, lang_023.jpg, lang_024.jpg, lang_025.jpg, lang_026.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+346	Creative	fruitloops	icon	2560x1440	561,702,590,731	832,734	730,734	525,734	miss	miss	miss	turn off default echo
+347	Creative	fruitloops	text	2560x1440	853,652,897,677	858,698	870,698	908,694	miss	miss	miss	choose chord type for 1
+350	Creative	fruitloops	icon	2560x1440	882,859,921,898	896,864	896,850	838,857	hit	miss	miss	legeto slide
+351	Creative	fruitloops	text	2560x1440	1152,417,1376,448	1459,446	1498,446	1472,442	miss	miss	miss	view presets
+352	Creative	fruitloops	icon	2560x1440	1004,808,1019,834	960,814	960,821	992,821	miss	miss	miss	adapt volume of the highlighted channel
+354	Creative	fruitloops	icon	2560x1440	1502,845,1521,875	1434,857	1408,835	1466,860	miss	miss	miss	change capo logic mode
+355	Creative	fruitloops	icon	2560x1440	456,123,484,143	550,86	538,86	448,86	miss	miss	miss	show automation clips
+358	Creative	fruitloops	icon	2560x1440	1721,451,1736,468	1267,1210	1267,1210	1696,1249	miss	miss	miss	close the piano window
+359	Creative	fruitloops	icon	2560x1440	1495,717,1504,742	1050,778	1062,792	1004,727	miss	miss	miss	select track 24
+360	Creative	fruitloops	text	2560x1440	1606,393,1667,453	1229,900	1165,893	1267,857	miss	miss	miss	view all exploremaps
+363	Creative	fruitloops	icon	2560x1440	1014,1004,1042,1030	973,86	973,86	813,702	miss	miss	miss	random color
+364	Creative	fruitloops	icon	2560x1440	49,85,67,105	1050,101	1062,101	512,76	miss	miss	miss	use smart fine tool
+366	Creative	fruitloops	icon	2560x1440	1381,540,1397,555	1242,576	1254,576	1382,526	miss	miss	miss	adjust volume level of a certain hz corresponding to point 2
+367	Creative	fruitloops	icon	2560x1440	1365,490,1382,519	1331,598	1331,605	1350,547	miss	miss	miss	adjust wet level
+368	Creative	fruitloops	icon	2560x1440	380,44,411,79	1101,72	1114,72	1037,32	miss	miss	miss	view mixer
+371	Creative	fruitloops	icon	2560x1440	735,611,752,630	1190,86	1190,86	768,598	miss	miss	miss	add new folder
+372	Creative	fruitloops	icon	2560x1440	392,121,439,143	1152,72	1114,72	896,50	miss	miss	miss	show audio clips
+375	Creative	fruitloops	text	2560x1440	997,1058,1016,1078	1050,1051	1037,1073	1031,1062	miss	miss	miss	reverse the audio
+376	Creative	fruitloops	icon	2560x1440	876,46,907,78	1357,122	1370,122	1405,118	miss	miss	miss	scrolls to reach time markers
+378	Creative	fruitloops	icon	2560x1440	983,367,996,377	1267,324	1267,317	947,367	miss	miss	miss	choose midi channel
+379	Creative	fruitloops	text	2560x1440	751,646,1035,665	1280,590	1293,590	941,568	miss	miss	miss	open containing folders of alicia's keys
+381	Creative	fruitloops	icon	2560x1440	2539,106,2559,128	205,79	205,86	429,68	miss	miss	miss	change the size
+382	Creative	fruitloops	text	2560x1440	1055,744,1072,764	1229,749	1229,756	1088,756	miss	miss	miss	don't show the confirm dialog in the future
+383	Creative	fruitloops	icon	2560x1440	1241,1053,1285,1098	1254,1073	1242,1051	1229,1069	hit	miss	miss	pause
+384	Creative	fruitloops	text	2560x1440	2342,184,2354,206	2470,166	2496,173	2483,191	miss	miss	miss	add more plugins to slot 2
+385	Creative	fruitloops	icon	2560x1440	1821,843,1872,876	1126,72	1139,79	1049,47	miss	miss	miss	change auto legeto mode
+387	Creative	fruitloops	icon	2560x1440	795,607,827,636	832,619	832,641	858,594	miss	miss	miss	DW Funk audition
+388	Creative	fruitloops	text	2560x1440	134,7,194,35	192,50	179,58	154,40	miss	miss	miss	adjust trmpo
+389	Creative	fruitloops	text	2560x1440	1138,719,1166,747	1152,72	1152,79	1357,54	miss	miss	miss	use high quality
+390	Creative	fruitloops	icon	2560x1440	1121,329,1135,344	653,965	666,965	788,936	miss	miss	miss	select next instrument
+392	Creative	fruitloops	icon	2560x1440	849,188,867,204	1178,209	1152,209	890,202	miss	miss	miss	change the channel panning of alice keys
+393	Creative	fruitloops	icon	2560x1440	1775,650,1807,688	1690,662	1690,662	1479,352	miss	miss	miss	next drum set
+394	Creative	fruitloops	icon	2560x1440	576,260,592,276	538,115	538,122	442,97	miss	miss	miss	expand grouped tracks
+395	Creative	fruitloops	icon	2560x1440	468,85,484,105	550,101	550,108	531,79	miss	miss	miss	use the draw tool
+396	Creative	fruitloops	icon	2560x1440	644,8,661,34	1331,101	1306,86	1242,40	miss	miss	miss	create new pattern
+397	Creative	fruitloops	icon	2560x1440	244,12,266,33	1203,108	1203,101	1204,111	miss	miss	miss	change song progress
+402	Creative	illustrator	text	5120x1440	3632,639,3758,662	3763,641	3712,641	3738,637	miss	hit	miss	don't use compression
+403	Creative	illustrator	icon	5120x1440	2828,502,2850,522	2714,943	922,994	883,1041	miss	miss	miss	erase the flashlight area in my drawing
+404	Creative	illustrator	icon	5120x1440	3890,733,3918,755	3840,770	3866,778	3930,767	miss	miss	miss	unite the selected paths
+405	Creative	illustrator	icon	5120x1440	4256,553,4286,568	4224,547	4224,547	4262,662	miss	miss	miss	Increase artboard number to 2
+406	Creative	illustrator	icon	5120x1440	2572,317,2606,338	2662,338	2662,324	2675,274	miss	miss	miss	select gradient tool
+407	Creative	illustrator	icon	5120x1440	5058,29,5078,43	4890,50	4941,58	5043,43	miss	miss	miss	collapse the right panels
+408	Creative	illustrator	icon	5120x1440	4216,551,4256,584	4198,626	4224,641	4198,555	miss	miss	miss	Change orientation to landscape
+411	Creative	illustrator	text	5120x1440	2576,127,2662,167	3866,648	3430,655	3584,655	miss	miss	miss	create a new file in AI
+412	Creative	illustrator	icon	5120x1440	2578,267,2614,294	2586,166	2586,382	2663,252	miss	miss	miss	select the eraser tool
+414	Creative	illustrator	icon	5120x1440	5032,760,5070,776	2918,670	2918,670	3046,663	miss	miss	miss	More options for rectangle transform
+416	Creative	illustrator	icon	5120x1440	4826,728,4848,742	4966,778	4966,799	4915,781	miss	miss	miss	hide the cat layer
+417	Creative	illustrator	icon	5120x1440	2560,516,2582,540	4941,166	4941,151	2637,522	miss	miss	miss	Change foreground color
+418	Creative	illustrator	icon	5120x1440	2564,411,2618,435	2611,547	2688,497	2637,342	miss	miss	miss	Select Blend Tool
+419	Creative	illustrator	text	5120x1440	4826,637,4884,658	4915,540	4915,547	4928,651	miss	miss	miss	check out the properties panel of the selected text
+420	Creative	illustrator	icon	5120x1440	4852,725,4868,745	4941,677	4941,677	4954,735	miss	miss	miss	lock the last layer
+421	Creative	illustrator	icon	5120x1440	4828,706,4850,720	4941,835	4941,842	4928,759	miss	miss	miss	hide the whole layer group
+422	Creative	illustrator	icon	5120x1440	4854,1188,4882,1206	4890,1159	4915,1159	4902,1192	miss	miss	miss	align the text to the center
+425	Creative	illustrator	icon	5120x1440	4836,845,4862,869	742,533	1638,533	2709,504	miss	miss	miss	Left top corner type
+426	Creative	illustrator	icon	5120x1440	2574,366,2614,388	2662,101	2662,122	2649,547	miss	miss	miss	color picker tool
+428	Creative	illustrator	icon	5120x1440	2560,158,2600,183	2509,94	2509,86	2637,158	miss	miss	miss	Use Rectangle Tool
+429	Creative	illustrator	icon	5120x1440	2570,122,2616,150	2611,115	2611,122	2624,241	miss	hit	miss	Select Pen tool
+430	Creative	illustrator	icon	5120x1440	2578,220,2612,242	2611,108	2611,115	2637,230	miss	miss	miss	select text tool

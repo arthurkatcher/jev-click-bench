@@ -1,0 +1,76 @@
+# ScreenSpot-Pro label audit, batch 11: apps solidworks, unreal_engine. B-missed cases to review: 73. All cases of these apps (for the UI-language labels): 1079-1155, 1205-1239 = 112 cases, on language sheets lang_067.jpg, lang_068.jpg, lang_069.jpg, lang_070.jpg, lang_071.jpg, lang_072.jpg, lang_075.jpg, lang_076.jpg, lang_077.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+1079	CAD	solidworks	text	3840x1080	975,599,1172,624	998,86	998,81	979,38	miss	miss	miss	Delete
+1080	CAD	solidworks	text	3840x1080	449,88,583,115	499,76	480,76	547,86	miss	miss	miss	Move Entity
+1083	CAD	solidworks	text	3840x1080	55,143,112,166	768,81	768,81	125,146	miss	miss	miss	switch to sketch
+1084	CAD	solidworks	text	3840x1080	475,35,511,97	1037,81	1018,86	519,84	miss	miss	miss	Round corners
+1085	CAD	solidworks	text	3840x1080	509,118,729,143	1018,173	998,173	576,429	miss	miss	miss	view wireframe diagram
+1087	CAD	solidworks	text	3840x1080	670,35,732,60	1037,70	1056,65	710,76	miss	miss	miss	wrap
+1088	CAD	solidworks	icon	3840x1080	713,3,743,28	768,49	768,54	845,24	miss	miss	miss	Save
+1090	CAD	solidworks	text	3840x1080	286,35,511,56	941,65	941,65	422,57	miss	miss	miss	Redraw
+1091	CAD	solidworks	icon	3840x1080	146,90,172,111	154,86	154,97	144,70	miss	hit	miss	Draw a polygon
+1092	CAD	solidworks	text	3840x1080	57,35,103,95	787,70	346,59	144,68	miss	miss	miss	Mark dimensions
+1095	CAD	solidworks	text	3840x1080	176,58,424,83	442,59	422,59	154,57	miss	hit	miss	Open a project
+1097	CAD	solidworks	text	3840x1080	608,88,665,111	461,65	461,65	662,62	miss	miss	miss	Shedding the shell
+1098	CAD	solidworks	text	3840x1080	472,119,507,144	998,86	998,86	518,97	miss	miss	miss	more for round corner
+1100	CAD	solidworks	icon	3840x1080	573,447,706,671	326,76	326,76	134,211	miss	miss	miss	select the smaller component
+1102	CAD	solidworks	text	3840x1080	6,67,55,122	346,86	326,92	106,70	miss	miss	miss	Exit Sketch
+1103	CAD	solidworks	text	3840x1080	50,199,71,224	250,167	250,167	86,197	miss	miss	miss	confirm explode view
+1105	CAD	solidworks	text	3840x1080	98,285,488,301	480,540	480,578	230,424	miss	miss	miss	select face 1
+1107	CAD	solidworks	text	3840x1080	472,42,521,113	826,86	941,81	528,68	miss	miss	miss	launch template editor
+1108	CAD	solidworks	text	3840x1080	392,736,686,761	288,86	288,86	163,68	miss	miss	miss	Geometric Analysis
+1110	CAD	solidworks	text	3840x1080	307,144,468,167	749,81	730,81	413,143	miss	miss	miss	Convert entity references.
+1111	CAD	solidworks	text	3840x1080	397,116,482,139	1018,86	1037,92	346,122	miss	miss	miss	Evaluate curvature
+1112	CAD	solidworks	text	3840x1080	6,537,75,567	134,578	134,567	77,570	miss	miss	miss	Add Collinear Relation
+1114	CAD	solidworks	icon	3840x1080	229,91,250,116	2957,86	2995,86	2093,46	miss	miss	miss	Text
+1115	CAD	solidworks	text	3840x1080	29,59,179,84	883,59	768,59	144,38	miss	miss	miss	Insert Part
+1117	CAD	solidworks	text	3840x1080	89,255,316,278	1075,97	1056,103	192,202	miss	miss	miss	jump to the selection
+1118	CAD	solidworks	text	3840x1080	110,65,231,95	346,81	346,81	106,76	miss	miss	miss	scan
+1119	CAD	solidworks	text	3840x1080	580,115,596,141	749,97	787,86	528,105	miss	miss	miss	drop down for moving the entity
+1120	CAD	solidworks	text	3840x1080	1287,2,1303,27	288,59	192,59	768,30	miss	miss	miss	indicator whether the file is saved
+1121	CAD	solidworks	text	3840x1080	215,192,236,213	326,81	346,76	211,197	miss	miss	miss	help for crop entity
+1122	CAD	solidworks	text	3840x1080	56,35,110,102	461,81	461,70	115,65	miss	miss	miss	Revolved Boss/Base
+1123	CAD	solidworks	text	3840x1080	516,34,564,113	518,65	518,76	950,113	hit	hit	miss	Copy Entity
+1125	CAD	solidworks	text	3840x1080	57,36,95,95	288,92	1171,92	797,127	miss	miss	miss	Measure
+1126	CAD	solidworks	icon	3840x1080	877,121,903,144	826,76	845,76	989,138	miss	miss	miss	View Orientation
+1127	CAD	solidworks	icon	3840x1080	2,246,25,270	307,346	307,308	67,254	miss	miss	miss	confirm chamfer
+1129	CAD	solidworks	icon	3840x1080	148,63,172,93	154,92	154,92	144,105	hit	hit	miss	Draw a circle.
+1131	CAD	solidworks	text	3840x1080	38,338,133,357	806,76	653,76	144,340	miss	miss	miss	mark X spacing
+1132	CAD	solidworks	text	3840x1080	257,144,410,165	288,103	288,97	307,130	miss	miss	miss	Crop entity
+1133	CAD	solidworks	text	3840x1080	340,57,537,80	1018,70	1018,76	864,59	miss	miss	miss	Insert coordination
+1136	CAD	solidworks	icon	3840x1080	184,87,214,114	211,81	154,76	86,211	miss	miss	miss	Draw rounded corners
+1137	CAD	solidworks	text	3840x1080	57,340,80,365	307,86	307,92	134,135	miss	miss	miss	Overlap
+1138	CAD	solidworks	text	3840x1080	595,63,671,144	154,562	134,529	96,437	miss	miss	miss	Show/Delete Geometric Relationships
+1139	CAD	solidworks	text	3840x1080	282,33,331,97	499,86	749,86	643,68	miss	miss	miss	make a hole
+1140	CAD	solidworks	icon	3840x1080	229,65,252,91	845,103	806,108	211,100	miss	miss	miss	Insert reference plane
+1141	CAD	solidworks	text	3840x1080	8,68,59,129	326,97	346,103	662,92	miss	miss	miss	Stretch
+1142	CAD	solidworks	icon	3840x1080	2,659,14,678	154,227	154,221	86,470	miss	miss	miss	expand the selected component in the tree view
+1146	CAD	solidworks	text	3840x1080	113,1003,173,1020	288,81	307,81	960,140	miss	miss	miss	change to 3D view
+1148	CAD	solidworks	text	3840x1080	234,63,292,131	806,103	806,92	154,92	miss	miss	miss	Stretch and cut
+1149	CAD	solidworks	text	3840x1080	55,143,219,166	154,227	154,227	125,119	miss	miss	miss	Annotation size
+1152	CAD	solidworks	icon	3840x1080	104,37,136,65	134,81	134,81	154,57	miss	miss	miss	Line tool
+1153	CAD	solidworks	text	3840x1080	607,60,671,89	403,92	346,103	682,62	miss	miss	miss	Draft
+1154	CAD	solidworks	icon	3840x1080	38,280,77,305	787,92	787,86	106,278	miss	miss	miss	Set the leader
+1206	Creative	unreal_engine	icon	3840x2160	476,65,498,85	403,119	365,97	509,76	miss	miss	miss	play the level
+1208	Creative	unreal_engine	text	3840x2160	138,2080,233,2109	250,1080	250,2030	134,2101	miss	miss	miss	Opens the output log drawer
+1209	Creative	unreal_engine	text	3840x2160	479,260,648,285	365,356	384,346	374,108	miss	miss	miss	placing an actor
+1210	Creative	unreal_engine	text	3840x2160	3437,1968,3606,1988	3533,2009	3533,2020	3523,1993	miss	miss	miss	Opens a dialog to change Cache settings
+1211	Creative	unreal_engine	text	3840x2160	1292,815,1351,836	1766,1080	2112,1058	2160,820	miss	miss	miss	Actor Object Reference
+1214	Creative	unreal_engine	text	3840x2160	1105,772,1167,796	1133,788	1171,821	1200,816	hit	miss	miss	Add a new Variable, Graph, Function, Macro, or Event Dispatcher
+1215	Creative	unreal_engine	icon	3840x2160	7,59,45,92	2938,151	2938,130	3024,113	miss	miss	miss	save the current level
+1216	Creative	unreal_engine	text	3840x2160	878,389,1232,409	941,454	941,454	1037,383	miss	miss	miss	Cook this project for the selected configuration and target
+1218	Creative	unreal_engine	text	3840x2160	145,76,424,102	3226,140	3245,140	3091,113	miss	miss	miss	Open an Outliner tab
+1220	Creative	unreal_engine	text	3840x2160	876,369,1234,387	960,443	960,443	998,389	miss	miss	miss	package project
+1221	Creative	unreal_engine	text	3840x2160	101,121,413,141	250,248	250,216	250,216	miss	miss	miss	View the entire undo history
+1223	Creative	unreal_engine	icon	3840x2160	2981,107,3027,133	2880,130	2880,119	2899,103	miss	miss	miss	camera speed
+1224	Creative	unreal_engine	text	3840x2160	55,202,266,221	230,205	230,227	106,227	hit	miss	miss	Switches the viewport to bottom view
+1225	Creative	unreal_engine	icon	3840x2160	656,1418,698,1448	1939,767	3206,140	3110,140	miss	miss	miss	Open the Add Filter Menu to add or manage filters
+1227	Creative	unreal_engine	text	3840x2160	702,1735,984,1755	826,1706	806,1706	787,1733	miss	miss	miss	Adds this folder to the favorites section for easy access
+1229	Creative	unreal_engine	text	3840x2160	879,453,1232,475	941,464	960,464	1037,437	hit	hit	miss	Package the game in DebugGame configuration
+1230	Creative	unreal_engine	text	3840x2160	1429,798,1515,826	1574,821	1594,821	1613,875	miss	miss	miss	Refreshes changelists from revision control provider
+1232	Creative	unreal_engine	text	3840x2160	2845,1028,3038,1053	2899,1026	2880,1026	2928,1064	miss	miss	miss	cut selection
+1233	Creative	unreal_engine	text	3840x2160	3444,1298,3728,1316	3456,1296	3456,1318	3542,1318	miss	miss	miss	select material
+1236	Creative	unreal_engine	text	3840x2160	593,300,861,321	307,86	288,108	710,292	miss	miss	miss	Launch the game on this Windows device
+1237	Creative	unreal_engine	icon	3840x2160	3035,111,3055,130	2822,130	2803,151	2736,113	miss	miss	miss	Maximizes or restores this game viewport
+1238	Creative	unreal_engine	text	3840x2160	3347,462,3528,484	3514,486	3514,475	3389,497	miss	hit	miss	Sets material quality in the scene to low

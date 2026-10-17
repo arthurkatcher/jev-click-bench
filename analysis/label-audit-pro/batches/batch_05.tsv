@@ -1,0 +1,80 @@
+# ScreenSpot-Pro label audit, batch 05: apps inventor, linux_common. B-missed cases to review: 77. All cases of these apps (for the UI-language labels): 431-500, 501-550 = 120 cases, on language sheets lang_026.jpg, lang_027.jpg, lang_028.jpg, lang_029.jpg, lang_030.jpg, lang_031.jpg, lang_032.jpg, lang_033.jpg, lang_034.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+431	CAD	inventor	text	3840x1080	642,47,692,110	768,76	768,70	749,78	miss	miss	miss	Mark dimensions
+432	CAD	inventor	text	3840x1080	704,45,766,114	346,76	384,76	691,73	miss	miss	miss	Paste
+433	CAD	inventor	icon	3840x1080	723,49,748,69	768,81	768,81	768,84	miss	miss	miss	Overlap Constraint
+435	CAD	inventor	text	3840x1080	358,49,397,118	634,76	653,76	432,70	miss	miss	miss	Punch Holes
+436	CAD	inventor	text	3840x1080	289,97,330,118	365,81	384,86	259,81	miss	miss	miss	Draw a point.
+437	CAD	inventor	text	3840x1080	242,70,306,96	269,76	288,76	192,70	hit	hit	miss	Update style
+439	CAD	inventor	text	3840x1080	75,49,114,102	806,76	826,76	518,76	miss	miss	miss	Stretch
+443	CAD	inventor	text	3840x1080	0,45,46,122	806,81	826,81	58,43	miss	miss	miss	Create a Plan
+444	CAD	inventor	text	3840x1080	796,47,863,108	403,65	730,65	682,76	miss	miss	miss	Find components
+445	CAD	inventor	text	3840x1080	0,48,52,109	480,65	461,70	58,65	miss	miss	miss	Measure
+446	CAD	inventor	text	3840x1080	1159,335,1333,361	365,383	346,313	1171,86	miss	miss	miss	Select the only feature
+450	CAD	inventor	text	3840x1080	56,49,116,105	211,86	230,140	134,62	miss	miss	miss	Project View
+453	CAD	inventor	text	3840x1080	989,48,1090,73	634,205	518,81	979,57	miss	miss	miss	Extract ifeature
+455	CAD	inventor	text	3840x1080	996,656,1099,677	1056,400	1037,86	1018,246	miss	miss	miss	validate parameters
+456	CAD	inventor	icon	3840x1080	86,0,118,22	442,81	442,76	221,19	miss	miss	miss	Save
+457	CAD	inventor	icon	3840x1080	151,47,190,102	442,464	422,464	1670,434	miss	miss	miss	Cross-sectional view
+458	CAD	inventor	icon	3840x1080	814,95,842,122	749,76	749,81	749,92	miss	miss	miss	Symmetry
+459	CAD	inventor	text	3840x1080	619,319,683,338	730,367	730,367	662,362	miss	miss	miss	open the english templates folder
+461	CAD	inventor	text	3840x1080	247,97,302,118	2803,81	1901,76	2872,74	miss	miss	miss	Clear style
+462	CAD	inventor	icon	3840x1080	1866,145,1879,163	480,59	499,70	1872,321	miss	miss	miss	minimize the child window
+463	CAD	inventor	text	3840x1080	0,48,54,119	288,65	269,70	77,73	miss	miss	miss	Basic View
+464	CAD	inventor	text	3840x1080	1014,48,1076,107	922,81	864,81	998,119	miss	miss	miss	Complete the sketch.
+465	CAD	inventor	text	3840x1080	530,48,566,71	826,70	826,65	576,59	miss	miss	miss	macros
+466	CAD	inventor	text	3840x1080	693,47,734,122	787,81	806,81	787,89	miss	miss	miss	Mark dimensions
+467	CAD	inventor	text	3840x1080	2,47,52,104	326,65	326,70	58,65	miss	miss	miss	Stress Analysis
+468	CAD	inventor	text	3840x1080	213,49,250,102	461,103	442,108	182,89	miss	miss	miss	Assembly Constraints
+471	CAD	inventor	text	3840x1080	29,137,48,162	154,97	154,124	67,151	miss	miss	miss	close the model tab on the left
+472	CAD	inventor	icon	3840x1080	771,97,796,118	768,76	749,81	758,92	miss	miss	miss	Symmetry Constraint
+475	CAD	inventor	text	3840x1080	1009,991,1113,1014	806,545	998,92	537,22	miss	miss	miss	switch to SAE6000-50.ipt
+477	CAD	inventor	text	3840x1080	720,634,826,654	806,92	787,178	854,84	miss	miss	miss	ipart options
+478	CAD	inventor	text	3840x1080	367,122,516,157	730,81	730,92	432,86	miss	miss	miss	Project geometric primitives.
+479	CAD	inventor	icon	3840x1080	24,1,54,19	2093,70	2112,70	2371,59	miss	miss	miss	Create New
+480	CAD	inventor	text	3840x1080	945,202,1003,218	845,81	806,81	749,59	miss	miss	miss	locate iPart featues
+481	CAD	inventor	icon	3840x1080	936,51,961,72	749,76	749,81	778,76	miss	miss	miss	Draw the construction line.
+482	CAD	inventor	text	3840x1080	399,47,433,108	1037,86	1018,86	480,81	miss	miss	miss	Fillet
+483	CAD	inventor	text	3840x1080	241,48,291,119	826,76	826,70	230,78	miss	miss	miss	Draw a rectangle
+484	CAD	inventor	text	3840x1080	341,49,408,108	480,81	518,81	336,68	miss	miss	miss	Leader Text
+485	CAD	inventor	text	3840x1080	156,49,195,111	768,70	749,70	144,68	miss	miss	miss	Draw a curve.
+486	CAD	inventor	text	3840x1080	0,50,35,116	845,81	826,76	106,57	miss	miss	miss	Create Plan
+487	CAD	inventor	icon	3840x1080	88,0,118,23	365,65	365,65	221,22	miss	miss	miss	Save
+488	CAD	inventor	text	3840x1080	156,49,195,124	365,70	749,70	144,76	miss	miss	miss	Draw a circle
+490	CAD	inventor	text	3840x1080	358,49,415,72	499,86	480,81	403,89	miss	miss	miss	Array
+491	CAD	inventor	icon	3840x1080	135,-1,151,19	1498,103	2112,108	2016,111	miss	miss	miss	redo to a specific history point
+495	CAD	inventor	icon	3840x1080	550,218,578,244	518,81	499,81	144,76	miss	miss	miss	Place constraint
+496	CAD	inventor	text	3840x1080	709,47,766,104	1248,119	1786,119	1901,151	miss	miss	miss	Full screen
+499	CAD	inventor	text	3840x1080	1147,97,1211,122	1037,81	1037,81	1872,202	miss	miss	miss	Front view
+501	OS	linux_common	icon	3456x2160	545,402,563,425	639,443	639,443	570,410	miss	miss	miss	collapse pkgs folder
+505	OS	linux_common	icon	3456x2160	1429,894,1443,908	1331,972	1331,961	1461,902	miss	miss	miss	enable jpeg in the cmake build
+506	OS	linux_common	text	3456x2160	2034,1687,2274,1711	1918,1523	1901,1534	2117,1685	miss	miss	miss	change the terminal encoding to the legacy GBK
+507	OS	linux_common	icon	3456x2160	2528,305,2559,336	2575,259	2575,248	2566,329	miss	miss	miss	rescan
+509	OS	linux_common	icon	3456x2160	2237,1182,2268,1215	2350,1199	2246,1285	2281,1209	miss	miss	miss	go back to photo mode
+511	OS	linux_common	icon	3456x2160	2057,750,2080,775	1884,983	1884,1048	2057,767	miss	miss	miss	view the images as a list
+513	OS	linux_common	icon	3456x2160	1937,1114,1962,1138	2004,1112	2004,1134	2108,1134	miss	miss	miss	set count down for the video recording
+514	OS	linux_common	text	3456x2160	2858,756,3009,781	3076,626	3076,626	2938,745	miss	miss	miss	edit terminal preferences
+517	OS	linux_common	icon	3456x2160	1900,500,1912,515	1763,540	1745,540	1710,513	miss	miss	miss	clear the search
+518	OS	linux_common	text	3456x2160	1553,1638,1764,1661	1866,1620	1918,1620	1581,1663	miss	miss	miss	don't use transparent terminal background
+519	OS	linux_common	icon	3456x2160	1898,1165,1964,1231	2074,724	1123,702	2064,1208	miss	miss	miss	take a photo
+520	OS	linux_common	icon	3456x2160	2,620,66,686	173,194	156,184	104,567	miss	miss	miss	get CMake-gui back to the display
+521	OS	linux_common	text	3456x2160	74,145,340,182	104,1091	104,994	52,530	miss	miss	miss	launch a new file explorer
+524	OS	linux_common	text	3456x2160	1675,1292,1842,1315	1711,1296	1711,1307	1771,1291	hit	hit	miss	remind me 30 min before the event
+525	OS	linux_common	text	3456x2160	952,608,2036,641	1365,572	1382,572	1961,453	miss	miss	miss	hide the list of context mismatch errors
+526	OS	linux_common	text	3456x2160	2152,1567,2292,1606	2195,1663	2212,1685	2134,1609	miss	miss	miss	switch to treemap chart
+528	OS	linux_common	icon	3456x2160	2390,723,2418,752	1987,1080	1987,1069	1244,761	miss	miss	miss	search in the current folder
+530	OS	linux_common	text	3456x2160	960,639,1001,655	950,616	950,616	855,605	miss	miss	miss	select the correct deb package to download according to the error message in the terminal
+532	OS	linux_common	text	3456x2160	1524,519,1574,544	1590,562	1572,551	1512,535	miss	miss	miss	turn on do not disturb
+533	OS	linux_common	text	3456x2160	1125,758,1177,804	2246,659	2264,670	2350,605	miss	miss	miss	win the game!
+535	OS	linux_common	text	3456x2160	1948,887,2053,910	1987,1058	2004,1048	1969,1005	miss	miss	miss	remove the environment variable
+536	OS	linux_common	icon	3456x2160	1284,573,1311,599	1572,594	1572,594	1313,589	miss	miss	miss	split a new terminal tab
+537	OS	linux_common	icon	3456x2160	1344,389,1379,416	1469,475	1452,475	1383,421	miss	miss	miss	back to email page
+538	OS	linux_common	icon	3456x2160	2350,728,2371,747	1365,529	207,508	173,540	miss	miss	miss	search filter
+539	OS	linux_common	text	3456x2160	1340,870,1514,903	1503,983	1503,961	1676,788	miss	miss	miss	go back to home dir
+540	OS	linux_common	text	3456x2160	1985,1226,2063,1249	2056,918	2074,918	2031,837	miss	miss	miss	click on the close button
+544	OS	linux_common	text	3456x2160	10,360,59,414	86,378	86,400	60,394	miss	miss	miss	open app center
+545	OS	linux_common	text	3456x2160	1034,609,1336,629	1192,670	1693,648	1071,643	miss	miss	miss	enable debug output
+547	OS	linux_common	text	3456x2160	1334,36,1534,71	743,1382	760,1296	726,940	miss	miss	miss	change to the opencv github page
+548	OS	linux_common	icon	3456x2160	1793,42,1813,65	1745,108	1780,108	1763,119	miss	miss	miss	close the browser
+549	OS	linux_common	icon	3456x2160	1830,1477,1846,1498	1711,1534	1711,1534	1789,1491	miss	miss	miss	increase the line of history in terminal

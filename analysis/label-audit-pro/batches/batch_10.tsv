@@ -1,0 +1,67 @@
+# ScreenSpot-Pro label audit, batch 10: apps pycharm, vmware. B-missed cases to review: 64. All cases of these apps (for the UI-language labels): 956-1033, 1320-1360 = 119 cases, on language sheets lang_059.jpg, lang_060.jpg, lang_061.jpg, lang_062.jpg, lang_063.jpg, lang_064.jpg, lang_082.jpg, lang_083.jpg, lang_084.jpg, lang_085.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+956	Dev	pycharm	text	5120x2880	2353,325,2420,359	2406,274	2406,302	2419,317	miss	miss	miss	error warning
+959	Dev	pycharm	text	5120x2880	397,1557,422,1579	2406,1598	2406,1829	2496,1570	miss	miss	miss	close pycharm terminal
+960	Dev	pycharm	icon	5120x2880	1670,440,1707,474	1562,432	1562,432	1575,461	miss	miss	miss	fit image zoom to the windows in pycharm
+961	Dev	pycharm	icon	5120x2880	1514,434,1558,478	1587,418	1587,418	1587,454	miss	miss	miss	zoom in the image in pycharm
+962	Dev	pycharm	icon	5120x2880	1101,1724,1138,1761	3814,1699	3686,1714	3097,1815	miss	miss	miss	suggestions for the error
+964	Dev	pycharm	icon	3840x2160	1427,1323,1450,1345	1613,1231	1632,1242	1440,1318	miss	miss	miss	disable markdown in pycharm
+966	Dev	pycharm	icon	5120x2880	904,218,952,276	1024,288	1152,302	845,245	miss	miss	miss	collapse all git commit in pycharm
+967	Dev	pycharm	text	5120x2880	609,1048,636,1072	666,1181	666,1253	653,1066	miss	miss	miss	turn off amend commit in pycharm
+971	Dev	pycharm	text	3840x2160	1379,1199,1456,1229	787,1210	902,1220	682,1231	miss	miss	miss	Install codegpt in pycharm
+972	Dev	pycharm	icon	5120x2880	2457,1550,2494,1580	2483,1570	2483,1555	2061,2196	hit	hit	miss	hide problems
+974	Dev	pycharm	icon	5120x2880	244,1434,296,1476	384,1814	358,1786	230,1455	miss	miss	miss	rerun python console in pycharm
+975	Dev	pycharm	icon	5120x2880	2358,274,2422,330	2586,302	2534,288	2355,302	miss	miss	miss	refrash hierachy information
+977	Dev	pycharm	text	5120x2880	1836,858,1964,895	2381,749	1818,576	1754,446	miss	miss	miss	add new run configurations in pycharm
+981	Dev	pycharm	text	5120x2880	609,1048,633,1072	691,1109	691,1109	704,1066	miss	miss	miss	turn on amend commit in pycharm
+983	Dev	pycharm	icon	5120x2880	3280,384,3326,430	3302,432	3251,418	3417,410	miss	miss	miss	edit opened markdown file in pycharm 
+984	Dev	pycharm	text	5120x2880	1642,852,1860,896	1715,850	1690,850	1728,850	miss	miss	miss	move project windows  of pycharmto the bottom left 
+985	Dev	pycharm	icon	5120x2880	3800,476,3850,550	3866,374	3866,374	3827,461	miss	miss	miss	view hierarchy
+988	Dev	pycharm	icon	5120x2880	3792,240,3848,302	3840,274	3840,245	3827,346	hit	hit	miss	open ai assistant in pycharm
+990	Dev	pycharm	icon	5120x2880	252,1796,296,1844	691,1584	819,1613	371,1627	miss	miss	miss	view todo item source
+992	Dev	pycharm	text	5120x2880	116,2004,276,2060	358,2102	3123,2189	2688,2678	miss	miss	miss	show problem details
+993	Dev	pycharm	icon	5120x2880	443,1542,492,1591	435,1584	410,1598	422,1576	miss	miss	miss	add new terminal
+994	Dev	pycharm	text	5120x2880	266,1765,755,1802	333,1728	358,1728	243,1742	miss	miss	miss	select the third error
+999	Dev	pycharm	icon	5120x2880	2968,1218,3008,1274	3072,1555	3072,1282	3123,1246	miss	miss	miss	close terminal
+1002	Dev	pycharm	icon	5120x2880	1998,276,2052,326	2586,259	2560,288	2074,302	miss	miss	miss	caller method hierachy
+1004	Dev	pycharm	icon	5120x2880	1096,1774,1144,1820	1178,2059	1178,2088	1126,1706	miss	miss	miss	excute python code in python console of pycharm 
+1005	Dev	pycharm	icon	5120x2880	1652,1668,1702,1714	1562,1685	1536,1699	1715,1699	miss	miss	miss	manage python package reposity in pycahrm
+1007	Dev	pycharm	icon	5120x2880	24,462,98,528	282,374	282,418	102,338	miss	miss	miss	view code structure in pycharm
+1008	Dev	pycharm	icon	5120x2880	3794,400,3850,472	3712,1498	3686,1498	3686,1498	miss	miss	miss	open python plost in pycharm
+1011	Dev	pycharm	icon	5120x2880	3330,384,3378,434	3328,418	3328,475	3418,410	miss	miss	miss	edit and preview opened markdown file in pycharm
+1012	Dev	pycharm	text	5120x2880	3438,2260,3560,2304	3738,2275	3738,2261	3751,2246	miss	miss	miss	update pycharm
+1013	Dev	pycharm	text	5120x2880	180,108,432,184	461,187	538,202	205,187	miss	miss	miss	change project
+1014	Dev	pycharm	icon	5120x2880	1661,226,1713,257	1818,245	1818,1210	1776,329	miss	miss	miss	error number
+1017	Dev	pycharm	icon	5120x2880	3226,160,3272,232	3226,202	3251,202	3225,180	miss	hit	miss	open notification
+1020	Dev	pycharm	text	5120x2880	1631,864,2071,901	1690,850	1664,864	1843,936	miss	hit	miss	resize project windows of pycharm stretch to right
+1022	Dev	pycharm	icon	5120x2880	814,434,852,488	768,490	768,490	755,468	miss	miss	miss	expand all changes of git commit in pycharm
+1023	Dev	pycharm	icon	5120x2880	3218,318,3282,394	179,2491	179,2491	141,2419	miss	miss	miss	open database
+1024	Dev	pycharm	icon	5120x2880	800,718,866,778	3482,619	2150,562	790,728	miss	miss	miss	open more tools windows in pycharm sidebar
+1025	Dev	pycharm	text	5120x2880	290,1998,432,2064	333,2088	384,2088	154,2549	miss	miss	miss	show problem details
+1026	Dev	pycharm	icon	5120x2880	3380,374,3434,436	3328,389	3328,389	3379,389	miss	miss	miss	preview opened markdown file in pycharm
+1031	Dev	pycharm	icon	5120x2880	1772,218,1850,266	1818,331	1843,346	1753,238	miss	miss	miss	weak warning number
+1032	Dev	pycharm	icon	5120x2880	52,1790,118,1854	2509,2203	333,2203	2266,2203	miss	miss	miss	python package
+1033	Dev	pycharm	icon	5120x2880	2814,80,2880,144	1741,2506	2202,2491	2666,2713	miss	miss	miss	debug this code
+1322	Dev	vmware	icon	3456x2234	1211,714,1229,738	1521,737	1521,737	1391,738	miss	miss	miss	suspend the VM
+1323	Dev	vmware	text	3456x2234	1551,981,1858,1001	1728,961	1728,972	1711,977	miss	miss	miss	choose an image from file
+1324	Dev	vmware	text	3456x2234	1521,933,1604,956	1521,882	1503,871	1546,933	miss	miss	miss	scan files for virtual machines
+1329	Dev	vmware	text	3456x2234	507,463,706,480	397,503	415,503	596,503	miss	miss	miss	disconnect the network adaptor of the VM
+1331	Dev	vmware	text	3456x2234	1100,1206,1262,1229	1227,1218	1227,1218	1184,1234	hit	hit	miss	check out the link for creating a virtual hard disk
+1333	Dev	vmware	text	3456x2234	2789,758,2902,793	2765,760	2765,760	2782,782	miss	miss	miss	delete the snapshot
+1334	Dev	vmware	text	3456x2234	2092,1121,2152,1145	2074,1128	2056,1128	2073,1134	miss	miss	miss	apply the new disk settings
+1335	Dev	vmware	icon	3456x2234	1654,1562,1686,1600	380,168	346,112	441,56	miss	miss	miss	open windows menu
+1337	Dev	vmware	icon	3456x2234	2277,1312,2300,1337	2091,1318	2108,1307	2272,1329	miss	miss	miss	cancel snapshot saving
+1339	Dev	vmware	text	3456x2234	167,78,406,98	1970,402	1970,402	2134,570	miss	miss	miss	create a new VM
+1340	Dev	vmware	text	3456x2234	1781,977,1981,996	1970,1005	1987,1005	1875,1006	miss	miss	miss	choose the ubuntu iso
+1341	Dev	vmware	text	3456x2234	1416,1077,1782,1098	1486,1106	1469,1095	1434,1100	miss	hit	miss	switch license to personal use
+1345	Dev	vmware	icon	3456x2234	1577,516,1593,537	1780,558	1763,570	1616,542	miss	miss	miss	close the startup disk settings window
+1346	Dev	vmware	text	3456x2234	2024,695,2188,718	1987,648	1953,648	2109,687	miss	miss	miss	restart from CD
+1348	Dev	vmware	icon	3456x2234	2150,715,2163,728	2195,715	2212,715	1426,206	miss	miss	miss	close the larger VM window
+1352	Dev	vmware	text	3456x2234	1924,897,2062,920	2039,927	2056,927	2004,928	miss	miss	miss	open customize settings
+1353	Dev	vmware	icon	3456x2234	1704,1315,1722,1335	1503,1720	1624,1765	1641,1363	miss	miss	miss	view snapshot details
+1354	Dev	vmware	icon	3456x2234	1319,1093,1343,1119	1659,1776	1538,1810	1624,1726	miss	miss	miss	save a new snapshot
+1355	Dev	vmware	text	3456x2234	1428,414,1692,433	1607,413	1590,424	1555,436	miss	hit	miss	allocate 8 cores to the VM
+1357	Dev	vmware	icon	3456x2234	1605,1118,1616,1134	1797,1095	1814,1083	1650,1128	miss	miss	miss	expand more settings in the hard disk settings
+1358	Dev	vmware	text	3456x2234	304,394,493,415	1158,1832	1192,1821	1166,1625	miss	miss	miss	send keys to the VM to open task manager
+1359	Dev	vmware	text	3456x2234	1644,516,1710,539	1884,637	1884,626	1625,570	miss	miss	miss	go back to show all VM settings

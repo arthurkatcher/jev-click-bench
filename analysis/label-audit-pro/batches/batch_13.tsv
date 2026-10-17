@@ -1,0 +1,53 @@
+# ScreenSpot-Pro label audit, batch 13: apps vscode, word. B-missed cases to review: 50. All cases of these apps (for the UI-language labels): 1361-1415, 1497-1580 = 139 cases, on language sheets lang_085.jpg, lang_086.jpg, lang_087.jpg, lang_088.jpg, lang_093.jpg, lang_094.jpg, lang_095.jpg, lang_096.jpg, lang_097.jpg, lang_098.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+1366	Dev	vscode	icon	3456x2234	2289,1545,2320,1575	2229,1363	2229,1385	2307,1542	miss	miss	miss	open remote ssh connection tab
+1367	Dev	vscode	icon	2560x1664	2494,703,2511,723	2406,707	2419,707	2458,711	miss	miss	miss	Delete the jupyter block which runs the st_ollama.py code.
+1368	Dev	vscode	text	2560x1664	50,396,324,413	141,441	154,441	128,474	miss	miss	miss	Open the readme file of the datasets.
+1371	Dev	vscode	text	2560x1664	1550,204,1665,225	538,216	538,225	371,196	miss	miss	miss	Open the paper of ParEval.
+1372	Dev	vscode	icon	2560x1664	1491,712,1508,728	1600,566	1613,557	1536,698	miss	miss	miss	Add a breakpoint in line 372 of the evaluator.py file.
+1373	Dev	vscode	text	2560x1664	690,792,736,810	678,857	678,840	646,832	miss	miss	miss	Change warmup steps.
+1374	Dev	vscode	icon	2560x1664	1609,146,1623,159	1536,166	1536,175	1491,158	miss	miss	miss	Close the videoautobench's latest json file.
+1375	Dev	vscode	text	2560x1664	2228,321,2367,337	499,324	512,324	538,316	miss	miss	miss	Open the ParEval Learderboard.
+1376	Dev	vscode	icon	2560x1664	1081,225,1107,249	1037,208	1024,208	1050,216	miss	miss	miss	Replace "cat" with "dog" in all files.
+1377	Dev	vscode	text	2560x1664	185,1226,348,1257	192,1107	205,1190	275,1219	miss	miss	miss	Check the github copilot settings.
+1378	Dev	vscode	icon	2560x1664	2476,104,2496,124	2483,125	2483,133	2483,92	miss	miss	miss	Preview the markdown file.
+1381	Dev	vscode	icon	2560x1664	549,441,569,466	653,557	666,557	576,465	miss	miss	miss	Expand the range of the docstrings of the load_data function.
+1384	Dev	vscode	text	2560x1664	1999,362,2046,388	2022,383	1126,366	864,358	hit	miss	miss	Download the LiveCodeBench's data.
+1386	Dev	vscode	icon	2560x1664	428,280,447,299	461,308	474,316	448,304	miss	miss	miss	Close the empty vscode.
+1388	Dev	vscode	icon	2560x1664	2479,123,2504,149	2458,125	2445,125	2438,92	miss	miss	miss	Split editor.
+1389	Dev	vscode	icon	2560x1664	498,891,512,907	691,982	435,982	474,907	miss	miss	miss	Close the jupyter notebook which contains a LoadLLM class.
+1391	Dev	vscode	text	2560x1664	1773,224,2048,244	205,183	230,200	102,150	miss	miss	miss	Check the codes of AutoGen.
+1393	Dev	vscode	icon	2560x1664	325,1162,345,1178	371,374	448,374	365,499	miss	miss	miss	Disable the breakpoint of the run_test function.
+1395	Dev	vscode	text	2992x1870	2768,851,2813,869	2783,842	2783,832	2798,842	miss	miss	miss	encoding in VSCode
+1401	Dev	vscode	text	2560x1664	108,1083,265,1113	230,632	243,574	97,426	miss	miss	miss	Check the running codes for the OpenAI models.
+1402	Dev	vscode	icon	2560x1600	1478,1203,1491,1216	1946,1160	1946,1168	1483,1220	miss	miss	miss	Collapse the range of the _acc_score function.
+1403	Dev	vscode	icon	2560x1600	745,45,762,64	947,112	934,112	832,72	miss	miss	miss	Close the file with the load_data function.
+1406	Dev	vscode	icon	2560x1664	723,104,738,124	1075,150	1088,158	1158,116	miss	miss	miss	Close the utils file with the run_test function.
+1408	Dev	vscode	icon	2560x1664	604,107,620,125	1242,166	1126,799	539,129	miss	miss	miss	Close the oneAPI python file.
+1409	Dev	vscode	text	2560x1664	1889,185,1961,211	1907,200	1894,208	1913,212	hit	hit	miss	Check the settings of workspace.
+1410	Dev	vscode	icon	2560x1600	1345,42,1365,65	397,64	397,80	422,72	miss	miss	miss	Preview the readme file.
+1413	Dev	vscode	icon	2560x1664	1039,133,1072,172	1050,141	1050,141	1076,146	hit	hit	miss	Run the python file.
+1414	Dev	vscode	text	2560x1664	2292,1630,2499,1662	90,582	90,582	32,619	miss	miss	miss	Select code interpreter.
+1415	Dev	vscode	icon	2560x1664	1415,135,1449,170	1434,150	1446,141	1158,141	hit	hit	miss	Preview the readme file.
+1502	Office	word	text	2560x1440	1317,511,1398,567	1254,619	1254,576	1376,508	miss	miss	miss	insert picture of smart art no.14 in word
+1506	Office	word	text	2560x1440	552,158,598,181	576,194	589,187	544,176	miss	miss	miss	the draw tab in word
+1510	Office	word	text	2560x1440	890,145,952,167	883,158	909,158	909,169	miss	hit	miss	the mailings tab in word
+1522	Office	word	text	2560x1440	437,189,523,211	486,202	486,209	499,212	hit	hit	miss	the cover page option in word
+1526	Office	word	text	2560x1440	723,189,764,243	768,202	742,202	710,212	miss	hit	miss	the icons inserting fuction in word
+1528	Office	word	icon	2560x1440	1961,861,1978,879	1229,209	1229,202	1242,202	miss	miss	miss	the "zoom in" function in word
+1531	Office	word	icon	2560x1440	897,243,934,281	896,518	896,533	826,533	miss	miss	miss	insert the circle shape in word
+1533	Office	word	text	2560x1440	1216,435,1245,456	1229,461	1242,461	1210,454	miss	miss	miss	key in the number of columns in word
+1534	Office	word	icon	2560x1440	1479,817,1499,834	1523,223	1523,230	1049,191	miss	miss	miss	create source for citations in word
+1537	Office	word	text	2560x1440	96,29,339,52	166,86	166,86	205,54	miss	miss	miss	create new document in word
+1549	Office	word	text	2560x1440	1688,177,1730,241	1651,209	1638,209	1683,205	miss	miss	miss	set page borders in word
+1551	Office	word	text	2560x1440	495,161,540,179	499,187	512,202	493,173	miss	miss	miss	the insert tab in word
+1556	Office	word	icon	2560x1440	667,127,691,152	755,144	768,151	698,133	miss	miss	miss	return to the previoius state in word
+1560	Office	word	icon	2560x1440	344,268,364,289	256,202	269,194	282,212	miss	miss	miss	make a 9x7 table in word
+1561	Office	word	text	2560x1440	439,235,522,256	474,223	474,216	499,234	miss	miss	miss	the page break option in word
+1566	Office	word	icon	2560x1440	1663,285,1677,297	1664,295	1677,295	1690,302	hit	hit	miss	choose black as the theme color in word
+1569	Office	word	icon	2560x1440	1488,452,1542,497	1638,475	1638,662	1587,583	miss	miss	miss	choose the eyeglasses with the bold black borderline as the icon in word
+1570	Office	word	text	2560x1440	985,220,1078,242	986,209	986,209	1012,220	miss	miss	miss	the page width option in word
+1575	Office	word	text	2560x1440	1161,988,1375,1008	1101,590	1088,238	1088,212	miss	miss	miss	new comment in word
+1578	Office	word	icon	2560x1440	748,175,793,235	742,230	717,223	698,202	miss	miss	miss	choose the yellow pen to draw in word
+1580	Office	word	text	2560x1440	434,159,479,182	474,180	448,180	570,140	hit	hit	miss	the home tab in word

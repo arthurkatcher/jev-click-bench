@@ -1,0 +1,54 @@
+# ScreenSpot-Pro label audit, batch 07: apps origin. B-missed cases to review: 51. All cases of these apps (for the UI-language labels): 709-770 = 62 cases, on language sheets lang_044.jpg, lang_045.jpg, lang_046.jpg, lang_047.jpg, lang_048.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+709	Scientific	origin	icon	3840x2160	300,2077,324,2100	326,162	307,162	1162,81	miss	miss	miss	plot a candlestick chart
+710	Scientific	origin	icon	3840x2160	519,51,534,66	442,108	442,108	624,76	miss	miss	miss	refresh
+711	Scientific	origin	icon	3840x2160	525,2078,552,2101	307,1112	346,1112	326,1112	miss	miss	miss	plot the selected matrix as an image
+712	Scientific	origin	icon	3840x2160	741,2080,758,2098	307,108	326,1091	326,108	miss	miss	miss	adjust the 3D framework to match the layer frame size
+713	Scientific	origin	text	3840x2160	436,2079,453,2097	902,86	902,97	1046,76	miss	miss	miss	plot the 3D scatter plot
+714	Scientific	origin	icon	3840x2160	1287,50,1310,71	346,130	346,130	355,81	miss	miss	miss	open the query builder
+715	Scientific	origin	text	3840x2160	1726,1078,1801,1099	1882,1080	1882,1091	1767,1113	miss	miss	miss	check the x-data format
+716	Scientific	origin	icon	3840x2160	1640,114,1693,169	2669,1091	2611,1102	2688,1124	miss	miss	miss	open or close the command window
+717	Scientific	origin	text	3840x2160	326,26,365,42	288,119	288,130	518,70	miss	miss	miss	click the tool menu
+718	Scientific	origin	icon	3840x2160	239,2077,259,2094	384,1112	384,1102	384,2106	miss	miss	miss	plot an area chart
+719	Scientific	origin	text	3840x2160	165,164,232,183	787,151	787,1112	787,184	miss	miss	miss	enter the name of x axis
+720	Scientific	origin	icon	3840x2160	1069,415,1103,432	1056,421	1037,443	1085,437	miss	miss	miss	maximize graph1
+721	Scientific	origin	icon	3840x2160	19,293,44,313	115,194	96,205	48,292	miss	miss	miss	select the text tool
+722	Scientific	origin	icon	3840x2160	1103,630,1135,650	2016,745	2381,734	1891,955	miss	miss	miss	minimize the graph4
+724	Scientific	origin	text	3840x2160	202,66,323,86	250,2063	230,2074	922,1658	miss	miss	miss	create a new worksheet
+725	Scientific	origin	text	3840x2160	1820,1115,2004,1165	1805,1134	1805,1123	1747,1139	miss	miss	miss	hide the Graph1
+726	Scientific	origin	icon	3840x2160	1105,412,1139,432	1037,432	1037,432	1123,437	miss	miss	miss	colse the grah1
+728	Scientific	origin	icon	3840x2160	120,2078,138,2097	346,86	326,1091	326,1091	miss	miss	miss	plot a line chart with markers for the selected data
+729	Scientific	origin	text	3840x2160	1342,930,1415,942	1344,1134	1325,950	1354,896	miss	miss	miss	input matrix value in (1,1)
+730	Scientific	origin	icon	3840x2160	147,2078,169,2097	346,1102	461,1112	365,1102	miss	miss	miss	plot a bar chart for the selected data
+731	Scientific	origin	icon	3840x2160	816,50,836,69	768,173	787,162	806,76	miss	miss	miss	column statistics
+735	Scientific	origin	text	3840x2160	164,180,234,197	346,1112	346,1112	346,1102	miss	miss	miss	input x-axis unit
+736	Scientific	origin	text	3840x2160	46,25,86,40	173,130	173,130	67,59	miss	miss	miss	select the edit menu
+737	Scientific	origin	text	3840x2160	411,417,581,457	480,1976	480,1987	154,1717	miss	miss	miss	edit the name of X axis
+738	Scientific	origin	icon	3840x2160	53,2082,78,2097	230,86	269,1091	250,1091	miss	miss	miss	plot a line chart for the selected data
+739	Scientific	origin	icon	3840x2160	208,2078,231,2099	384,1112	365,1112	365,1112	miss	miss	miss	plot a box plot
+740	Scientific	origin	text	3840x2160	1922,1270,1995,1288	1901,1253	1920,1253	1939,1264	miss	miss	miss	click the OK button
+741	Scientific	origin	icon	3840x2160	585,2079,606,2098	346,108	326,119	1018,81	miss	miss	miss	rotate the 3D framework clockwise
+745	Scientific	origin	icon	3840x2160	787,2077,807,2097	422,108	442,1091	461,130	miss	miss	miss	reset
+746	Scientific	origin	icon	3840x2160	2454,654,2549,720	2477,680	2477,680	2448,680	hit	hit	miss	close the Graph1
+747	Scientific	origin	icon	3840x2160	495,2079,517,2095	326,140	365,162	634,81	miss	miss	miss	open the contour profile image
+748	Scientific	origin	icon	3840x2160	268,2078,291,2099	346,140	422,1123	346,140	miss	miss	miss	plot a polar chart
+749	Scientific	origin	icon	3840x2160	631,2077,652,2096	326,1102	346,1112	346,140	miss	miss	miss	rotate the framework to the right
+750	Scientific	origin	icon	3840x2160	673,2078,694,2096	365,1091	346,140	835,81	miss	miss	miss	tilt the framework upward
+751	Scientific	origin	icon	3840x2160	1300,74,1323,95	307,119	307,119	125,76	miss	miss	miss	import into excel
+752	Scientific	origin	icon	3840x2160	2088,845,2132,871	2054,702	2016,691	2077,862	miss	miss	miss	close the plotting plotvm
+753	Scientific	origin	icon	3840x2160	881,2077,905,2100	307,140	307,173	864,76	miss	miss	miss	mask points within the selected range
+754	Scientific	origin	icon	3840x2160	403,2079,423,2098	499,130	499,1102	499,1102	miss	miss	miss	create a 3D surface plot with color mapping
+755	Scientific	origin	icon	3840x2160	998,2078,1021,2097	326,1091	307,1102	326,1091	miss	miss	miss	disable masking
+756	Scientific	origin	icon	3840x2160	564,2078,587,2100	346,86	307,86	1018,81	miss	miss	miss	rotate the 3D framework counterclockwise
+757	Scientific	origin	icon	3840x2160	698,51,714,65	499,130	941,140	77,81	miss	miss	miss	open or close the command window
+758	Scientific	origin	icon	3840x2160	490,51,504,67	480,1091	480,1091	499,1091	miss	miss	miss	open the video generator
+759	Scientific	origin	text	3840x2160	590,405,760,630	614,464	595,454	634,367	hit	hit	miss	select the scattor plot
+760	Scientific	origin	text	3840x2160	1,21,46,38	115,108	115,108	38,49	miss	miss	miss	select the file menu
+763	Scientific	origin	icon	3840x2160	465,49,486,72	442,97	806,108	1325,76	miss	miss	miss	send the graphic to powerpoint
+764	Scientific	origin	icon	3840x2160	464,2078,486,2096	806,130	787,130	653,76	miss	miss	miss	create a 2D filled contour plot with color mapping
+765	Scientific	origin	icon	3840x2160	178,2078,200,2098	365,1112	365,1102	480,1112	miss	miss	miss	plot a dual y-axis chart
+766	Scientific	origin	icon	3840x2160	607,2080,628,2098	346,119	346,130	1046,81	miss	miss	miss	rotate the framework to the left
+768	Scientific	origin	icon	3840x2160	3220,752,3252,772	3245,832	3264,842	3197,761	miss	miss	miss	close the graph3
+769	Scientific	origin	icon	3840x2160	903,2078,928,2099	346,162	346,1091	346,151	miss	miss	miss	unmask the range
+770	Scientific	origin	icon	3840x2160	760,2077,782,2098	346,1091	461,1091	442,1091	miss	miss	miss	reset rotation

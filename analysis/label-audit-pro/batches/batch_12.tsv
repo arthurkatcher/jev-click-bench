@@ -1,0 +1,77 @@
+# ScreenSpot-Pro label audit, batch 12: apps stata, vivado. B-missed cases to review: 74. All cases of these apps (for the UI-language labels): 1156-1204, 1240-1319 = 129 cases, on language sheets lang_072.jpg, lang_073.jpg, lang_074.jpg, lang_075.jpg, lang_077.jpg, lang_078.jpg, lang_079.jpg, lang_080.jpg, lang_081.jpg, lang_082.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+1158	Scientific	stata	text	2160x1440	702,695,1043,715	853,706	853,713	864,684	hit	hit	miss	label snapshot1
+1160	Scientific	stata	icon	2160x1440	488,178,508,202	572,194	540,194	486,198	miss	miss	miss	open a new viewer in stata
+1161	Scientific	stata	icon	2160x1440	805,155,826,172	767,158	778,166	821,155	miss	miss	miss	open the previous bookmark
+1162	Scientific	stata	icon	2160x1440	135,57,152,74	108,86	108,86	119,65	miss	miss	miss	copy
+1163	Scientific	stata	icon	2160x1440	256,55,278,77	162,94	162,101	227,58	miss	miss	miss	open the variable manager
+1164	Scientific	stata	icon	2160x1440	1779,139,1797,157	1825,137	1836,144	1777,137	miss	miss	miss	delete label
+1166	Scientific	stata	icon	2160x1440	468,181,484,200	648,202	648,202	670,198	miss	miss	miss	open the log
+1169	Scientific	stata	icon	2160x1440	438,182,456,200	475,194	475,194	437,187	miss	miss	miss	print
+1170	Scientific	stata	icon	2160x1440	181,32,220,45	140,79	140,65	103,43	miss	miss	miss	select the data menu
+1171	Scientific	stata	icon	2160x1440	394,179,412,199	432,202	432,209	416,191	miss	miss	miss	open the folder in stata
+1172	Scientific	stata	icon	2160x1440	858,156,874,171	680,144	637,151	815,158	miss	miss	miss	show file in browser
+1173	Scientific	stata	icon	2160x1440	170,58,187,74	65,79	76,86	54,65	miss	miss	miss	create a new file editor
+1174	Scientific	stata	icon	2160x1440	184,56,202,74	130,72	140,79	103,65	miss	miss	miss	find
+1175	Scientific	stata	icon	2160x1440	2101,120,2149,141	86,101	86,86	54,68	miss	miss	miss	navigate to
+1178	Scientific	stata	icon	2160x1440	1653,100,1674,120	1674,115	1685,108	1690,83	hit	miss	miss	minimize the page
+1179	Scientific	stata	icon	2160x1440	882,153,897,172	702,158	702,151	875,166	miss	miss	miss	execute file
+1180	Scientific	stata	icon	2160x1440	786,156,802,170	734,130	713,122	816,166	miss	miss	miss	toggle bookmark
+1181	Scientific	stata	icon	2160x1440	1758,137,1773,154	1782,166	1771,158	1777,151	miss	miss	miss	add label
+1183	Scientific	stata	icon	2160x1440	974,744,1039,762	940,763	918,749	961,745	miss	miss	miss	click the cancel button
+1184	Scientific	stata	icon	2160x1440	7,122,24,140	86,130	86,122	65,122	miss	miss	miss	open a new tab
+1185	Scientific	stata	icon	2160x1440	340,82,356,102	281,94	259,94	335,97	miss	miss	miss	pin the history window
+1186	Scientific	stata	icon	2160x1440	288,54,302,74	184,662	184,684	205,695	miss	miss	miss	show more result
+1187	Scientific	stata	icon	2160x1440	208,56,223,72	130,86	151,86	227,68	miss	miss	miss	edit data
+1188	Scientific	stata	icon	2160x1440	158,55,172,76	130,94	119,86	103,72	miss	miss	miss	paste
+1189	Scientific	stata	icon	2160x1440	8,58,26,77	76,79	86,65	38,65	miss	miss	miss	rollback
+1193	Scientific	stata	icon	2160x1440	24,56,41,74	151,1354	151,1361	221,1415	miss	miss	miss	enable browsing mode
+1195	Scientific	stata	icon	2160x1440	1711,98,1735,122	626,187	626,202	615,191	miss	miss	miss	close the page
+1198	Scientific	stata	icon	2160x1440	229,54,249,76	140,79	173,79	227,65	miss	miss	miss	browse data
+1199	Scientific	stata	icon	2160x1440	126,53,151,76	151,79	151,79	286,65	miss	miss	miss	bring the graphical window to the front
+1200	Scientific	stata	icon	2160x1440	367,1392,402,1440	259,1375	259,1361	97,1404	miss	miss	miss	open the stata app from taskbar
+1202	Scientific	stata	icon	2160x1440	5,56,21,74	140,1339	140,1346	54,1310	miss	miss	miss	enable editing mode
+1203	Scientific	stata	icon	2160x1440	135,95,148,112	97,108	108,115	92,104	miss	miss	miss	close the current file
+1204	Scientific	stata	icon	2160x1440	897,744,963,762	918,756	896,749	928,742	hit	miss	miss	click the confirm button
+1240	CAD	vivado	icon	2560x1440	1047,403,1063,419	1293,418	1024,425	1037,418	miss	miss	miss	close 1.xcd in vivado
+1242	CAD	vivado	icon	2560x1440	487,1025,517,1049	512,1030	499,1037	486,1037	hit	hit	miss	remove report
+1243	CAD	vivado	icon	2560x1440	524,848,557,883	602,806	589,806	570,936	miss	miss	miss	change source file properties in vivado
+1245	CAD	vivado	icon	2560x1440	421,1023,442,1048	474,1008	474,1022	480,1040	miss	miss	miss	expand all of tcl console in vivado
+1248	CAD	vivado	icon	2560x1440	976,241,1007,270	922,317	960,324	870,346	miss	miss	miss	unselected all in vivado
+1249	CAD	vivado	icon	2560x1440	345,1023,377,1052	435,1037	435,1037	384,1037	miss	miss	miss	search report in vivado
+1251	CAD	vivado	text	2560x1440	180,294,224,318	154,331	141,324	166,310	miss	miss	miss	click flow in vivado
+1255	CAD	vivado	icon	2560x1440	1107,466,1131,491	179,454	179,454	192,490	miss	miss	miss	click language temnplate in vivado
+1256	CAD	vivado	icon	2560x1440	1231,517,1255,546	1254,518	1254,518	1292,536	hit	hit	miss	expand all ip catalog in vivado
+1258	CAD	vivado	text	2560x1440	1300,449,1394,478	1280,490	1280,497	1312,479	miss	miss	miss	click IP catalog windows in right side of vivado 
+1263	CAD	vivado	text	2560x1440	870,493,925,519	832,569	806,583	870,482	miss	miss	miss	click status of ip catalog in vivado
+1264	CAD	vivado	text	2560x1440	373,886,399,917	499,907	525,907	410,893	miss	miss	miss	turn off the implementation of 1.xdc  in vivado 
+1266	CAD	vivado	icon	2560x1440	1225,567,1252,593	1101,590	1101,590	1075,586	miss	miss	miss	select other project device in vivado
+1267	CAD	vivado	text	2560x1440	357,793,374,811	499,842	499,828	397,803	miss	miss	miss	disable 1.xdc in vivado 
+1268	CAD	vivado	text	2560x1440	414,292,467,316	486,324	486,331	422,317	miss	miss	miss	click layout in vivado
+1270	CAD	vivado	text	2560x1440	359,424,436,444	461,454	461,454	422,447	miss	miss	miss	click simulation in vivado settings
+1274	CAD	vivado	icon	2560x1440	1983,455,1998,475	1306,490	1370,497	1984,519	miss	miss	miss	open help of IP catalog in vivado
+1279	CAD	vivado	icon	2560x1440	456,1025,476,1048	461,1044	461,1044	448,1030	hit	hit	miss	pause tcl console in vivado
+1280	CAD	vivado	icon	2560x1440	1005,464,1025,491	934,490	998,497	883,490	miss	miss	miss	cilck compatible familier in ip catalog
+1281	CAD	vivado	text	2560x1440	917,1045,958,1070	883,1066	883,1073	915,1069	miss	miss	miss	open logs in vivado
+1284	CAD	vivado	text	2560x1440	691,851,805,876	781,864	781,864	525,760	hit	hit	miss	add file in vivado
+1286	CAD	vivado	icon	2560x1440	758,464,781,491	845,468	870,482	787,482	miss	miss	miss	search in ip catalog
+1287	CAD	vivado	icon	2560x1440	2079,316,2101,341	1254,331	1267,331	1216,482	miss	miss	miss	float 1.xdc in a new windows in vivado
+1291	CAD	vivado	text	2560x1440	961,558,1052,581	973,590	973,590	954,576	miss	miss	miss	click compile order in vivado
+1293	CAD	vivado	icon	2560x1440	382,1024,409,1050	448,1037	474,1044	416,1040	miss	miss	miss	collapse all i tcl console in vivado
+1294	CAD	vivado	text	2560x1440	1302,519,1327,543	1267,533	1267,533	1318,544	miss	miss	miss	click group by repositoty button in vivado
+1296	CAD	vivado	icon	2560x1440	1035,773,1052,798	1075,821	1062,821	1094,814	miss	miss	miss	open IP properties in vivado
+1297	CAD	vivado	text	2560x1440	960,1046,1026,1072	781,389	794,389	692,367	miss	miss	miss	click reports in vivado
+1298	CAD	vivado	text	2560x1440	928,497,985,519	986,533	986,533	954,526	miss	miss	miss	click license of ip catalog i nvivado
+1299	CAD	vivado	icon	2560x1440	1030,451,1054,475	986,497	986,497	1063,479	miss	miss	miss	open help of source in vivado
+1300	CAD	vivado	icon	2560x1440	635,748,658,779	538,576	525,806	659,759	miss	miss	miss	switch to previous object in vivado 
+1301	CAD	vivado	text	2560x1440	729,636,965,665	819,547	832,547	838,590	miss	miss	miss	change implementation strategy in vsettings ivado
+1302	CAD	vivado	text	2560x1440	376,860,398,882	474,886	512,886	410,882	miss	miss	miss	turn off the synthesis of 1.xdc in vivado
+1303	CAD	vivado	text	2560x1440	523,1022,550,1051	550,1087	563,1073	563,1066	miss	miss	miss	edit report options in vivado
+1304	CAD	vivado	icon	2560x1440	2020,522,2038,540	1114,518	1101,533	1306,522	miss	miss	miss	open IP catalog setting in vivado
+1305	CAD	vivado	icon	2560x1440	1196,520,1220,543	1254,526	1267,518	1229,525	miss	miss	miss	collapse all ip catalog in vivado
+1308	CAD	vivado	icon	2560x1440	1225,667,1252,691	1037,698	1037,698	1050,694	miss	miss	miss	set top module in vivado
+1309	CAD	vivado	text	2560x1440	413,323,435,350	384,367	358,353	435,385	miss	miss	miss	click project summary in vivado
+1313	CAD	vivado	text	2560x1440	341,324,371,352	166,1001	166,994	147,998	miss	miss	miss	generate bitstream in viavdo
+1314	CAD	vivado	icon	2560x1440	564,1025,580,1048	486,1037	474,1044	531,1037	miss	miss	miss	clear tcl console in vivado
+1319	CAD	vivado	icon	2560x1440	966,464,991,494	922,497	922,504	960,486	miss	miss	miss	paste code to 1.xdc in vivado

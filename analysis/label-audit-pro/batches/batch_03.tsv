@@ -1,0 +1,59 @@
+# ScreenSpot-Pro label audit, batch 03: apps eviews, excel. B-missed cases to review: 56. All cases of these apps (for the UI-language labels): 229-278, 279-342 = 114 cases, on language sheets lang_014.jpg, lang_015.jpg, lang_016.jpg, lang_017.jpg, lang_018.jpg, lang_019.jpg, lang_020.jpg, lang_021.jpg.
+# Coordinates are ORIGINAL screenshot px. key = answer-key box x1,y1,x2,y2. click = box centre of each run.
+case	group	app	type	screen	key_x1y1x2y2	A1_click	A2_click	B_click	A1	A2	B	instruction
+231	Scientific	eviews	text	2160x1440	1068,727,1248,748	1134,756	1134,756	1150,752	miss	miss	miss	input user
+234	Scientific	eviews	icon	2160x1440	1385,909,1414,926	1372,907	1372,907	1383,929	miss	miss	miss	choose default add-ins directory
+237	Scientific	eviews	text	2160x1440	969,674,1054,688	1037,706	1026,698	1010,691	miss	miss	miss	open the font
+239	Scientific	eviews	text	2160x1440	86,216,161,238	108,216	108,209	76,230	hit	miss	miss	capture tab
+243	Scientific	eviews	text	2160x1440	36,24,59,39	65,43	65,43	38,40	miss	miss	miss	open the edit button
+244	Scientific	eviews	text	2160x1440	1074,717,1108,734	1048,727	1048,734	1048,727	miss	miss	miss	input minor tick count
+245	Scientific	eviews	text	2160x1440	1260,788,1296,806	1242,799	1242,792	1253,796	miss	miss	miss	input tab size
+252	Scientific	eviews	text	2160x1440	1243,730,1260,750	1242,749	1231,756	1236,742	miss	miss	miss	input prefix
+255	Scientific	eviews	text	2160x1440	1066,676,1079,688	1112,691	1091,691	1107,687	miss	miss	miss	choose use the same proxy server for both
+257	Scientific	eviews	text	2160x1440	1366,972,1446,1003	1426,389	1426,374	1431,385	miss	miss	miss	close
+261	Scientific	eviews	text	2160x1440	7,25,26,39	43,50	54,50	32,40	miss	miss	miss	open the file menu
+268	Scientific	eviews	text	2160x1440	822,551,830,559	486,763	486,763	832,565	miss	miss	miss	expand the file structure
+274	Scientific	eviews	text	2160x1440	71,25,107,42	54,50	54,50	49,40	miss	miss	miss	open the object menu
+279	Office	excel	text	3456x2234	1177,926,1300,942	1331,938	1331,938	1210,950	miss	miss	miss	change selected cells to type "Text"
+280	Office	excel	text	3840x2160	2123,1053,2211,1104	2150,281	2131,1199	1747,1237	miss	miss	miss	select the cell with a wrong value among the TRUE's and FALSE's
+281	Office	excel	text	3456x2234	707,495,883,512	691,436	691,380	769,397	miss	miss	miss	adjust column width of A-H
+285	Office	excel	text	3840x2160	192,638,207,656	192,594	192,572	221,648	miss	miss	miss	do not display the (blank) row
+286	Office	excel	text	3840x2160	3553,290,3602,309	3667,270	3667,292	3610,297	miss	miss	miss	select "Year" for the pivot table
+287	Office	excel	text	3840x2160	0,794,22,825	173,1026	173,1793	950,1145	miss	miss	miss	select whole row 108
+288	Office	excel	text	3456x2234	747,271,843,297	778,1195	778,1173	757,309	miss	miss	miss	continue moving the mouse to include the H column
+289	Office	excel	text	3840x2160	1378,73,1421,109	1325,130	1325,151	1392,157	miss	miss	miss	group columns H to N
+291	Office	excel	text	3456x2234	900,134,936,189	968,212	968,223	890,212	miss	miss	miss	turn on filter for column C
+293	Office	excel	text	3840x2160	1689,629,1914,648	1824,637	1824,626	1795,664	hit	miss	miss	only allow values from a list
+294	Office	excel	text	3456x2234	174,78,209,98	190,134	190,123	156,84	miss	miss	miss	turn on autosave
+295	Office	excel	text	3456x2234	1705,419,1894,440	1797,469	1797,480	1806,413	miss	miss	miss	delete the column
+296	Office	excel	text	3840x2160	1766,480,1825,519	1824,972	1786,972	1830,518	miss	miss	miss	select the value of the highest bar
+297	Office	excel	text	3456x2234	898,585,1127,606	899,637	899,637	942,620	miss	miss	miss	clear filter set on column C
+298	Office	excel	text	3840x2160	25,1403,141,1434	288,270	250,259	163,130	miss	miss	miss	click on the cell with a different link color to apply the format brush
+299	Office	excel	icon	3840x2160	685,255,783,354	826,162	826,162	787,302	miss	miss	miss	insert the first 3-D Column plot
+300	Office	excel	text	3456x2234	1296,983,1451,1004	1382,1016	1365,1016	1356,1011	miss	miss	miss	sort by the Category column
+301	Office	excel	text	3840x2160	1170,162,1378,184	1210,151	1210,151	1277,151	miss	miss	miss	remove circles of invalid data
+304	Office	excel	icon	3840x2160	2172,435,2190,454	1901,454	1958,475	2150,459	miss	miss	miss	recover the data validation dialog
+307	Office	excel	text	3456x2234	1520,653,1613,668	1486,637	1503,626	1538,642	miss	miss	miss	change font size to 14
+308	Office	excel	text	3840x2160	3721,419,3782,442	3667,454	3667,464	3706,427	miss	miss	miss	set the maximum y-axis value
+309	Office	excel	icon	3840x2160	2121,670,2137,689	1939,670	1920,691	1910,696	miss	miss	miss	enter the interactive cell selection mode to select sources for data validation
+310	Office	excel	text	3456x2234	1535,813,1623,835	1797,715	1814,737	1788,788	miss	miss	miss	replace all numbers in brackets to empty
+311	Office	excel	text	3840x2160	316,147,494,168	1286,216	1286,216	432,238	miss	miss	miss	remove background fill for line 118
+312	Office	excel	text	3456x2234	1819,1085,2062,1112	1814,1072	1849,1061	1806,1089	miss	miss	miss	turn off auto download and install
+315	Office	excel	text	3456x2234	1167,1086,1254,1108	1227,1117	1261,1117	1209,1116	miss	miss	miss	wrap text in the cells
+317	Office	excel	text	3840x2160	1670,816,1741,841	1747,810	1728,810	1747,810	miss	miss	miss	remove data validation for the selected cells
+318	Office	excel	text	3456x2234	1091,141,1174,164	1140,168	1140,168	1157,168	miss	miss	miss	convert the selection back to Normal style
+320	Office	excel	icon	3840x2160	1059,203,1071,218	1248,292	1248,292	1440,103	miss	miss	miss	collapse the grouped columns H to N
+322	Office	excel	icon	3840x2160	1273,715,1289,730	1248,724	1248,724	1238,719	miss	miss	miss	expand the value dropdown of the selected cel
+323	Office	excel	text	3456x2234	1386,542,1443,562	1417,614	1434,614	1348,559	miss	miss	miss	check out Border tab
+325	Office	excel	text	3840x2160	3546,1432,3683,2099	3610,1426	3610,1436	3629,1371	miss	hit	miss	drop the dragged "Year" to the Rows area
+329	Office	excel	icon	3840x2160	680,71,713,95	1152,119	1152,130	739,108	miss	miss	miss	insert a bar chart
+331	Office	excel	text	3840x2160	3516,7,3807,34	192,108	3571,97	3658,43	miss	miss	miss	search for excel functionalities
+332	Office	excel	text	3456x2234	1521,599,1571,639	1434,760	1452,737	1469,726	miss	miss	miss	make borders in every direction
+333	Office	excel	text	3840x2160	3557,820,3676,842	3667,842	3648,832	3629,810	miss	hit	miss	set to default rotation
+334	Office	excel	text	3456x2234	1101,885,1336,905	1210,927	1210,938	1219,911	miss	miss	miss	change the saved file name
+335	Office	excel	icon	3840x2160	1059,204,1071,216	1075,162	1075,140	1085,221	miss	miss	miss	expand the collapsed columns by clicking th plus sign above the column names
+337	Office	excel	text	3456x2234	164,2081,242,2101	173,2089	173,2089	147,2094	hit	hit	miss	switch to sheet 1
+338	Office	excel	icon	3456x2234	1186,1106,1208,1129	1261,1016	1261,1016	1226,1100	miss	miss	miss	add a sorting rule
+339	Office	excel	icon	3840x2160	1205,72,1215,110	1190,130	1190,130	1180,103	miss	miss	miss	open the dropdown menu for Data Validation
+340	Office	excel	text	3840x2160	729,233,752,254	1094,313	1094,324	748,286	miss	miss	miss	select the whole "year" column
+342	Office	excel	icon	3456x2234	470,173,492,198	467,212	467,190	501,173	miss	miss	miss	align text to the center horizontally

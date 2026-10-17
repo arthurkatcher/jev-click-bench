@@ -3,3 +3,5 @@ data/
 ref/
 results/
 __pycache__/
+analysis/label-audit-pro/cases/
+analysis/label-audit-pro/lang_sheets/

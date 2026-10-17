@@ -1,6 +1,6 @@
 # jev-screenspot
 
-Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction -> one `box` question -> click the box centre -> hit if the centre is inside the ground-truth bbox, edges inclusive (the standard ScreenSpot rule, same as SeeClick `pretrain/screenspot_test.py` and ScreenSpot-Pro `eval_sample_positive_gt`).
+Raw Jev 1.14 `box` grounding on ScreenSpot-v2 and ScreenSpot-Pro. One screenshot + one instruction -> one `box` question -> click the box centre -> hit if the centre is inside the ground-truth bbox, edges inclusive (the standard ScreenSpot rule, same as SeeClick `pretrain/screenspot_test.py` and ScreenSpot-Pro `eval_sample_positive_gt`).
 
 ## Layout
 - `jev.py`: OpenRouter `POST /api/alpha/decisions`, model `typesafe/jev-1.14`, header `TypeSafe-Danger-Zone-Images: true`, image as an `image_url` part in `state`. `fit()` scales screenshots so both sides are 280-1568 px (Jev's limit), no padding, so box fractions map 1:1 to the original (within ~1 px). `decide()` retries 429/5xx/504/524/529, timeouts and connection errors (honours Retry-After), raises `JevError`; 401/402/403 are fatal (stop the run). The key is never logged.
@@ -12,7 +12,7 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2. One screenshot + one instruction 
 - `data/screenspot-v2/`: OS-Copilot/ScreenSpot-v2 from Hugging Face: 1,272 cases over 730 referenced screenshots (the folder holds 756 files + a tar; 26 unreferenced). Cells: mobile text 290, mobile icon 211, desktop text 194, desktop icon 140, web text 234, web icon 203. bbox = [x, y, w, h] pixels.
 - `ref/`: official eval code, read-only: SeeClick, OS-Atlas, ScreenSpot-Pro-GUI-Grounding (its model-adapter interface `ground_only_positive(instruction, image)` can take a Jev adapter later for ScreenSpot-Pro).
 - `results/runs.jsonl`: dev log of single-case runs only (3 smoke calls on Oct 16 with the old v1 wording, then the live zoom smoke on #1095, A and B). Never part of a pass.
-- `REPORT.md`: the run report. `analysis/`: `pro_run2_analysis.py` (Pro run 2 integrity, official re-score, declared zoom diagnostics), `audit_run2.py` (deep audit: integrity asserts and every number in `AUDIT-run2.md`), `labels_audit.py` + `label-audit/` (label audit of every missed case, `LABELS-audit.md`), `errors.py` (pass-1 error table), `figures.py` and `label_figures.py` (article figures, listed in `figures/INDEX.md`), `zoom-replay/`, `zoom-examples/`, `headroom.py` (post-hoc selectors and ceilings after zoom), `leaderboard/` (sourced v2 and Pro score tables, official Pro leaderboard data), `upstream-issue/` (the label report posted as OS-Atlas issue #65, figures, prior-report check).
+- `REPORT.md`: the run report. `analysis/`: `pro_run2_analysis.py` (Pro run 2 integrity, official re-score, declared zoom diagnostics), `audit_run2.py` (deep audit: integrity asserts and every number in `AUDIT-run2.md`), `labels_audit.py` + `label-audit/` (label audit of every missed case, `LABELS-audit.md`), `errors.py` (pass-1 error table), `figures.py` and `label_figures.py` (article figures, listed in `figures/INDEX.md`), `zoom-replay/`, `zoom-examples/`, `headroom.py` (post-hoc selectors and ceilings after zoom), `leaderboard/` (sourced v2 and Pro score tables, official Pro leaderboard data), `upstream-issue/` (the label report posted as OS-Atlas issue #65, figures, prior-report check). ScreenSpot-Pro: `audit_pro_run2.py` (deep audit: integrity asserts and every number in `AUDIT-pro-run2.md`; `--images`, `--balance`), `labels_audit_pro.py` + `label-audit-pro/` (label audit of B's 905 misses and the UI language of all cases, `LABELS-audit-pro.md`; reviewer instructions, verdicts, language labels, QC notes), `pro_label_figures.py` (case images, language sheets, close-ups; the images themselves are not in git), `upstream-issue-pro/` (draft label report for the ScreenSpot-Pro authors, not posted).
 
 ## Usage
     python3 tests/test_offline.py                       # offline tests, no API calls
@@ -29,8 +29,11 @@ ScreenSpot-Pro: the same commands with `--bench pro` first; data in `data/screen
 
     python3 tests/test_pro_offline.py                   # Pro offline tests, no API calls
     python3 screenspot.py --bench pro check             # offline preflight: images, sizes, boxes
-    python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60   # raw + 2x zoom, ~$0.51
-    python3 screenspot.py --bench pro zoomstats results/pro/pass1.jsonl results/pro/zoom1.jsonl
+    python3 screenspot.py --bench pro run --pass 1 --workers 4                  # Run A: raw pass 1, ~$0.25
+    python3 screenspot.py --bench pro run --pass 2 --zoom --workers 4 --max-cost 0.60   # run 2: raw A2 + 2x zoom B, ~$0.50
+    python3 screenspot.py --bench pro zoomstats results/pro/pass2.jsonl results/pro/zoom2.jsonl --rerun results/pro/pass1.jsonl
+    python3 analysis/audit_pro_run2.py                  # Pro deep audit, offline (--images, --balance)
+    python3 analysis/labels_audit_pro.py                # Pro label audit tables, offline
 
 ## Protocol (frozen before the full run)
 - Prompt v2: box instruction `In the screenshot, the UI element to use for this task: <instruction>`, instruction whitespace-normalised and passed unquoted (21 contain their own quotes, 40 start with "click", 17 with "tap"). No wording iteration on ScreenSpot-v2 rows; any wording ablation runs off-benchmark and is reported separately.
@@ -58,7 +61,7 @@ A separate method, never the headline. Two `box` calls per case:
 - How the crop was chosen (stated in any write-up): from pass-1 answers, offline, no calls. Accuracy by target size saturates around 60 sent px; a replay estimated ~86% for this crop (anchored model, each case keeps its pass-1 difficulty) with diminishing returns past 2x and targets falling out of tighter crops; centring on A's click alone cut the target out of too-wide misses (#744), so the window must contain A's box. Choosing the crop from pass-1 data is light test-set selection; 0.5 is also the round 2x choice. What was compared, all on pass-1 outcomes and never on a zoom answer: 12 crop sizes (0.15-1.0 of each side), click-centred vs box-containing window (3 sizes), confidence gates 0.7/0.8/0.9/none, an upscale cap; margin fixed at 0.1, not swept. Registered prediction before any zoom call: ~86% (range ~85-87%); the same replay under the runner's exact resize rule (crop resized to A's sent size, `zoomsim6.py`): 85.8%. Coverage on pass-1 answers: miss targets at least partly visible (>=8 sent px) 193/212, fully inside 177, centre inside 185; hits partly visible 1060/1060, centre inside 1046 (14 full-width rows half cut). One live zoom smoke before the run (#1095, dev log, chosen as the showcase case): A FALSE, B FALSE; nothing changed after it, no further smokes; article zoom figures come from `results/zoom2.jsonl` only. Scripts and their printed tables: `analysis/zoom-replay/` (`replay-output.txt`); example images: `analysis/zoom-examples/`.
 
 ## Budget
-Cost = input tokens x $0.042/M, about 614 + 0.0024 tokens per sent pixel: ~$0.19 per pass. The current key (~$0.63 left) fits two passes. `--max-cost` (default $0.30) stops a pass early.
+Cost = input tokens x $0.042/M, about 614 + 0.0024 tokens per sent pixel: ~$0.19 per v2 pass, ~$0.25 per Pro stage (every Pro screenshot is sent at the 1568 px limit). The key held $0.295 on Oct 17 10:34 (after Pro run 2, matching the logs): one more Pro stage fits. `--max-cost` (default $0.30) stops a pass early.
 
 ## Smoke calls (Oct 16 2026, v1 wording, dev log)
 | Case | Type | Result | Conf | Time | Cost |
