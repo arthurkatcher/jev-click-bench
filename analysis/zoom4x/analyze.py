@@ -8,7 +8,7 @@
   python3 analysis/zoom4x/analyze.py [results/pro/zoom4x.jsonl] > analysis/zoom4x/results.txt
 """
 import collections, json, math, random, statistics, sys
-sys.path.insert(0, "/home/bionics/jev-screenspot")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[2]))
 import screenspot as ss
 
 ss.use("pro")

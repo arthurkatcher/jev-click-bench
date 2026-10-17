@@ -1,8 +1,10 @@
+import pathlib
+ROOT = str(pathlib.Path(__file__).resolve().parents[2])
 import json, sys
 from PIL import Image, ImageDraw, ImageFont
-D='/home/bionics/jev-screenspot/data/screenspot-v2/screenspotv2_image/'
+D=ROOT + '/data/screenspot-v2/screenspotv2_image/'
 R={}
-for l in open('/home/bionics/jev-screenspot/results/pass1.jsonl'):
+for l in open(ROOT + '/results/pass1.jsonl'):
     try: r=json.loads(l); R[r['i']]=r
     except: pass
 F=0.5

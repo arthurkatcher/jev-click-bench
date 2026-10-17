@@ -1,7 +1,9 @@
+import pathlib
+ROOT = str(pathlib.Path(__file__).resolve().parents[2])
 import json, math, sys
 import numpy as np
 recs = {}
-for l in open('/home/bionics/jev-screenspot/results/pass1.jsonl'):
+for l in open(ROOT + '/results/pass1.jsonl'):
     try: r = json.loads(l)
     except: continue
     if r.get('status') in ('ok','wrong_format'): recs[r['i']] = r

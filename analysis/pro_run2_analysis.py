@@ -6,7 +6,7 @@
    b. grid: targets smaller than one answer step, in A's view vs in B's view.
 """
 import json, glob, collections, sys
-sys.path.insert(0, "/home/bionics/jev-screenspot")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1]))
 import screenspot as ss
 
 ss.use("pro")

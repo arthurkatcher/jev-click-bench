@@ -1,6 +1,34 @@
 # jev-screenspot
 
-Raw Jev 1.14 `box` grounding on ScreenSpot-v2 and ScreenSpot-Pro. One screenshot + one instruction -> one `box` question -> click the box centre -> hit if the centre is inside the ground-truth bbox, edges inclusive (the standard ScreenSpot rule, same as SeeClick `pretrain/screenspot_test.py` and ScreenSpot-Pro `eval_sample_positive_gt`).
+How well Jev 1.14's `box` tool clicks: a full run on ScreenSpot-v2 and ScreenSpot-Pro with the official scoring, plus a zoomed second look that more than doubles it on Pro. Write-up: [How well Jev clicks, and the second look that doubles it](https://arthurkatcher.com/blog/how-well-jev-clicks).
+
+| Benchmark | Setup | Calls per click | Score | Cost per 1,000 clicks |
+|---|---|---|---|---|
+| ScreenSpot-v2 (1,272) | Jev box | 1 | 83.33% | $0.15 |
+| ScreenSpot-v2 | + 2x zoom | 2 | 87.89% | $0.30 |
+| ScreenSpot-Pro (1,581) | Jev box | 1 | 19.17% | $0.16 |
+| ScreenSpot-Pro | + 2x zoom | 2 | 42.76% | $0.32 |
+| ScreenSpot-Pro | + 4x zoom, post-hoc | 3 | 60.15% | $0.48 |
+
+- The zoom rows are scored against a raw pass in the same run (v2 84.36%, Pro 18.66%); the raw rows are the first pass.
+- The 4x step was designed after the 2x result, with its prediction committed first (`analysis/zoom4x/prediction.txt`): 63.2%, range 59.7-66.2.
+- Every score uses the official answer key, even where the label audit thinks the key is wrong.
+- Costs are OpenRouter's billed cost per request, logged in each record.
+
+Everything behind the numbers is here: the harness, every request's record (`results/`, one JSON line per click with Jev's raw response, box, click, hit and cost), the run logs, the deep audits (`analysis/AUDIT-run2.md`, `analysis/AUDIT-pro-run2.md`), the label audits and the running report (`REPORT.md`).
+
+Label problems found in both benchmarks were reported upstream: [OS-Atlas #65](https://github.com/OS-Copilot/OS-Atlas/issues/65) (ScreenSpot-v2), [ScreenSpot-Pro #32](https://github.com/likaixin2000/ScreenSpot-Pro-GUI-Grounding/issues/32) and [HF discussion #5](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/discussions/5).
+
+## Run it yourself
+
+1. Python 3.10+, `pip install requests pillow`.
+2. Get the data from Hugging Face into `data/`: [OS-Copilot/ScreenSpot-v2](https://huggingface.co/datasets/OS-Copilot/ScreenSpot-v2) into `data/screenspot-v2/`, [likaixin/ScreenSpot-Pro](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro) (revision 210e78d) into `data/screenspot-pro/`. Screenshots are not in this repo.
+3. Copy `.env.example` to `.env` and put in an OpenRouter key.
+4. `python3 tests/test_offline.py` (no API calls), then `python3 screenspot.py run --pass 1 --workers 4`. A full v2 pass costs about $0.19, a Pro stage about $0.25.
+
+The official eval code the scoring copies lives in `ref/` locally (SeeClick, OS-Atlas, ScreenSpot-Pro-GUI-Grounding) and is not redistributed here.
+
+Datasets: ScreenSpot-v2 (Apache-2.0, OS-Copilot) and ScreenSpot-Pro (MIT, Li et al.). The result records quote their instructions and answer boxes. Code: MIT.
 
 ## Layout
 - `jev.py`: OpenRouter `POST /api/alpha/decisions`, model `typesafe/jev-1.14`, header `TypeSafe-Danger-Zone-Images: true`, image as an `image_url` part in `state`. `fit()` scales screenshots so both sides are 280-1568 px (Jev's limit), no padding, so box fractions map 1:1 to the original (within ~1 px). `decide()` retries 429/5xx/504/524/529, timeouts and connection errors (honours Retry-After), raises `JevError`; 401/402/403 are fatal (stop the run). The key is never logged.
@@ -13,7 +41,7 @@ Raw Jev 1.14 `box` grounding on ScreenSpot-v2 and ScreenSpot-Pro. One screenshot
 - `data/screenspot-v2/`: OS-Copilot/ScreenSpot-v2 from Hugging Face: 1,272 cases over 730 referenced screenshots (the folder holds 756 files + a tar; 26 unreferenced). Cells: mobile text 290, mobile icon 211, desktop text 194, desktop icon 140, web text 234, web icon 203. bbox = [x, y, w, h] pixels.
 - `ref/`: official eval code, read-only: SeeClick, OS-Atlas, ScreenSpot-Pro-GUI-Grounding (its model-adapter interface `ground_only_positive(instruction, image)` can take a Jev adapter later for ScreenSpot-Pro).
 - `results/runs.jsonl`: dev log of single-case runs only (3 smoke calls on Oct 16 with the old v1 wording, then the live zoom smoke on #1095, A and B). Never part of a pass.
-- `REPORT.md`: the run report. `analysis/`: `pro_run2_analysis.py` (Pro run 2 integrity, official re-score, declared zoom diagnostics), `audit_run2.py` (deep audit: integrity asserts and every number in `AUDIT-run2.md`), `labels_audit.py` + `label-audit/` (label audit of every missed case, `LABELS-audit.md`), `errors.py` (pass-1 error table), `figures.py` and `label_figures.py` (article figures, listed in `figures/INDEX.md`), `zoom-replay/`, `zoom-examples/`, `headroom.py` (post-hoc selectors and ceilings after zoom), `leaderboard/` (sourced v2 and Pro score tables, official Pro leaderboard data), `upstream-issue/` (the label report posted as OS-Atlas issue #65, figures, prior-report check). ScreenSpot-Pro: `audit_pro_run2.py` (deep audit: integrity asserts and every number in `AUDIT-pro-run2.md`; `--images`, `--balance`), `labels_audit_pro.py` + `label-audit-pro/` (label audit of B's 905 misses and the UI language of all cases, `LABELS-audit-pro.md`; reviewer instructions, verdicts, language labels, QC notes), `pro_label_figures.py` (case images, language sheets, close-ups; the images themselves are not in git), `upstream-issue-pro/` (draft label report for the ScreenSpot-Pro authors, not posted), `zoom4x/` (stage C: prediction registered before any stage-C call, analysis and results).
+- `REPORT.md`: the run report. `analysis/`: `pro_run2_analysis.py` (Pro run 2 integrity, official re-score, declared zoom diagnostics), `audit_run2.py` (deep audit: integrity asserts and every number in `AUDIT-run2.md`), `labels_audit.py` + `label-audit/` (label audit of every missed case, `LABELS-audit.md`), `errors.py` (pass-1 error table), `figures.py` and `label_figures.py` (article figures, listed in `figures/INDEX.md`), `zoom-replay/`, `zoom-examples/`, `headroom.py` (post-hoc selectors and ceilings after zoom), `leaderboard/` (sourced v2 and Pro score tables, official Pro leaderboard data), `upstream-issue/` (the label report posted as OS-Atlas issue #65, figures, prior-report check). ScreenSpot-Pro: `audit_pro_run2.py` (deep audit: integrity asserts and every number in `AUDIT-pro-run2.md`; `--images`, `--balance`), `labels_audit_pro.py` + `label-audit-pro/` (label audit of B's 905 misses and the UI language of all cases, `LABELS-audit-pro.md`; reviewer instructions, verdicts, language labels, QC notes), `pro_label_figures.py` (case images, language sheets, close-ups; the images themselves are not in git), `upstream-issue-pro/` (the label report posted as ScreenSpot-Pro issue #32 and HF discussion #5), `zoom4x/` (stage C: prediction registered before any stage-C call, analysis and results).
 
 ## Usage
     python3 tests/test_offline.py                       # offline tests, no API calls

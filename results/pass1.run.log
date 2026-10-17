@@ -1,0 +1,54 @@
+pass 1: 20 done, 1252 to run, $0.0040 logged so far, cap $0.3
+key balance before: 0.6310296639999999
+  50/1252  $0.0115
+  100/1252  $0.0183
+  150/1252  $0.0251
+  200/1252  $0.0320
+  250/1252  $0.0403
+  300/1252  $0.0472
+  350/1252  $0.0540
+  400/1252  $0.0608
+  450/1252  $0.0683
+  500/1252  $0.0747
+  550/1252  $0.0785
+  600/1252  $0.0824
+  650/1252  $0.0884
+  700/1252  $0.0963
+  750/1252  $0.1063
+  800/1252  $0.1163
+  850/1252  $0.1246
+  900/1252  $0.1328
+  950/1252  $0.1411
+  1000/1252  $0.1493
+  1050/1252  $0.1575
+  1100/1252  $0.1658
+  1150/1252  $0.1740
+  1200/1252  $0.1823
+  1250/1252  $0.1905
+key balance after: 0.612061  (billed this run: $0.018968, logged this run: $0.186913)
+# pass1.jsonl
+prompt versions: {('v2', 'a723751c1725'): 1272}
+models (requested, resolved, provider): {('typesafe/jev-1.14', 'typesafe/jev-1.14-20261014', 'TypeSafe'): 1272}
+| Platform | Type | n | scored | hits | acc | 95% CI |
+|---|---|---|---|---|---|---|
+| mobile | text | 290 | 290 | 269 | 92.76 | 89.2-95.2 |
+| mobile | icon | 211 | 211 | 175 | 82.94 | 77.3-87.4 |
+| desktop | text | 194 | 194 | 180 | 92.78 | 88.3-95.7 |
+| desktop | icon | 140 | 140 | 109 | 77.86 | 70.3-83.9 |
+| web | text | 234 | 234 | 187 | 79.91 | 74.3-84.5 |
+| web | icon | 203 | 203 | 140 | 68.97 | 62.3-74.9 |
+
+Avg (micro, hits / 1272, official strict rule, as published v2 tables): 83.33  (95% Wilson CI 81.2-85.3)
+Avg (micro, 1e-9 edge tolerance): 83.33  (0 cases differ)
+Avg (macro, mean of 6 cells): 82.54
+scored 1272/1272, wrong_format 0, infra_error 0, not run 0, degenerate boxes 2, centre on a truth edge 0, edges outside [0,1] 0
+latency median 0.894s p90 1.896s, cost of logged responses $0.1909 (retried attempts are not logged; compare the key balance)
+input tokens: total 4,544,508, mean 3573, min 653, max 6170; wall time incl. retries median 0.897s; retried cases 0
+confidence AUROC (hit vs miss): 0.655
+  conf [0.0, 0.5): n=263 acc=68.1
+  conf [0.5, 0.6): n=171 acc=84.2
+  conf [0.6, 0.7): n=226 acc=85.4
+  conf [0.7, 0.8): n=251 acc=88.8
+  conf [0.8, 0.9): n=262 acc=87.8
+  conf [0.9, 1.0]: n=99 acc=91.9
+EXIT 0

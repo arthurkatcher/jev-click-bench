@@ -1,0 +1,133 @@
+== run A2 + B (raw pass 2 + frozen 2x zoom) ScreenSpot-Pro
+start: 2026-10-17T09:36:48+02:00
+code_rev: 3cc1088, tree dirty: 0
+python: Python 3.12.3
+data revision: 210e78d3844251110bff86c95835ebd37a6930fa
+zoom: ZOOM_F=0.5 ZOOM_MARGIN=0.1 (frozen, same as v2)
+command: python3 -u screenspot.py --bench pro run --pass 2 --zoom --workers 4 --max-cost 0.60
+pass 2 + zoom: 0 done, 1581 to run, $0.0000 logged so far, cap $0.6
+key balance before: 0.7996768759999999
+  50/1581  $0.0165  zoom scored 50, infra 0
+  100/1581  $0.0300  zoom scored 100, infra 0
+  150/1581  $0.0444  zoom scored 150, infra 0
+  200/1581  $0.0616  zoom scored 200, infra 0
+  250/1581  $0.0806  zoom scored 250, infra 0
+  300/1581  $0.0993  zoom scored 300, infra 0
+  350/1581  $0.1167  zoom scored 350, infra 0
+  400/1581  $0.1332  zoom scored 400, infra 0
+  450/1581  $0.1421  zoom scored 450, infra 0
+  500/1581  $0.1511  zoom scored 500, infra 0
+  550/1581  $0.1688  zoom scored 550, infra 0
+  600/1581  $0.1871  zoom scored 600, infra 0
+  650/1581  $0.2042  zoom scored 650, infra 0
+  700/1581  $0.2207  zoom scored 700, infra 0
+  750/1581  $0.2372  zoom scored 750, infra 0
+  800/1581  $0.2537  zoom scored 800, infra 0
+  850/1581  $0.2709  zoom scored 850, infra 0
+  900/1581  $0.2888  zoom scored 900, infra 0
+  950/1581  $0.3054  zoom scored 950, infra 0
+  1000/1581  $0.3219  zoom scored 1000, infra 0
+  1050/1581  $0.3384  zoom scored 1050, infra 0
+  1100/1581  $0.3518  zoom scored 1100, infra 0
+  1150/1581  $0.3607  zoom scored 1150, infra 0
+  1200/1581  $0.3788  zoom scored 1200, infra 0
+  1250/1581  $0.3956  zoom scored 1250, infra 0
+  1300/1581  $0.4121  zoom scored 1300, infra 0
+  1350/1581  $0.4300  zoom scored 1350, infra 0
+  1400/1581  $0.4488  zoom scored 1400, infra 0
+  1450/1581  $0.4642  zoom scored 1450, infra 0
+  1500/1581  $0.4779  zoom scored 1500, infra 0
+  1550/1581  $0.4944  zoom scored 1550, infra 0
+key balance after: 0.303585  (billed this run: $0.496092, logged this run: $0.504672)
+logged cost this run: $0.504672 (all stages, incl. billed error bodies)
+# pass2.jsonl
+prompt versions: {('v2', 'a723751c1725'): 1581}
+models (requested, resolved, provider): {('typesafe/jev-1.14', 'typesafe/jev-1.14-20261014', 'TypeSafe'): 1581}
+| Group | Type | n | scored | hits | acc | 95% CI |
+|---|---|---|---|---|---|---|
+| CAD | text | 197 | 197 | 25 | 12.69 | 8.7-18.1 |
+| CAD | icon | 64 | 64 | 9 | 14.06 | 7.6-24.6 |
+| Dev | text | 154 | 154 | 47 | 30.52 | 23.8-38.2 |
+| Dev | icon | 145 | 145 | 10 | 6.90 | 3.8-12.2 |
+| Creative | text | 198 | 198 | 39 | 19.70 | 14.8-25.8 |
+| Creative | icon | 143 | 143 | 4 | 2.80 | 1.1-7.0 |
+| Scientific | text | 144 | 144 | 53 | 36.81 | 29.4-44.9 |
+| Scientific | icon | 110 | 110 | 7 | 6.36 | 3.1-12.6 |
+| Office | text | 177 | 177 | 73 | 41.24 | 34.3-48.6 |
+| Office | icon | 53 | 53 | 7 | 13.21 | 6.5-24.8 |
+| OS | text | 107 | 107 | 19 | 17.76 | 11.7-26.1 |
+| OS | icon | 89 | 89 | 2 | 2.25 | 0.6-7.8 |
+
+Avg (micro, hits / 1581, official strict rule, as published pro tables): 18.66  (95% Wilson CI 16.8-20.7)
+  text: 26.20 (n=977)
+  icon: 6.46 (n=604)
+Avg (micro, 1e-9 edge tolerance): 18.66  (0 cases differ)
+Avg (macro, mean of 12 cells): 17.02
+scored 1581/1581, wrong_format 0, infra_error 0, not run 0, degenerate boxes 18, centre on a truth edge 17, edges outside [0,1] 0
+latency median 0.888s p90 1.396s, cost of logged responses $0.2523 (retried attempts are not logged; compare the key balance)
+input tokens: total 6,007,925, mean 3800, min 2126, max 4604; wall time incl. retries median 0.891s; retried cases 0
+confidence AUROC (hit vs miss): 0.765
+  conf [0.0, 0.5): n=772 acc=6.5
+  conf [0.5, 0.6): n=172 acc=15.7
+  conf [0.6, 0.7): n=191 acc=26.2
+  conf [0.7, 0.8): n=213 acc=31.0
+  conf [0.8, 0.9): n=180 acc=42.2
+  conf [0.9, 1.0]: n=53 acc=49.1
+# zoom2.jsonl
+prompt versions: {('v2', 'a723751c1725'): 1581}
+models (requested, resolved, provider): {('typesafe/jev-1.14', 'typesafe/jev-1.14-20261014', 'TypeSafe'): 1581}
+| Group | Type | n | scored | hits | acc | 95% CI |
+|---|---|---|---|---|---|---|
+| CAD | text | 197 | 197 | 88 | 44.67 | 37.9-51.6 |
+| CAD | icon | 64 | 64 | 12 | 18.75 | 11.1-30.0 |
+| Dev | text | 154 | 154 | 99 | 64.29 | 56.5-71.4 |
+| Dev | icon | 145 | 145 | 28 | 19.31 | 13.7-26.5 |
+| Creative | text | 198 | 198 | 104 | 52.53 | 45.6-59.4 |
+| Creative | icon | 143 | 143 | 20 | 13.99 | 9.2-20.6 |
+| Scientific | text | 144 | 144 | 93 | 64.58 | 56.5-71.9 |
+| Scientific | icon | 110 | 110 | 27 | 24.55 | 17.5-33.4 |
+| Office | text | 177 | 177 | 117 | 66.10 | 58.9-72.7 |
+| Office | icon | 53 | 53 | 18 | 33.96 | 22.7-47.4 |
+| OS | text | 107 | 107 | 56 | 52.34 | 43.0-61.6 |
+| OS | icon | 89 | 89 | 14 | 15.73 | 9.6-24.7 |
+
+Avg (micro, hits / 1581, official strict rule, as published pro tables): 42.76  (95% Wilson CI 40.3-45.2)
+  text: 57.01 (n=977)
+  icon: 19.70 (n=604)
+Avg (micro, 1e-9 edge tolerance): 42.76  (0 cases differ)
+Avg (macro, mean of 12 cells): 39.23
+scored 1581/1581, wrong_format 0, infra_error 0, not run 0, degenerate boxes 6, centre on a truth edge 13, edges outside [0,1] 0, stage B box past the crop edge 0, zoom configs [(0.5, 0.1, '3cc1088')]
+latency median 0.814s p90 1.212s, cost of logged responses $0.2523 (retried attempts are not logged; compare the key balance)
+input tokens: total 6,008,079, mean 3800, min 2127, max 4603; wall time incl. retries median 0.816s; retried cases 0
+confidence AUROC (hit vs miss): 0.756
+  conf [0.0, 0.5): n=445 acc=13.5
+  conf [0.5, 0.6): n=172 acc=32.0
+  conf [0.6, 0.7): n=236 acc=43.2
+  conf [0.7, 0.8): n=321 acc=56.7
+  conf [0.8, 0.9): n=346 acc=67.9
+  conf [0.9, 1.0]: n=61 acc=68.9
+| Group | n | raw A | zoom A+B | delta pp | miss->hit | hit->miss | McNemar p |
+|---|---|---|---|---|---|---|---|
+| all | 1581 | 18.66 | 42.76 | +24.10 | 436 | 55 | 1.24e-74 |
+| CAD text | 197 | 12.69 | 44.67 | +31.98 | 70 | 7 | 3.52e-14 |
+| CAD icon | 64 | 14.06 | 18.75 | +4.69 | 8 | 5 | 0.581 |
+| Dev text | 154 | 30.52 | 64.29 | +33.77 | 61 | 9 | 1.28e-10 |
+| Dev icon | 145 | 6.90 | 19.31 | +12.41 | 25 | 7 | 0.0021 |
+| Creative text | 198 | 19.70 | 52.53 | +32.83 | 70 | 5 | 9.82e-16 |
+| Creative icon | 143 | 2.80 | 13.99 | +11.19 | 17 | 1 | 0.000145 |
+| Scientific text | 144 | 36.81 | 64.58 | +27.78 | 46 | 6 | 1.03e-08 |
+| Scientific icon | 110 | 6.36 | 24.55 | +18.18 | 21 | 1 | 1.1e-05 |
+| Office text | 177 | 41.24 | 66.10 | +24.86 | 54 | 10 | 2e-08 |
+| Office icon | 53 | 13.21 | 33.96 | +20.75 | 13 | 2 | 0.00739 |
+| OS text | 107 | 17.76 | 52.34 | +34.58 | 38 | 1 | 1.46e-10 |
+| OS icon | 89 | 2.25 | 15.73 | +13.48 | 13 | 1 | 0.00183 |
+| window half (zoom 2x) | 1534 | 19.17 | 43.74 | +24.58 | 432 | 55 | 1.24e-73 |
+| window widened | 23 | 4.35 | 21.74 | +17.39 | 4 | 0 | 0.125 |
+| window full screen (same image re-asked) | 24 | 0.00 | 0.00 | +0.00 | 0 | 0 | 1 |
+| A downscaled (B recovers pixels) | 1581 | 18.66 | 42.76 | +24.10 | 436 | 55 | 1.24e-74 |
+paired delta 95% bootstrap CI: +21.63 to +26.63 pp
+full-screen group: identical box 4/24, hit flips 0/24 (0.0%)
+latency per case over 1581 cases (median / p90): A 0.888/1.396s, A+B 1.720/2.600s; wall incl. retries A 0.891/1.400s, A+B 1.723/2.609s
+input tokens over the same cases: A 6,007,925, B 6,008,079 (A+B = 2.00x A)
+logged cost, all records: A file $0.2523, zoom file $0.2523, total $0.5047
+exit: 0 end: 2026-10-17T09:54:19+02:00

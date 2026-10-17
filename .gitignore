@@ -1,7 +1,11 @@
 .env
 data/
 ref/
-results/
 __pycache__/
 analysis/label-audit-pro/cases/
 analysis/label-audit-pro/lang_sheets/
+# results: the per-click records and run logs are published; images and resume state are not
+results/**/*.png
+results/*.png
+results/**/*.progress.json
+results/*.progress.json

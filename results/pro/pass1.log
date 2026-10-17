@@ -1,0 +1,75 @@
+== run A (raw, no zoom) ScreenSpot-Pro pass 1
+start: 2026-10-17T09:24:34+02:00
+code_rev: 4099bfa, tree dirty: 0
+python: Python 3.12.3
+data revision: 210e78d3844251110bff86c95835ebd37a6930fa
+command: python3 -u screenspot.py --bench pro run --pass 1 --workers 4 --max-cost 0.35
+pass 1: 0 done, 1581 to run, $0.0000 logged so far, cap $0.35
+key balance before: 1.0525075099999999
+  50/1581  $0.0083
+  100/1581  $0.0150
+  150/1581  $0.0222
+  200/1581  $0.0308
+  250/1581  $0.0403
+  300/1581  $0.0496
+  350/1581  $0.0583
+  400/1581  $0.0665
+  450/1581  $0.0711
+  500/1581  $0.0755
+  550/1581  $0.0844
+  600/1581  $0.0935
+  650/1581  $0.1021
+  700/1581  $0.1103
+  750/1581  $0.1186
+  800/1581  $0.1268
+  850/1581  $0.1355
+  900/1581  $0.1444
+  950/1581  $0.1527
+  1000/1581  $0.1610
+  1050/1581  $0.1692
+  1100/1581  $0.1759
+  1150/1581  $0.1804
+  1200/1581  $0.1894
+  1250/1581  $0.1978
+  1300/1581  $0.2060
+  1350/1581  $0.2150
+  1400/1581  $0.2244
+  1450/1581  $0.2321
+  1500/1581  $0.2390
+  1550/1581  $0.2472
+key balance after: 0.802482  (billed this run: $0.250025, logged this run: $0.252335)
+logged cost this run: $0.252335 (all stages, incl. billed error bodies)
+# pass1.jsonl
+prompt versions: {('v2', 'a723751c1725'): 1581}
+models (requested, resolved, provider): {('typesafe/jev-1.14', 'typesafe/jev-1.14-20261014', 'TypeSafe'): 1581}
+| Group | Type | n | scored | hits | acc | 95% CI |
+|---|---|---|---|---|---|---|
+| CAD | text | 197 | 197 | 25 | 12.69 | 8.7-18.1 |
+| CAD | icon | 64 | 64 | 10 | 15.62 | 8.7-26.4 |
+| Dev | text | 154 | 154 | 43 | 27.92 | 21.4-35.5 |
+| Dev | icon | 145 | 145 | 11 | 7.59 | 4.3-13.1 |
+| Creative | text | 198 | 198 | 40 | 20.20 | 15.2-26.3 |
+| Creative | icon | 143 | 143 | 8 | 5.59 | 2.9-10.7 |
+| Scientific | text | 144 | 144 | 56 | 38.89 | 31.3-47.0 |
+| Scientific | icon | 110 | 110 | 8 | 7.27 | 3.7-13.7 |
+| Office | text | 177 | 177 | 74 | 41.81 | 34.8-49.2 |
+| Office | icon | 53 | 53 | 8 | 15.09 | 7.9-27.1 |
+| OS | text | 107 | 107 | 17 | 15.89 | 10.2-24.0 |
+| OS | icon | 89 | 89 | 3 | 3.37 | 1.2-9.4 |
+
+Avg (micro, hits / 1581, official strict rule, as published pro tables): 19.17  (95% Wilson CI 17.3-21.2)
+  text: 26.10 (n=977)
+  icon: 7.95 (n=604)
+Avg (micro, 1e-9 edge tolerance): 19.17  (0 cases differ)
+Avg (macro, mean of 12 cells): 17.66
+scored 1581/1581, wrong_format 0, infra_error 0, not run 0, degenerate boxes 14, centre on a truth edge 13, edges outside [0,1] 0
+latency median 0.827s p90 1.364s, cost of logged responses $0.2523 (retried attempts are not logged; compare the key balance)
+input tokens: total 6,007,986, mean 3800, min 2127, max 4605; wall time incl. retries median 0.829s; retried cases 0
+confidence AUROC (hit vs miss): 0.76
+  conf [0.0, 0.5): n=766 acc=6.7
+  conf [0.5, 0.6): n=182 acc=21.4
+  conf [0.6, 0.7): n=187 acc=20.3
+  conf [0.7, 0.8): n=209 acc=31.1
+  conf [0.8, 0.9): n=187 acc=45.5
+  conf [0.9, 1.0]: n=50 acc=50.0
+exit: 0 end: 2026-10-17T09:33:28+02:00

@@ -12,7 +12,7 @@ sample on the 2x step (A1's raw curve by size, applied to B's sizes, against the
   python3 analysis/zoom4x/predict.py > analysis/zoom4x/prediction.txt
 """
 import collections, math, random, statistics, sys
-sys.path.insert(0, "/home/bionics/jev-screenspot")
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[2]))
 import screenspot as ss
 
 ss.use("pro")

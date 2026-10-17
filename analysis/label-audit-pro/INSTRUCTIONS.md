@@ -1,6 +1,6 @@
 # Reviewer instructions: ScreenSpot-Pro label audit (by eye)
 
-You are auditing Jev 1.14's misses on the ScreenSpot-Pro GUI-grounding benchmark, by eye, for a write-up. Repo: `/home/bionics/jev-screenspot`. You only read files, run the zoom helper below, and write your two output files. Never run `screenspot.py` or anything that calls an API, and never edit any other file.
+You are auditing Jev 1.14's misses on the ScreenSpot-Pro GUI-grounding benchmark, by eye, for a write-up. Repo: this repository. You only read files, run the zoom helper below, and write your two output files. Never run `screenspot.py` or anything that calls an API, and never edit any other file.
 
 ## Background
 Each case is one screenshot of a professional app plus one English instruction. Jev answers with a box; the click is the box centre; it is a hit if the click is inside the answer-key box. Every case has three answers:

@@ -1,0 +1,71 @@
+Sat Oct 17 11:39:58 CEST 2026
+stage C on zoom2.jsonl -> zoom4x.jsonl: 0 done, 1581 to run, $0.0000 logged so far, cap $0.28
+key balance before: 0.294509444
+  50/1581  $0.0083  hits 28  infra 0
+  100/1581  $0.0150  hits 54  infra 0
+  150/1581  $0.0222  hits 85  infra 0
+  200/1581  $0.0308  hits 117  infra 0
+  250/1581  $0.0403  hits 146  infra 0
+  300/1581  $0.0496  hits 185  infra 0
+  350/1581  $0.0583  hits 221  infra 0
+  400/1581  $0.0665  hits 243  infra 0
+  450/1581  $0.0711  hits 273  infra 0
+  500/1581  $0.0755  hits 304  infra 0
+  550/1581  $0.0844  hits 333  infra 0
+  600/1581  $0.0935  hits 361  infra 0
+  650/1581  $0.1021  hits 399  infra 0
+  700/1581  $0.1103  hits 435  infra 0
+  750/1581  $0.1186  hits 449  infra 0
+  800/1581  $0.1268  hits 476  infra 0
+  850/1581  $0.1355  hits 512  infra 0
+  900/1581  $0.1444  hits 552  infra 0
+  950/1581  $0.1527  hits 575  infra 0
+  1000/1581  $0.1610  hits 609  infra 0
+  1050/1581  $0.1692  hits 637  infra 0
+  1100/1581  $0.1759  hits 663  infra 0
+  1150/1581  $0.1804  hits 686  infra 0
+  1200/1581  $0.1894  hits 708  infra 0
+  1250/1581  $0.1978  hits 736  infra 0
+  1300/1581  $0.2060  hits 773  infra 0
+  1350/1581  $0.2150  hits 802  infra 0
+  1400/1581  $0.2244  hits 833  infra 0
+  1450/1581  $0.2321  hits 855  infra 0
+  1500/1581  $0.2390  hits 881  infra 0
+  1550/1581  $0.2472  hits 923  infra 0
+key balance after: 0.043656  (billed this run: $0.250854, logged this run: $0.252339; the balance lags billing, logged usage.cost is the cost of record)
+logged cost this run: $0.252339
+# zoom4x.jsonl
+prompt versions: {('v2', 'a723751c1725'): 1581}
+models (requested, resolved, provider): {('typesafe/jev-1.14', 'typesafe/jev-1.14-20261014', 'TypeSafe'): 1581}
+| Group | Type | n | scored | hits | acc | 95% CI |
+|---|---|---|---|---|---|---|
+| CAD | text | 197 | 197 | 132 | 67.01 | 60.2-73.2 |
+| CAD | icon | 64 | 64 | 20 | 31.25 | 21.2-43.4 |
+| Dev | text | 154 | 154 | 123 | 79.87 | 72.8-85.4 |
+| Dev | icon | 145 | 145 | 51 | 35.17 | 27.9-43.2 |
+| Creative | text | 198 | 198 | 140 | 70.71 | 64.0-76.6 |
+| Creative | icon | 143 | 143 | 51 | 35.66 | 28.3-43.8 |
+| Scientific | text | 144 | 144 | 112 | 77.78 | 70.3-83.8 |
+| Scientific | icon | 110 | 110 | 34 | 30.91 | 23.0-40.1 |
+| Office | text | 177 | 177 | 152 | 85.88 | 80.0-90.2 |
+| Office | icon | 53 | 53 | 31 | 58.49 | 45.1-70.7 |
+| OS | text | 107 | 107 | 70 | 65.42 | 56.0-73.8 |
+| OS | icon | 89 | 89 | 35 | 39.33 | 29.8-49.7 |
+
+Avg (micro, hits / 1581, official strict rule, as published pro tables): 60.15  (95% Wilson CI 57.7-62.5)
+  text: 74.62 (n=977)
+  icon: 36.75 (n=604)
+Avg (micro, 1e-9 edge tolerance): 60.28  (2 cases differ)
+Avg (macro, mean of 12 cells): 56.46
+scored 1581/1581, wrong_format 0, infra_error 0, not run 0, degenerate boxes 6, centre on a truth edge 5, edges outside [0,1] 0, zoom box past the crop edge 0, zoom configs [(0.5, 0.1, '5649be5')]
+latency median 0.764s p90 1.041s, cost of logged responses $0.2523 (retried attempts are not logged; compare the key balance)
+input tokens: total 6,008,070, mean 3800, min 2125, max 4604; wall time incl. retries median 0.766s; retried cases 0
+confidence AUROC (hit vs miss): 0.74
+  conf [0.0, 0.5): n=437 acc=30.2
+  conf [0.5, 0.6): n=176 acc=61.4
+  conf [0.6, 0.7): n=235 acc=66.8
+  conf [0.7, 0.8): n=323 acc=70.0
+  conf [0.8, 0.9): n=330 acc=77.6
+  conf [0.9, 1.0]: n=80 acc=90.0
+exit 0
+Sat Oct 17 11:47:24 CEST 2026
