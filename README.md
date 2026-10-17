@@ -1,16 +1,16 @@
 # jev-screenspot
 
-How well Jev 1.14's `box` tool clicks: a full run on ScreenSpot-v2 and ScreenSpot-Pro with the official scoring, plus a zoomed second look that more than doubles it on Pro. Write-up: [How well Jev clicks, and the second look that doubles it](https://arthurkatcher.com/blog/how-well-jev-clicks).
+How well Jev 1.14's `box` tool clicks: a full run on ScreenSpot-v2 and ScreenSpot-Pro with the official scoring, plus a zoomed second look that more than doubles it on Pro. Write-up: [Jev 1.14 can click: 84% on ScreenSpot-v2, 43% on Pro with a second look](https://arthurkatcher.com/blog/how-well-jev-clicks).
 
 | Benchmark | Setup | Calls per click | Score | Cost per 1,000 clicks |
 |---|---|---|---|---|
-| ScreenSpot-v2 (1,272) | Jev box | 1 | 83.33% | $0.15 |
+| ScreenSpot-v2 (1,272) | Jev box | 1 | 84.36% | $0.15 |
 | ScreenSpot-v2 | + 2x zoom | 2 | 87.89% | $0.30 |
-| ScreenSpot-Pro (1,581) | Jev box | 1 | 19.17% | $0.16 |
+| ScreenSpot-Pro (1,581) | Jev box | 1 | 18.66% | $0.16 |
 | ScreenSpot-Pro | + 2x zoom | 2 | 42.76% | $0.32 |
 | ScreenSpot-Pro | + 4x zoom, post-hoc | 3 | 60.15% | $0.48 |
 
-- The zoom rows are scored against a raw pass in the same run (v2 84.36%, Pro 18.66%); the raw rows are the first pass.
+- Raw and zoom rows are the same run (pass 2 + zoom). A separate first raw pass scored 83.33% (v2) and 19.17% (Pro), the same within noise.
 - The 4x step was designed after the 2x result, with its prediction committed first (`analysis/zoom4x/prediction.txt`): 63.2%, range 59.7-66.2.
 - Every score uses the official answer key, even where the label audit thinks the key is wrong.
 - Costs are OpenRouter's billed cost per request, logged in each record.
