@@ -1,6 +1,6 @@
-# Jev 1.14 box on ScreenSpot-v2: run report
+# Jev 1.14 box on ScreenSpot-v2 and ScreenSpot-Pro: run report
 
-Status as of Sat Oct 17 2026, 09:36 CEST. Living document: updated after each run.
+Status as of Sat Oct 17 2026, 09:58 CEST. Living document: updated after each run.
 
 ## 1. Summary
 
@@ -11,7 +11,8 @@ Status as of Sat Oct 17 2026, 09:36 CEST. Living document: updated after each ru
 - Accuracy depends strongly on how big the target is in the image Jev sees. That motivated the zoom method, a second call on a 2x crop around the first answer: **87.89%**, +3.54 pp over its own raw answer (p=0.0002). See 1b.
 - Deep audit (1c): every answer rescored from the raw API response, every sent image rebuilt, logs and billing reconciled. No number changed.
 - Label audit (1d): of the 271 cases any run missed, 4 have a wrong answer key and 39 more sit on ambiguous or loose instructions. Side note only: the score stays the official key.
-- Oct 17 (1e): the label errors are reported upstream (OS-Atlas issue #65), both leaderboards are collected, and the headroom analysis says a better v2 number would be tuned on the test set. Next: ScreenSpot-Pro with the frozen 2x zoom.
+- Oct 17 (1e): the label errors are reported upstream (OS-Atlas issue #65), both leaderboards are collected, and the headroom analysis says a better v2 number would be tuned on the test set.
+- **ScreenSpot-Pro (1e, Oct 17):** raw Jev scores **19.17%** (pass 1; pass 2 18.66%, same within noise). The same frozen 2x zoom, fixed before any Pro call, lifts it to **42.76%**: +24.10 pp over its own raw answer (436 fixed, 55 broken, p = 1.2e-74), about 7x the v2 gain. Pro targets are about 20x smaller than v2's, so zoom matters far more. Cost $0.00032 per task with zoom.
 
 ## 1b. Pass 2 + zoom (run 21:49-22:01 CEST, 0 errors, $0.3817 logged)
 
@@ -115,7 +116,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 - No earlier report anywhere (`PRIOR-REPORTS.md`): all OS-Atlas and SeeClick issues and PRs, the HF discussions, v2 mirrors, web search.
 - **New finding:** web [200] (#1035, "log in by x account") and web [202] (#1037, "check the weather news") were right in ScreenSpot v1 and broke in v2. Only 9 boxes changed between v1 and v2 for the same image and instruction. #455, #458, #487 and #449 are new in v2, and so is the duplicate.
 
-### ScreenSpot-Pro run (frozen Oct 17 08:50, ready, waits for a top-up)
+### ScreenSpot-Pro run (frozen Oct 17 08:50, run Oct 17 09:24-09:54)
 - Data: likaixin/ScreenSpot-Pro at revision 210e78d (Mar 18 2026), in `data/screenspot-pro/`. 1,581 cases, 26 apps, 6 groups, text 977 / icon 604, bbox = [x1, y1, x2, y2] (v2 is [x, y, w, h]). Scoring = the official `eval_sample_positive_gt`, overall = micro accuracy over all cases. Setting = the official leaderboard one: English instruction, positive cases only.
 - Method: the v2 harness unchanged (Arthur, Oct 17: keep it simple). **Zoom: 2x alone (Arthur, Oct 17), the same frozen rule as v2.** No 3x arm. Nothing on Pro is looked at to pick settings.
 - Download complete: all 1,618 files (the 62 with spaces in the name re-fetched URL-encoded). Preflight (`screenspot.py --bench pro check`, offline): every image present, every size equal to the annotation's img_size, every box with a positive area. One label quirk: #491's box starts at y = -1 (scored as given, like v2's #449, which runs 1 px past the edge).
@@ -143,7 +144,32 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 - Where it sits (official leaderboard data): between OS-Atlas-7B 18.9 and Aguvis-7B 22.9, above GPT5-minimal (resized) 18.5 and Claude (Computer Use) 17.1.
 - Why it is so much lower than v2 (83.33): the median Pro target covers 0.035% of the screen vs 0.72% on v2, about 20x smaller. Jev answers on a 0.01 grid, and 562 of 1,581 Pro targets (36%) are smaller than one grid step on at least one side (v2: 1 of 1,272). Every screenshot is also sent downscaled (0.41x for 4K, down to 0.26x). Icons suffer most (7.95%).
 - Confidence still carries signal: AUROC 0.76; answers at 0.8 or more are right 46-50% of the time, under 0.5 only 6.7%.
-- Next: Run B, the frozen 2x zoom on this pass's answers (stage B only, A is resumed from this file, about $0.25). The key has $0.058: top-up first. Command: `python3 screenspot.py --bench pro run --pass 1 --zoom --max-cost 0.60`.
+### ScreenSpot-Pro run 2: raw A2 + frozen 2x zoom B (Oct 17 09:36-09:54, `results/pro/pass2.jsonl` + `zoom2.jsonl`, log `pass2.log`)
+Same protocol as v2's run 2: a fresh raw pass (A2) and the zoom stage (B) on A2's own answers, in one run. Command: `python3 screenspot.py --bench pro run --pass 2 --zoom --workers 4 --max-cost 0.60`.
+
+- **Zoom (A2+B) on ScreenSpot-Pro: 42.76% (676/1581, Wilson 95% CI 40.3-45.2)**, vs its own raw answer A2 18.66% (295/1581, CI 16.8-20.7): **+24.10 pp**, paired 95% bootstrap CI +21.63 to +26.63, 436 miss->hit vs 55 hit->miss, exact McNemar p = 1.2e-74. Text 57.01%, icon 19.70%, macro over 12 cells 39.23%.
+- On v2 the same frozen rule gave +3.54 pp. On Pro it gives about 7x that, as expected from the target sizes (below): Pro is the benchmark where zoom matters.
+- **Q1. Is A1 different from A2? No, within noise.** A1 19.17%, A2 18.66%, mean 18.91 +- 0.25, exact McNemar p = 0.55. 1445 of 1581 cases agree (91.4%), 64 miss->hit, 72 hit->miss; identical box in 302 of 1581. Rerun noise: 8.6% of cases flip vs 31.1% flipped by zoom.
+- Clean run: 3,162 calls, all ok (0 wrong_format, 0 infra_error, 0 retries), one model version, code_rev 3cc1088 on a clean tree. Every B window recomputes exactly from A2's box with the frozen rule (0 mismatches), every B image was sent at A2's size. Independent official re-score from the raw responses (B mapped back through its window): A2 295, B 676, 0 disagreements with the recorded hits.
+- Cost and speed: 6.01M + 6.01M input tokens (B = exactly A's tokens), $0.5047 logged, $0.4961 billed by the balance. Median per case: A 0.89 s, A+B 1.72 s (p90 2.60 s). 17 min 31 s wall time on 4 workers. About $0.00032 per task with zoom.
+
+| Group | Text: A2 -> B | Icon: A2 -> B |
+|---|---|---|
+| CAD | 12.69 -> 44.67 | 14.06 -> 18.75 |
+| Dev | 30.52 -> 64.29 | 6.90 -> 19.31 |
+| Creative | 19.70 -> 52.53 | 2.80 -> 13.99 |
+| Scientific | 36.81 -> 64.58 | 6.36 -> 24.55 |
+| Office | 41.24 -> 66.10 | 13.21 -> 33.96 |
+| OS | 17.76 -> 52.34 | 2.25 -> 15.73 |
+
+- Every cell gains; all but CAD icon (+4.7, p=0.58) are significant. Text gains +25 to +35 pp per group, icons +5 to +21.
+- Window types: 1534 half (true 2x), 23 widened for a big A box, 24 full screen (A's box was so big the rule re-asks the same image: 0 flips there).
+- **Declared diagnostics of the frozen 2x zoom** (reported only; nothing here changes a setting or a score):
+  - Ceiling: when A2 missed (1286), the target was inside B's window 88.3% of the time (1135). B fixed 436 of those (38.4%). The other 151 misses had the target outside the window, which B cannot fix by construction (0 fixed). B kept 240 of A2's 295 hits.
+  - Grid: targets smaller than one 0.01 answer step on a side drop from 562 in A's view to 83 in B's view. Those 562 go from 5.0% (A2) to 16.9% (B); the rest go from 26.2% to 57.0%. So the zoom helps both through the finer grid and through more pixels per target.
+- Confidence after zoom: AUROC 0.756; answers at 0.8 or more right 68% of the time (n=407), under 0.5 13.5% (n=445).
+- Where it sits (official leaderboard data and `analysis/leaderboard/screenspot-pro.md`): next to Phi-Ground 43.2 and GUI-Actor-2.5VL-3B 42.2 (both single-shot), below Claude Opus 4.5 45.7 (method not stated), above UI-TARS-72B 38.1 and Claude Sonnet 4.5 36.2. Caveat for any chart: Jev zoom is 2 calls per task, those entries 1. Parallel from the ScreenSpot-Pro paper: its search wrapper took OS-Atlas-7B from 18.9 to 48.1.
+- Cost context (`analysis/leaderboard/cost-latency.md`, collected Oct 17 by a research agent; estimates, not measurements): no leaderboard entry publishes cost or tokens per task. On image tokens alone, before any thinking, a 4K Pro screenshot costs about $0.0011 (Gemini 3 Flash) to $0.03-0.10 (GPT-6 Astra) per call vs Jev's $0.00016. The agent also flagged newer v2 rows above MAI-UI-32B (GPT-6 Astra 97.88 in a third-party re-run, Qwen-UI-Agent-27B 97.5): not yet verified by hand, so section 9 is unchanged for now.
 
 ## 2. What has been done (Oct 16-17 2026, CEST)
 
@@ -161,6 +187,7 @@ From `python3 analysis/headroom.py` (post-hoc, offline, no calls):
 | Oct 17 07:55-08:40 | Headroom analysis, both leaderboards collected (2 research agents), upstream issue drafted, checked for prior reports and posted (#65), ScreenSpot-Pro data downloaded |
 | Oct 17 08:45-08:57 | Pro prep: 2x zoom alone frozen, loader + preflight + offline tests, download completed, 3-case smoke ($0.001) |
 | Oct 17 09:00-09:33 | Two review rounds (fixes e2118e7, 4099bfa), wider and fresh smokes, Pro Run A raw: 19.17%, 0 errors, $0.25 |
+| Oct 17 09:36-09:54 | Pro run 2: A2 18.66%, A2+B (2x zoom) 42.76%, 0 errors, $0.50; official re-score and diagnostics |
 
 Commits: 0a89357 (bench), fc84df2 and d9596d8 (review fixes, observability), 5266a58 (error analysis), 7b3c2d4 (zoom method), 1b2e535 and bb538fc (zoom review fixes), bb0aa6a and 89d0022 (pass 2 + zoom results), 02e029e (deep audit and label audit).
 
